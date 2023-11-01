@@ -1,4 +1,8 @@
 export const navBarClassNames = {
+  wrapper: [
+    "px-3",
+    "sm:px-6",
+  ],
   item: [
     "flex",
     "relative",
