@@ -29,11 +29,20 @@ export default function Login() {
           </CardHeader>
           <Divider />
           <CardBody>
-            <EmailInput/>
-            <PasswordInput/>
+            <EmailInput />
+            <PasswordInput />
           </CardBody>
 
-          <CardFooter></CardFooter>
+          <CardFooter>
+            <div className="">
+              <h1 className="">
+                Need to create an account?{' '}
+                <a href="" className="">
+                  Sign up
+                </a>
+              </h1>
+            </div>
+          </CardFooter>
         </Card>
       </div>
     </main>
