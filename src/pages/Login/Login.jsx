@@ -35,10 +35,10 @@ export default function Login() {
           </CardBody>
 
           <CardFooter>
-            <div className="">
-              <h1 className="">
+            <div className='flex flex-col w-full pl-2 pr-2'>
+              <h1 className='text-sm pb-2 sm:mt-4'>
                 Need to create an account?{' '}
-                <a href="" className="">
+                <a href="" className='text-primary-400 hover:text-primary'>
                   Sign up
                 </a>
               </h1>
