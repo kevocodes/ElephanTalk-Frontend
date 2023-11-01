@@ -9,7 +9,7 @@ function HamburguerMenu({ setIsMenuOpen }) {
 
       <HamburguerLink setIsMenuOpen={setIsMenuOpen} to="/favorites" name="Favorites" />
 
-      <HamburguerLink setIsMenuOpen={setIsMenuOpen} to="/own" name="Own posts" />
+      <HamburguerLink setIsMenuOpen={setIsMenuOpen} to="/own" name="Own" />
 
       <HamburguerLogout setIsMenuOpen={setIsMenuOpen} />
     </NavbarMenu>

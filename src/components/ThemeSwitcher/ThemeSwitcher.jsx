@@ -15,9 +15,13 @@ export function ThemeSwitcher() {
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
       {theme === "dark" ? (
-        <Icon icon="ion:moon" className="text-foreground"/>
-        ) : (
-        <Icon icon="material-symbols:sunny-rounded" className="text-foreground"/>
+        <Icon icon="ion:moon" className="text-foreground" fontSize={22} />
+      ) : (
+        <Icon
+          icon="material-symbols:sunny-rounded"
+          className="text-foreground"
+          fontSize={22}
+        />
       )}
     </Button>
   );

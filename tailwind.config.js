@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const { nextui } = require("@nextui-org/react");
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 export default {
   content: [
@@ -12,6 +13,10 @@ export default {
     fontFamily: {
       montserrat: ["Montserrat", "sans-serif"],
       oswald: ["Oswald", "sans-serif"],
+    },
+    screens: {
+      xs: "425px",
+      ...defaultTheme.screens,
     },
   },
   darkMode: "class",
