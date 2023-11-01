@@ -28,7 +28,10 @@ export default function Login() {
             </div>
           </CardHeader>
           <Divider />
-          <CardBody></CardBody>
+          <CardBody>
+            <EmailInput/>
+            <PasswordInput/>
+          </CardBody>
 
           <CardFooter></CardFooter>
         </Card>
