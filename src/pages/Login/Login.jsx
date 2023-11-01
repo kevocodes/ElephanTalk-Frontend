@@ -5,6 +5,8 @@ import {
   CardFooter,
   Divider,
 } from '@nextui-org/react'
+import EmailInput from './components/inputs/EmailInput'
+import PasswordInput from './components/inputs/PasswordInput'
 
 export default function Login() {
   return (
