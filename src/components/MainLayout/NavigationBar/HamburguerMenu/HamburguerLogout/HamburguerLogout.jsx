@@ -6,7 +6,7 @@ function HamburguerLogout({ setIsMenuOpen }) {
     <NavbarMenuItem>
       <Button
         as={NavLink}
-        variant="flat"
+        variant="light"
         color="danger"
         to="/login"
         className="w-full"
