@@ -36,9 +36,9 @@ jobs:
         ENV_FILE: ${{ secrets.ENV_FILE }}
       
     - name: Create production build 
-      run: npm run build --if-present
+      run: yarn run build
         
     - name: Copy files to deploy folder
-      run: sudo cp -r dist/* "$DEPLOY_FOLDER"
+      run: cp -r dist/* "$DEPLOY_FOLDER"
       env:
         DEPLOY_FOLDER: ${{ secrets.DEPLOY_FOLDER }}
