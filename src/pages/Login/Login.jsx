@@ -7,6 +7,7 @@ import {
 } from '@nextui-org/react'
 import EmailInput from './components/inputs/EmailInput'
 import PasswordInput from './components/inputs/PasswordInput'
+import LoginButton from './components/butttons/LoginButton'
 
 export default function Login() {
   return (
@@ -41,6 +42,7 @@ export default function Login() {
                   Sign up
                 </a>
               </h1>
+              <LoginButton/>
             </div>
           </CardFooter>
         </Card>
