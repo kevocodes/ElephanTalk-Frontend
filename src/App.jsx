@@ -1,13 +1,14 @@
 import MainLayout from "./components/MainLayout/MainLayout";
 import AppProvider from "./providers/app.provider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login/Login";
 
 function App() {
   return (
     <AppProvider>
       <Router>
         <Routes>
-          <Route path="/login" element={<h1>Login</h1>} />
+          <Route path="/login" element={<Login/>} />
           <Route path="/register" element={<h1>Register</h1>} />
 
           <Route element={<MainLayout />}>
