@@ -12,7 +12,7 @@ import LoginButton from './components/butttons/LoginButton'
 export default function Login() {
   return (
     <main className='h-screen grid justify-items-center'> 
-      <div>
+      <div className='flex flex-col justify-center '>
         <Card
           isBlurred
           className="border-none bg-background/60 dark:bg-default-100/50 w-full"
