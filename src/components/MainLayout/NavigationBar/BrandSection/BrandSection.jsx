@@ -1,10 +1,11 @@
-import { NavbarBrand, NavbarContent } from "@nextui-org/react";
+import { Image, NavbarBrand, NavbarContent } from "@nextui-org/react";
+import logo from "../../../../assets/logo-letters.webp";
 
 function BrandSection() {
   return (
     <NavbarContent>
       <NavbarBrand>
-        <p className="font-bold text-inherit">ElephanTalk</p>
+        <Image src={logo} height={100} width={145} radius="none" />
       </NavbarBrand>
     </NavbarContent>
   );
