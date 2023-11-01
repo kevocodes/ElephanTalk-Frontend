@@ -1,6 +1,6 @@
 import { Input } from '@nextui-org/react'
 
-export default function App({ onChange, value }) {
+export default function EmailInput({ onChange, value }) {
   return (
     <Input
       isClearable
