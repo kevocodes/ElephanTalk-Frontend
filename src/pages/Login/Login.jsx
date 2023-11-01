@@ -11,7 +11,7 @@ import LoginButton from './components/butttons/LoginButton'
 
 export default function Login() {
   return (
-    <main>
+    <main className='h-screen grid justify-items-center'> 
       <div>
         <Card
           isBlurred
