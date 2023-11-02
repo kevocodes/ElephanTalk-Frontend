@@ -1,6 +1,6 @@
 /* eslint no-unused-vars: "warn"*/
 
-function PostForm({ title, data = {} , action }) {
+function PostForm({ title = "Create new post", data = {} , action }) {
   return (
     <div>PostForm</div>
   )
