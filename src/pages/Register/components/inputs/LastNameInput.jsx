@@ -4,7 +4,7 @@ export default function LastNameInput({ onChange, value }) {
     <Input
       isClearable
       type="input"
-      label="First Name"
+      label="Last Name"
       variant="bordered"
       color="primary-50"
       onClear={() => console.log('input cleared')}
