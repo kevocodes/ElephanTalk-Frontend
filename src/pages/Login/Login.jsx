@@ -9,6 +9,7 @@ import EmailInput from './components/inputs/EmailInput'
 import PasswordInput from './components/inputs/PasswordInput'
 import LoginButton from './components/butttons/LoginButton'
 import './Login.css'
+import logo from "../../assets/logo.webp"
 
 
 export default function Login() {
@@ -21,11 +22,16 @@ export default function Login() {
           className="border-none bg-background/60 dark:bg-default-100/50 w-full"
           shadow="sm"
         >
-          <CardHeader className="flex gap-3">
+          <CardHeader className="flex gap-3 flex-col">
+          <img
+          alt="logo logo"
+          height={80}
+          radius="sm"
+          src={logo}
+          width={220}
+        />
             <div className="flex flex-col pl-2">
-              <p className="text-md text-primary text-3xl font-bold mb-2  sm:text-lef ">
-                ElephanTalk
-              </p>
+              
               <p className="text-small text-default-500 text-primary-50">
                 Connect with phantastic people
               </p>
