@@ -9,7 +9,7 @@ export default function EmailInput({ onChange, value }) {
       variant="bordered"
       color="primary-50"
       onClear={() => console.log('input cleared')}
-      className="w-full text-primary-50 pt-4 pb-2"
+      className="w-full  pt-4 pb-2"
       onChange={onChange}
       value={value}
     />
