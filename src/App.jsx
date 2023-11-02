@@ -3,6 +3,7 @@ import AppProvider from "./providers/app.provider";
 import MainLayout from "./components/MainLayout/MainLayout";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login/>} />
-          <Route path="/register" element={<h1>Register</h1>} />
+          <Route path="/register" element={<Register/>} />
 
           <Route element={<MainLayout />}>
             <Route path="/" element={<Home />} />
