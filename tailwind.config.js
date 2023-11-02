@@ -11,7 +11,7 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'login': "url('./src/assets/login/login-register-background.webp')",
+        'login': "url('/src/assets/login/login-register-background.webp')",
       }
     },
     fontFamily: {
