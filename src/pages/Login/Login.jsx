@@ -8,10 +8,13 @@ import {
 import EmailInput from './components/inputs/EmailInput'
 import PasswordInput from './components/inputs/PasswordInput'
 import LoginButton from './components/butttons/LoginButton'
+import './Login.css'
+
 
 export default function Login() {
   return (
-    <main className='h-screen grid justify-items-center bg-gradient-to-r from-primary-800 to-blue-black-40'> 
+    <main className='h-screen grid justify-items-center bg-image  bg-cover bg-center bg-no-repeat  '
+    > 
       <div className='flex flex-col justify-center  lg:h-full  md:w-96  sm:mx-2 md:m-auto  sm:m-auto sm:my-8 sm:h-80'>
         <Card
           isBlurred
