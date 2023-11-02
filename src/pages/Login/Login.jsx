@@ -32,7 +32,7 @@ export default function Login() {
         />
             <div className="flex flex-col pl-2">
               
-              <p className="text-small text-default-500 text-primary-50">
+              <p className="text-small text-default-500 text-foreground">
                 Connect with phantastic people
               </p>
             </div>
@@ -47,7 +47,7 @@ export default function Login() {
             <div className='flex flex-col w-full pl-2 pr-2'>
               <h1 className='text-sm pb-2 sm:mt-4'>
                 Need to create an account?{' '}
-                <a href="" className='text-primary-400 hover:text-primary'>
+                <a href="" className='text-foreground hover:text-primary-500'>
                   Sign up
                 </a>
               </h1>
