@@ -47,3 +47,20 @@ export const toggleFavoritePost = async ({ token, postId }) => {
   
   return true;
 };
+
+export const commentPost = async ({ token, postId, content }) => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/comment`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ content }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error commenting on post");
+  }
+
+  return true;
+};
