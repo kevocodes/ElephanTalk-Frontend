@@ -43,7 +43,9 @@ function Register() {
                                 <FirstNameInput />
                                 <LastNameInput />
                             </div>
-
+                            <EmailInput />
+                            <PasswordInput />
+                            <PasswordConfirmInput />
                         </div>
                     </CardBody>
 
