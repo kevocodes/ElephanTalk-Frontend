@@ -24,10 +24,34 @@ function PostForm({
     };
   });
 
+  const [isValidUrl, setIsValidUrl] = useState(true);
+  const [isDescriptionValid, setIsDescriptionValid] = useState(true);
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
   };
+
+  function validateImage(url) {
+    const pattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
+    // This checks if the url is valid and stores the result
+    const result = pattern.test(url);
+    setIsValidUrl(result);
+    return result;
+  }
+
+  function validateDescription(description) {
+    const result = description.length >= 8;
+    setIsDescriptionValid(result);
+    return result;
+  }
+
+  function isFormValid() {
+    return (
+      validateImage(formValues.image) &&
+      validateDescription(formValues.description)
+    );
+  }
 
   return (
     <Card className="mx-auto mt-4 max-w-[80%]">
@@ -37,16 +61,19 @@ function PostForm({
         <Input
           name="description"
           value={formValues.description}
-          label="Descripcion"
+          label="Description"
           isRequired={true}
           onChange={handleChange}
         />
         <Input
+          bordered
           name="image"
           value={formValues.image}
-          label="URL de la imagen"
+          label="Image URL"
+          placeholder="Enter the image URL for your post."
           isRequired={true}
           onChange={handleChange}
+          errorMessage={!isValidUrl ? "Please enter a valid image URL." : ""}
         />
       </CardBody>
     </Card>
