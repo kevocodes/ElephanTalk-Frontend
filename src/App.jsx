@@ -1,6 +1,7 @@
 import MainLayout from "./components/MainLayout/MainLayout";
 import AppProvider from "./providers/app.provider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import CreatePost from "./pages/CreatePost/CreatePost";
 
 function App() {
   return (
@@ -16,7 +17,7 @@ function App() {
             <Route path="/own" element={<h1>Own posts</h1>} />
             <Route path="/post/:id" element={<h1>Post</h1>} />
             <Route path="/edit/:id" element={<h1>Edit post</h1>} />
-            <Route path="/create" element={<h1>Create post</h1>} />
+            <Route path="/create" element={<CreatePost />} />
             <Route path="*" element={<h1>404</h1>} />
           </Route>
         </Routes>
