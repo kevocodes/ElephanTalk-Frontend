@@ -56,6 +56,7 @@ function Register() {
                                     Log in
                                 </Link>
                             </h1>
+                            <RegisterButton />
                         </div>
                     </CardFooter>
                 </Card>
