@@ -24,6 +24,11 @@ function PostForm({
     };
   });
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
+  };
+
   return (
     <Card className="mx-auto mt-4 max-w-[80%]">
       <CardHeader className="font-oswald text-3xl">{title}</CardHeader>
@@ -34,12 +39,14 @@ function PostForm({
           value={formValues.description}
           label="Descripcion"
           isRequired={true}
+          onChange={handleChange}
         />
         <Input
           name="image"
           value={formValues.image}
           label="URL de la imagen"
           isRequired={true}
+          onChange={handleChange}
         />
       </CardBody>
     </Card>
