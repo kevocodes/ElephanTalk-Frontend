@@ -46,10 +46,11 @@ function Register() {
                             <EmailInput />
                             <PasswordInput />
                             <PasswordConfirmInput />
+                            {/* Here we can put a label to show a warning if the passwords don't match */}
                         </div>
                     </CardBody>
                     <CardFooter>
-                        <div className='flex flex-col w-full px-2' >
+                        <div className='flex flex-col gap-2 w-full px-2' >
                             <h1 className='text-sm'>
                                 Already have an account?{' '}
                                 <Link to="/login" className='text-foreground hover:text-primary-500 font-semibold'>
