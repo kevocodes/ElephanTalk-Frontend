@@ -11,8 +11,9 @@ import PostDetails from "./PostDetails/PostDetails";
 import ActionsControllers from "./ActionsControllers/ActionsControllers";
 import InteractionsDetails from "./InteractionsDetails/InteractionsDetails";
 import CommentForm from "./CommentForm/CommentForm";
+import { useState } from "react";
 
-function Post({ info, setPosts }) {
+function Post({ info }) {
   const {
     description,
     image,
@@ -23,6 +24,8 @@ function Post({ info, setPosts }) {
     isLiked,
     isFavorite,
   } = info;
+
+  const [postLikes, setLikes] = useState(likes);
 
   return (
     <Card className="max-w-[468px]">
@@ -52,11 +55,11 @@ function Post({ info, setPosts }) {
           postId={_id}
           isLiked={isLiked}
           isFavorite={isFavorite}
-          setPosts={setPosts}
+          setLikes={setLikes}
         />
 
         <InteractionsDetails
-          likes={likes}
+          likes={postLikes}
           comments={comments.length}
           postId={_id}
         />

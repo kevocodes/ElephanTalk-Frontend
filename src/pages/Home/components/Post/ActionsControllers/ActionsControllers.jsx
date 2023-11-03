@@ -11,7 +11,7 @@ import {
   toggleLikePost,
 } from "../../../../../services/posts.service";
 
-function ActionsControllers({ postId, isLiked, isFavorite, setPosts }) {
+function ActionsControllers({ postId, isLiked, isFavorite, setLikes }) {
   const navigate = useNavigate();
   const { user, token } = useAuth();
   const [favorited, setFavorited] = useState(isFavorite);
@@ -23,20 +23,10 @@ function ActionsControllers({ postId, isLiked, isFavorite, setPosts }) {
       setLiked((v) => !v);
       await toggleLikePost({ token, postId });
 
-      setPosts((prevPosts) => {
-        const newPosts = prevPosts.map((post) => {
-          if (post._id !== postId) return post;
+      setLikes((prevLikes) => {
+        if (!liked) return [...prevLikes, user];
 
-          if (!liked) {
-            post.likes.push(user);
-          } else {
-            post.likes = post.likes.filter((like) => like._id !== user._id);
-          }
-
-          return post;
-        });
-
-        return newPosts;
+        return prevLikes.filter((like) => like._id !== user._id);
       });
     } catch (error) {
       // If the request fails, set the state to the previous value
@@ -50,8 +40,6 @@ function ActionsControllers({ postId, isLiked, isFavorite, setPosts }) {
       // Update the UI first for better UX
       setFavorited((v) => !v);
       await toggleFavoritePost({ token, postId });
-
-      
     } catch (error) {
       // If the request fails, set the state to the previous value
       setFavorited((v) => !v);
