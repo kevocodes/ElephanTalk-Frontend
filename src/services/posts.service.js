@@ -29,5 +29,6 @@ export const toggleLikePost = async ({ token, postId }) => {
     throw new Error("Error liking post");
   }
 
-  return await response.json();
+  return true;
 };
+

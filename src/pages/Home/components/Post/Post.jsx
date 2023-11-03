@@ -12,8 +12,17 @@ import ActionsControllers from "./ActionsControllers/ActionsControllers";
 import InteractionsDetails from "./InteractionsDetails/InteractionsDetails";
 import CommentForm from "./CommentForm/CommentForm";
 
-function Post({ info }) {
-  const { description, image, user, likes, comments, _id } = info;
+function Post({ info, setPosts }) {
+  const {
+    description,
+    image,
+    user,
+    likes,
+    comments,
+    _id,
+    isLiked,
+    isFavorite,
+  } = info;
 
   return (
     <Card className="max-w-[468px]">
@@ -39,7 +48,12 @@ function Post({ info }) {
           height={360}
         />
 
-        <ActionsControllers postId={_id} />
+        <ActionsControllers
+          postId={_id}
+          isLiked={isLiked}
+          isFavorite={isFavorite}
+          setPosts={setPosts}
+        />
 
         <InteractionsDetails
           likes={likes}
