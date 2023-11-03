@@ -4,7 +4,7 @@ import { useState } from "react";
 import { commentPost } from "../../../../../services/posts.service";
 import { useAuth } from "../../../../../utils/tempUser";
 
-function CommentForm({ setCommentsCount, postId }) {
+function CommentForm({ setPostsComments, postId }) {
   const { token } = useAuth();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ function CommentForm({ setCommentsCount, postId }) {
       setLoading(true);
       await commentPost({ content: value, token, postId });
       setValue("");
-      setCommentsCount((prev) => prev + 1);
+      setPostsComments((prev) => [...prev, { content: value }]);
       setLoading(false);
     } catch (error) {
       setLoading(false);

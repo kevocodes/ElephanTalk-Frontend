@@ -30,7 +30,8 @@ function Post({ info, setPosts }) {
   const { user: currentUser } = useAuth();
 
   const [postLikes, setLikes] = useState(likes);
-  const [commentsCount, setCommentsCount] = useState(comments.length);
+  const [postComments, setPostsComments] = useState(comments);
+  const [isActive, setIsActive] = useState(active);
 
   return (
     <Card className="max-w-[468px]">
@@ -46,11 +47,12 @@ function Post({ info, setPosts }) {
         </div>
 
         {currentUser._id === user._id && (
-          <OptionsDropdown
-            isActive={active}
-            postId={_id}
-            setPosts={setPosts}
-          />
+            <OptionsDropdown
+              isActive={isActive}
+              setIsActive={setIsActive}
+              postId={_id}
+              setPosts={setPosts}
+            />
         )}
       </CardHeader>
       <CardBody className="py-2 gap-3">
@@ -67,11 +69,12 @@ function Post({ info, setPosts }) {
           isLiked={isLiked}
           isFavorite={isFavorite}
           setLikes={setLikes}
+          isActive={isActive}
         />
 
         <InteractionsDetails
           likes={postLikes}
-          comments={commentsCount}
+          comments={postComments.length}
           postId={_id}
         />
 
@@ -79,7 +82,7 @@ function Post({ info, setPosts }) {
       </CardBody>
 
       <CardFooter className="gap-3 px-5">
-        <CommentForm setCommentsCount={setCommentsCount} postId={_id} />
+        <CommentForm setPostsComments={setPostsComments} postId={_id} />
       </CardFooter>
     </Card>
   );

@@ -80,3 +80,19 @@ export const deletePost = async ({ token, postId }) => {
 
   return true;
 };
+
+export const hidePost = async ({ token, postId }) => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/active`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Error hiding post");
+  }
+
+  return true;
+}

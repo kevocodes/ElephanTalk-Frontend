@@ -10,10 +10,18 @@ import {
   toggleFavoritePost,
   toggleLikePost,
 } from "../../../../../services/posts.service";
+import { Chip } from "@nextui-org/react";
 
-function ActionsControllers({ postId, isLiked, isFavorite, setLikes }) {
+function ActionsControllers({
+  postId,
+  isLiked,
+  isFavorite,
+  setLikes,
+  isActive,
+}) {
   const navigate = useNavigate();
   const { user, token } = useAuth();
+
   const [favorited, setFavorited] = useState(isFavorite);
   const [liked, setLiked] = useState(isLiked);
 
@@ -34,7 +42,8 @@ function ActionsControllers({ postId, isLiked, isFavorite, setLikes }) {
       // If the request fails, set the UI to the previous state
       setLiked((v) => !v); // toggle the like state
 
-      setLikes((prevLikes) => { // Undo the like
+      setLikes((prevLikes) => {
+        // Undo the like
         if (liked) return [...prevLikes, user];
 
         return prevLikes.filter((like) => like._id !== user._id);
@@ -71,12 +80,19 @@ function ActionsControllers({ postId, isLiked, isFavorite, setLikes }) {
           action={() => navigate(`/post/${postId}`)}
         />
       </div>
+      <div className="flex justify-between items-center gap-1">
+        {!isActive && (
+          <Chip color="primary" variant="flat" size="small">
+            Hidden
+          </Chip>
+        )}
 
-      <ControllerToggle
-        state={favorited}
-        action={handleFavorite}
-        Component={FavoriteIcon}
-      />
+        <ControllerToggle
+          state={favorited}
+          action={handleFavorite}
+          Component={FavoriteIcon}
+        />
+      </div>
     </div>
   );
 }

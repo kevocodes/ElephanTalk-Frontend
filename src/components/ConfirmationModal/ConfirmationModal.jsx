@@ -12,6 +12,7 @@ function ConfirmationModal({ isOpen, onOpenChange, action, actionText, title, de
   return (
     <>
       <Modal
+        backdrop="blur"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         isDismissable={false}
@@ -33,10 +34,10 @@ function ConfirmationModal({ isOpen, onOpenChange, action, actionText, title, de
                 </p>
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant="light" onPress={onClose}>
+                <Button color="default" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="primary" variant="flat" onPress={action} isLoading={loading}>
+                <Button color="danger" variant="light" onPress={action} isLoading={loading}>
                   {actionText}
                 </Button>
               </ModalFooter>
