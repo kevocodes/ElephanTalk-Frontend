@@ -48,7 +48,16 @@ function Register() {
                             <PasswordConfirmInput />
                         </div>
                     </CardBody>
-
+                    <CardFooter>
+                        <div className='flex flex-col w-full px-2' >
+                            <h1 className='text-sm'>
+                                Already have an account?{' '}
+                                <Link to="/login" className='text-foreground hover:text-primary-500 font-semibold'>
+                                    Log in
+                                </Link>
+                            </h1>
+                        </div>
+                    </CardFooter>
                 </Card>
             </div>
         </main>
