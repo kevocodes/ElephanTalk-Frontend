@@ -21,16 +21,25 @@ function ActionsControllers({ postId, isLiked, isFavorite, setLikes }) {
     try {
       // Update the UI first for better UX
       setLiked((v) => !v);
-      await toggleLikePost({ token, postId });
 
       setLikes((prevLikes) => {
         if (!liked) return [...prevLikes, user];
 
         return prevLikes.filter((like) => like._id !== user._id);
       });
+
+      // Send the request to the server
+      await toggleLikePost({ token, postId });
     } catch (error) {
-      // If the request fails, set the state to the previous value
-      setLiked((v) => !v);
+      // If the request fails, set the UI to the previous state
+      setLiked((v) => !v); // toggle the like state
+
+      setLikes((prevLikes) => { // Undo the like
+        if (liked) return [...prevLikes, user];
+
+        return prevLikes.filter((like) => like._id !== user._id);
+      });
+
       console.log(error);
     }
   };
@@ -39,6 +48,7 @@ function ActionsControllers({ postId, isLiked, isFavorite, setLikes }) {
     try {
       // Update the UI first for better UX
       setFavorited((v) => !v);
+
       await toggleFavoritePost({ token, postId });
     } catch (error) {
       // If the request fails, set the state to the previous value
