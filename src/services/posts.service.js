@@ -32,3 +32,18 @@ export const toggleLikePost = async ({ token, postId }) => {
   return true;
 };
 
+export const toggleFavoritePost = async ({ token, postId }) => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/favorite`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Error adding post to favorites");
+  }
+  
+  return true;
+};

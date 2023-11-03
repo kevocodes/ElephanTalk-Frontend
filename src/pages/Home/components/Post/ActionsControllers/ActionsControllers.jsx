@@ -45,7 +45,19 @@ function ActionsControllers({ postId, isLiked, isFavorite, setPosts }) {
     }
   };
 
+  const handleFavorite = async () => {
+    try {
+      // Update the UI first for better UX
+      setFavorited((v) => !v);
+      await toggleFavoritePost({ token, postId });
 
+      
+    } catch (error) {
+      // If the request fails, set the state to the previous value
+      setFavorited((v) => !v);
+      console.log(error);
+    }
+  };
 
   return (
     <div className="flex items-center justify-between w-full">
@@ -64,7 +76,7 @@ function ActionsControllers({ postId, isLiked, isFavorite, setPosts }) {
 
       <ControllerToggle
         state={favorited}
-        action={() => setFavorited((v) => !v)}
+        action={handleFavorite}
         Component={FavoriteIcon}
       />
     </div>
