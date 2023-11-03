@@ -1,4 +1,4 @@
-const BASE_URL = "https://postsapi.kevo.codes";
+const BASE_URL = import.meta.env.VITE_PUBLIC_API_URL;
 
 export const getAvailablePosts = async ({ token }) => {
   const response = await fetch(`${BASE_URL}/posts`, {
