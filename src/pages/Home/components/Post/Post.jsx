@@ -12,8 +12,9 @@ import ActionsControllers from "./ActionsControllers/ActionsControllers";
 import InteractionsDetails from "./InteractionsDetails/InteractionsDetails";
 import CommentForm from "./CommentForm/CommentForm";
 import { useState } from "react";
+import { useAuth } from "../../../../utils/tempUser";
 
-function Post({ info }) {
+function Post({ info, setPosts }) {
   const {
     description,
     image,
@@ -23,7 +24,10 @@ function Post({ info }) {
     _id,
     isLiked,
     isFavorite,
+    active,
   } = info;
+
+  const { user: currentUser } = useAuth();
 
   const [postLikes, setLikes] = useState(likes);
   const [commentsCount, setCommentsCount] = useState(comments.length);
@@ -41,7 +45,13 @@ function Post({ info }) {
           </div>
         </div>
 
-        <OptionsDropdown />
+        {currentUser._id === user._id && (
+          <OptionsDropdown
+            isActive={active}
+            postId={_id}
+            setPosts={setPosts}
+          />
+        )}
       </CardHeader>
       <CardBody className="py-2 gap-3">
         <Image
@@ -69,7 +79,7 @@ function Post({ info }) {
       </CardBody>
 
       <CardFooter className="gap-3 px-5">
-        <CommentForm setCommentsCount={setCommentsCount} postId={_id}/>
+        <CommentForm setCommentsCount={setCommentsCount} postId={_id} />
       </CardFooter>
     </Card>
   );

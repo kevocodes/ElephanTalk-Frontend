@@ -64,3 +64,19 @@ export const commentPost = async ({ token, postId, content }) => {
 
   return true;
 };
+
+export const deletePost = async ({ token, postId }) => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Error deleting post");
+  }
+
+  return true;
+};
