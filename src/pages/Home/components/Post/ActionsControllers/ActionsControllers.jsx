@@ -4,8 +4,11 @@ import FavoriteIcon from "./FavoriteIcon/FavoriteIcon";
 import CommentIcon from "./CommentIcon/CommentIcon";
 import ControllerToggle from "./ControllerToggle/ControllerToggle";
 import ControllerAction from "./ControllerAction/ControllerAction";
+import { useNavigate } from "react-router-dom";
 
-function ActionsControllers() {
+function ActionsControllers({ postId }) {
+  const navigate = useNavigate();
+  
   const [liked, setLiked] = useState(false);
   const [favorited, setFavorited] = useState(false);
 
@@ -18,7 +21,10 @@ function ActionsControllers() {
           Component={HeartIcon}
         />
 
-        <ControllerAction Component={CommentIcon} action={() => alert("to")} />
+        <ControllerAction
+          Component={CommentIcon}
+          action={() => navigate(`/post/${postId}`)}
+        />
       </div>
 
       <ControllerToggle

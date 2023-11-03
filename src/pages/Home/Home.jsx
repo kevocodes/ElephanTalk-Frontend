@@ -24,11 +24,9 @@ function Home() {
 
   return (
     <main className="flex flex-col gap-4 items-center py-4">
-      
-      { posts.map((post) => (
-        <Post key={ post._id } image={ post.image } />
+      {posts.map((post) => (
+        <Post key={post._id} info={post} />
       ))}
-
     </main>
   );
 }
