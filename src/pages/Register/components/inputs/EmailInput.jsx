@@ -1,5 +1,6 @@
 import { Input } from "@nextui-org/react"
 import { MailIcon } from "../icons/MailIcon"
+
 export default function EmailInput({ onChange, value}) {
   return (
     <Input
