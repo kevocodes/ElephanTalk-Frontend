@@ -37,7 +37,15 @@ function Register() {
                         </div>
                     </CardHeader>
                     <Divider />
-
+                    <CardBody>
+                        <div className='flex flex-col gap-3'>
+                            <div className='flex md:flex-row flex-col gap-3 md:gap-2'>
+                                
+                            </div>
+                            
+                        </div>
+                    </CardBody>
+                    
                 </Card>
             </div>
         </main>
