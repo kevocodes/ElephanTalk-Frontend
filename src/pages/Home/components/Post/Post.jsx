@@ -26,6 +26,7 @@ function Post({ info }) {
   } = info;
 
   const [postLikes, setLikes] = useState(likes);
+  const [commentsCount, setCommentsCount] = useState(comments.length);
 
   return (
     <Card className="max-w-[468px]">
@@ -60,7 +61,7 @@ function Post({ info }) {
 
         <InteractionsDetails
           likes={postLikes}
-          comments={comments.length}
+          comments={commentsCount}
           postId={_id}
         />
 
@@ -68,7 +69,7 @@ function Post({ info }) {
       </CardBody>
 
       <CardFooter className="gap-3 px-5">
-        <CommentForm />
+        <CommentForm setCommentsCount={setCommentsCount} postId={_id}/>
       </CardFooter>
     </Card>
   );
