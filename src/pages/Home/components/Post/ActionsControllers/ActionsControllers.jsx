@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function ActionsControllers({ postId }) {
   const navigate = useNavigate();
-  
+
   const [liked, setLiked] = useState(false);
   const [favorited, setFavorited] = useState(false);
 

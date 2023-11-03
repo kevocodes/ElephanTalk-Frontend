@@ -13,7 +13,21 @@ export const getAvailablePosts = async ({ token }) => {
     throw new Error("Error fetching posts");
   }
 
-  const data = await response.json();
+  return await response.json();
+};
 
-  return data;
+export const toggleLikePost = async ({ token, postId }) => {
+  const response = await fetch(`${BASE_URL}/posts/${postId}/like`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Error liking post");
+  }
+
+  return await response.json();
 };
