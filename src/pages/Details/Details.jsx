@@ -12,11 +12,12 @@ import ActionsControllers from "../Home/components/Post/ActionsControllers/Actio
 import InteractionsDetails from "../Home/components/Post/InteractionsDetails/InteractionsDetails";
 import CommentForm from "../Home/components/Post/CommentForm/CommentForm";
 import PostDetails from "../Home/components/Post/PostDetails/PostDetails";
+import CommentSection from "./components/CommentSection/CommentSection";
 
 function Details() {
   return (
-    <main className="flex-1 absolute top-0 py-14 lg:pb-0 flex flex-col justify-center items-center w-full h-screen bg-slate-500">
-      <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full">
+    <main className="flex-1 absolute top-0 py-14 lg:pb-0 flex flex-col justify-center items-center w-full h-screen">
+      <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full ">
         <CardHeader className="justify-between px-5 mt-2">
           <div className="flex gap-5">
             <Avatar
@@ -31,27 +32,38 @@ function Details() {
             </div>
           </div>
         </CardHeader>
-        <CardBody className="flex flex-col w-full max-h-full py-0 items-center lg:items-start lg:flex-row">
-          <div className="lg:w-1/2 lg:flex lg:justify-center lg:items-center">
+        <CardBody className="flex flex-col w-full max-h-full py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row ">
+          <div className="lg:w-1/2 lg:flex lg:h-full lg:items-center lg:justify-center">
             <Image
-              alt="Card background"
-              className="object-cover rounded-xl"
+              alt="Card background "
+              className="object-cover rounded-xl w-full"
               src="https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
-              width={480}
-              height={360}
             />
            
           </div>
-          <div className="lg:w-1/2 flex flex-col gap-3 ">
+          <div className="lg:w-1/2 flex flex-col h-full lg:overflow-auto gap-3 lg:px-2">
           <ActionsControllers />
             <PostDetails  />
             <InteractionsDetails />
             <CommentForm />
             <CommentCard />
+            
+            <CommentCard />
+            
+            <CommentCard />
+            
             <CommentCard />
             <CommentCard />
+            
+            <CommentCard />
+            
             <CommentCard />
             <CommentCard />
+            
+            <CommentCard />
+            
+            <CommentCard />
+            
           </div>
         </CardBody>
       </Card>

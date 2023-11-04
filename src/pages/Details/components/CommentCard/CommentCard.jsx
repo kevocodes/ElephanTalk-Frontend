@@ -3,9 +3,11 @@ import {Card, CardHeader, CardBody, CardFooter, Divider, Link, Image, Avatar} fr
 
 export default function App() {
   return (
-    <Card className="w-full">
+    <div className="flex items-center justify-between w-full">
+        <Card className="w-fullmin-h-fit ">
       <CardHeader className="flex gap-3">
         <Avatar
+        className="rounded-full"
           alt="nextui logo"
           height={40}
           radius="sm"
@@ -14,10 +16,12 @@ export default function App() {
         />
         <div className="flex flex-col min-h-fit w-10/12">
           <p className="text-md">Usuario</p>
-          <p className="text-small text-default-500">Blah blah  blah blah blah lah blah blalah blah blalah blah blablah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blahblah blah blah blah blah blah</p>
+          <p className="text-small text-default-500">Blah blah  blah blah blah lah blah blalah blah blablah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blahblah blah blah blah blah blah</p>
         </div>
       </CardHeader>
       
     </Card>
+    </div>
+    
   );
 }
