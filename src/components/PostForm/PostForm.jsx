@@ -5,11 +5,11 @@ import {
   CardHeader,
   CardBody,
   Divider,
-  Image,
   Input,
   Textarea,
   Button,
 } from "@nextui-org/react";
+import ImagePreview from "./ImagePreview";
 
 function PostForm({
   title = "Create New Post",
@@ -64,7 +64,7 @@ function PostForm({
   }
 
   return (
-    <Card className="mx-auto mt-8 max-w-[80%] md:max-w-xl lg:max-w-2xl font-monserrat">
+    <Card className="mx-auto my-8 max-w-[80%] md:max-w-xl lg:max-w-2xl font-monserrat">
       <CardHeader className="font-bold text-2xl p-4">{title}</CardHeader>
       <Divider />
       <CardBody>
@@ -96,6 +96,7 @@ function PostForm({
               !isImageValid ? "Please enter a valid image URL." : ""
             }
           />
+          <ImagePreview />
           <Button className="font-extrabold" type="submit" color="primary">
             Submit
           </Button>

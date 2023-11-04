@@ -1,6 +1,19 @@
-function ImagePreview() {
+import { Image } from "@nextui-org/react"
+import noPreview from "../../assets/no-preview.png"
+
+function ImagePreview({ image }) {
   return (
-    <div>ImagePreview</div>
+    <div className="flex flex-col gap-2 py-4">
+      <h1 className="text-xl text-left w-full font-bold">Preview:</h1>
+      <div className="flex justify-center w-full">
+        <Image
+          className="rounded-md shadow-lg max-h-48"
+          src={image || noPreview}
+          alt="Image preview"
+          objectFit="cover"
+        />
+      </div>
+    </div>
   )
 }
 
