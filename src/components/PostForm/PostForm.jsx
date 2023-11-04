@@ -4,11 +4,11 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
   Divider,
   Image,
   Input,
   Textarea,
+  Button,
 } from "@nextui-org/react";
 
 function PostForm({
@@ -64,8 +64,8 @@ function PostForm({
   }
 
   return (
-    <Card className="mx-auto mt-4 max-w-[80%]">
-      <CardHeader className="font-oswald text-3xl p-4">{title}</CardHeader>
+    <Card className="mx-auto mt-8 max-w-[80%] md:max-w-xl lg:max-w-2xl font-monserrat">
+      <CardHeader className="font-bold text-2xl p-4">{title}</CardHeader>
       <Divider />
       <CardBody>
         <form className="flex flex-col gap-2">
@@ -96,6 +96,9 @@ function PostForm({
               !isImageValid ? "Please enter a valid image URL." : ""
             }
           />
+          <Button className="font-extrabold" type="submit" color="primary">
+            Submit
+          </Button>
         </form>
       </CardBody>
     </Card>
