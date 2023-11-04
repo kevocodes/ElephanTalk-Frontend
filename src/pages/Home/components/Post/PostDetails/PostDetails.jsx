@@ -1,4 +1,4 @@
-function PostDetails({ description }) {
+function PostDetails({ description="Descripcion default para pruebas" }) {
   return (
     <div>
       {description && (
