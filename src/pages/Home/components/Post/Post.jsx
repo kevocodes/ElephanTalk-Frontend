@@ -6,17 +6,20 @@ import {
   CardHeader,
   Image,
 } from "@nextui-org/react";
-import OptionsDropdown from "./OptionsDropdown/OptionsDropdown";
-import PostDetails from "./PostDetails/PostDetails";
-import ActionsControllers from "./ActionsControllers/ActionsControllers";
-import InteractionsDetails from "./InteractionsDetails/InteractionsDetails";
-import CommentForm from "./CommentForm/CommentForm";
 import { useState } from "react";
-import { useAuth } from "../../../../utils/tempUser";
 import { useLocation, useNavigate } from "react-router-dom";
 import { deletePost, hidePost } from "../../../../services/posts.service";
+import { useAuth } from "../../../../utils/tempUser";
+import ActionsControllers from "./ActionsControllers/ActionsControllers";
+import CommentForm from "./CommentForm/CommentForm";
+import InteractionsDetails from "./InteractionsDetails/InteractionsDetails";
+import OptionsDropdown from "./OptionsDropdown/OptionsDropdown";
+import PostDetails from "./PostDetails/PostDetails";
 
-function Post({ info, setPosts }) {
+function Post(props) {
+  const { info, setPosts, onLike, onFavorite } = props;
+  console.log(props);
+
   const {
     description,
     image,
@@ -36,6 +39,14 @@ function Post({ info, setPosts }) {
   const [postLikes, setLikes] = useState(likes);
   const [postComments, setPostsComments] = useState(comments);
   const [isActive, setIsActive] = useState(active);
+
+  const handleLike = async ({ setLiked, liked }) => {
+    await onLike({ setLiked, liked, setLikes, postId });
+  };
+
+  const handleFavorite = async ({ setFavorited }) => {
+    await onFavorite({ setFavorited, postId });
+  };
 
   const handleEdit = () => {
     navigate(`/edit/${postId}`);
@@ -113,8 +124,9 @@ function Post({ info, setPosts }) {
           postId={postId}
           isLiked={isLiked}
           isFavorite={isFavorite}
-          setLikes={setLikes}
           isActive={isActive}
+          onLike={handleLike}
+          onFavorite={handleFavorite}
         />
 
         <InteractionsDetails

@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
-import { getPosts, toggleFavoritePost, toggleLikePost } from "../../services/posts.service";
 import { useAuth } from "../../utils/tempUser";
-import Post from "./components/Post/Post";
+import {
+  getPosts,
+  toggleFavoritePost,
+  toggleLikePost,
+} from "../../services/posts.service";
+import Post from "../Home/components/Post/Post";
 
-function Home() {
+function Favorites() {
   const [posts, setPosts] = useState([]);
 
   const { token, user } = useAuth();
@@ -11,7 +15,7 @@ function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data } = await getPosts({ token });
+        const { data } = await getPosts({ token, endpoint: "favorites" });
         setPosts(data);
         console.log(data);
       } catch (error) {
@@ -55,6 +59,11 @@ function Home() {
       // Update the UI first for better UX
       setFavorited((v) => !v);
 
+      // [OWN COMPONENT LOGIC] Update the favorites posts
+      setPosts((prevPosts) => {
+        return prevPosts.filter((post) => post._id !== postId);
+      });
+      
       // Send the request to the server
       await toggleFavoritePost({ token, postId });
     } catch (error) {
@@ -79,4 +88,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Favorites;
