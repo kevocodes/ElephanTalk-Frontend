@@ -8,6 +8,7 @@ import {
   Divider,
   Image,
   Input,
+  Textarea,
 } from "@nextui-org/react";
 
 function PostForm({
@@ -29,6 +30,7 @@ function PostForm({
 
   const handleChange = (event) => {
     const { name, value } = event.target;
+    console.log(name);
     setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
   };
 
@@ -55,26 +57,36 @@ function PostForm({
 
   return (
     <Card className="mx-auto mt-4 max-w-[80%]">
-      <CardHeader className="font-oswald text-3xl">{title}</CardHeader>
+      <CardHeader className="font-oswald text-3xl p-4">{title}</CardHeader>
       <Divider />
-      <CardBody className="flex gap-4">
-        <Input
-          name="description"
-          value={formValues.description}
-          label="Description"
-          isRequired={true}
-          onChange={handleChange}
-        />
-        <Input
-          bordered
-          name="image"
-          value={formValues.image}
-          label="Image URL"
-          placeholder="Enter the image URL for your post."
-          isRequired={true}
-          onChange={handleChange}
-          errorMessage={!isValidUrl ? "Please enter a valid image URL." : ""}
-        />
+      <CardBody>
+        <form className="flex flex-col gap-2">
+          <Textarea
+            name="description"
+            value={formValues.description}
+            label="Description"
+            errorMessage={
+              !isValidUrl
+                ? "Please enter a description of at least 8 characters."
+                : ""
+            }
+            variant="bordered"
+            isRequired={true}
+            isInvalid={!isDescriptionValid}
+            onChange={handleChange}
+          />
+          <Input
+            variant="bordered"
+            name="image"
+            value={formValues.image}
+            label="Image URL"
+            placeholder="Enter the image URL for your post."
+            isRequired={true}
+            onChange={handleChange}
+            isInvalid={!isValidUrl}
+            errorMessage={!isValidUrl ? "Please enter a valid image URL." : ""}
+          />
+        </form>
       </CardBody>
     </Card>
   );
