@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { getPosts, toggleFavoritePost, toggleLikePost } from "../../services/posts.service";
 import { useAuth } from "../../utils/tempUser";
-import Post from "./components/Post/Post";
+import Post from "../Home/components/Post/Post";
 
-function Home() {
+function Own() {
   const [posts, setPosts] = useState([]);
 
   const { token, user } = useAuth();
@@ -11,7 +11,7 @@ function Home() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const { data } = await getPosts({ token });
+        const { data } = await getPosts({ token, endpoint: "owned" });
         setPosts(data);
         console.log(data);
       } catch (error) {
@@ -79,4 +79,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Own;
