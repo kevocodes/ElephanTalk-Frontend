@@ -41,11 +41,12 @@ function Details() {
             />
            
           </div>
-          <div className="lg:w-1/2 flex flex-col h-full lg:overflow-auto gap-3 lg:px-2">
+          <div className="lg:w-1/2 flex flex-col h-full lg:overflow-hidden lg:mt-0 mt-2 gap-3 lg:px-2">
           <ActionsControllers />
             <PostDetails  />
             <InteractionsDetails />
             <CommentForm />
+            <div className="flex flex-col h-full lg:overflow-auto gap-3 lg:px-2">
             <CommentCard />
             
             <CommentCard />
@@ -63,6 +64,8 @@ function Details() {
             <CommentCard />
             
             <CommentCard />
+            </div>
+            
             
           </div>
         </CardBody>
