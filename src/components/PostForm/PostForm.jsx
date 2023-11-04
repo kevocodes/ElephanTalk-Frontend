@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: "warn"*/
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardHeader,
@@ -25,8 +25,16 @@ function PostForm({
     };
   });
 
-  const [isValidUrl, setIsValidUrl] = useState(true);
+  const [isImageValid, setIsImageValid] = useState(true);
   const [isDescriptionValid, setIsDescriptionValid] = useState(true);
+
+  // This effect is needed to tell the image preview
+  // if it can be displayed or not
+  useEffect(() => {
+    if (formValues.image != "") {
+      validateImage(formValues.image);
+    }
+  }, [formValues.image]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -38,7 +46,7 @@ function PostForm({
     const pattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
     // This checks if the url is valid and stores the result
     const result = pattern.test(url);
-    setIsValidUrl(result);
+    setIsImageValid(result);
     return result;
   }
 
@@ -48,11 +56,11 @@ function PostForm({
     return result;
   }
 
+  // This function is called when the form is submitted
+  // it checks if the form is valid
+  // it does not need to execute validateImage again because the effect makes it right away it changes
   function isFormValid() {
-    return (
-      validateImage(formValues.image) &&
-      validateDescription(formValues.description)
-    );
+    return isImageValid && validateDescription(formValues.description);
   }
 
   return (
@@ -83,8 +91,10 @@ function PostForm({
             placeholder="Enter the image URL for your post."
             isRequired={true}
             onChange={handleChange}
-            isInvalid={!isValidUrl}
-            errorMessage={!isValidUrl ? "Please enter a valid image URL." : ""}
+            isInvalid={!isImageValid}
+            errorMessage={
+              !isImageValid ? "Please enter a valid image URL." : ""
+            }
           />
         </form>
       </CardBody>
