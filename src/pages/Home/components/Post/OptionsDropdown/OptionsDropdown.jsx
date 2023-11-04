@@ -32,8 +32,7 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
 
   const handleHide = async () => onHide(setLoading, onCloseHide);
 
-  return (
-    <>
+  return (``   <>
       <Dropdown>
         <DropdownTrigger>
           <Icon
@@ -76,7 +75,9 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
         title={`${isActive ? "Hide" : "Unhide"} post?`}
         description={`It will be temporarily ${
           isActive ? "hidden" : "unhidden"
-        } from the feed, but you can ${!isActive ? "hide" : "unhide"} it later.`}
+        } from the feed, but you can ${
+          !isActive ? "hide" : "unhide"
+        } it later.`}
         loading={loading}
       />
     </>

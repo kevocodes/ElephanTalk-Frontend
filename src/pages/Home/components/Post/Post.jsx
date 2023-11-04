@@ -36,7 +36,7 @@ function Post({ info, setPosts }) {
   const [postLikes, setLikes] = useState(likes);
   const [postComments, setPostsComments] = useState(comments);
   const [isActive, setIsActive] = useState(active);
-  
+
   const handleEdit = () => {
     navigate(`/edit/${postId}`);
   };
@@ -60,14 +60,14 @@ function Post({ info, setPosts }) {
       setLoading(true);
       await hidePost({ token, postId });
       setIsActive((v) => !v);
-      
+
       // If the user is not in the own page, remove the post from the feed
       if (location.pathname !== "/own") {
         setPosts((prevPosts) =>
-        prevPosts.filter((post) => post._id !== postId)
+          prevPosts.filter((post) => post._id !== postId)
         );
-      }   
-      
+      }
+
       setLoading(false);
       onClose();
     } catch (error) {
@@ -91,13 +91,13 @@ function Post({ info, setPosts }) {
         </div>
 
         {currentUser._id === user._id && (
-            <OptionsDropdown
-              isActive={isActive}
-              setIsActive={setIsActive}
-              onEdit={handleEdit}
-              onDelete={handleDelete}
-              onHide={handleHide}
-            />
+          <OptionsDropdown
+            isActive={isActive}
+            setIsActive={setIsActive}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onHide={handleHide}
+          />
         )}
       </CardHeader>
       <CardBody className="py-2 gap-3">
