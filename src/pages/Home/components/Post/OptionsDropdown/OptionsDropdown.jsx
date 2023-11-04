@@ -32,7 +32,8 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
 
   const handleHide = async () => onHide(setLoading, onCloseHide);
 
-  return (``   <>
+  return (
+    <>
       <Dropdown>
         <DropdownTrigger>
           <Icon
