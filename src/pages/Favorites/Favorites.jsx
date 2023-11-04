@@ -29,7 +29,7 @@ function Favorites() {
   const handleLike = async ({ setLiked, liked, setLikes, postId }) => {
     try {
       // Update the UI first for better UX
-      setLiked((v) => !v);
+      setLiked(false);
 
       setLikes((prevLikes) => {
         if (!liked) return [...prevLikes, user];
@@ -41,7 +41,7 @@ function Favorites() {
       await toggleLikePost({ token, postId });
     } catch (error) {
       // If the request fails, set the UI to the previous state
-      setLiked((v) => !v); // toggle the like state
+      setLiked(true); // toggle the like state
 
       setLikes((prevLikes) => {
         // Undo the like
@@ -55,6 +55,8 @@ function Favorites() {
   };
 
   const handleFavorite = async ({ setFavorited, postId }) => {
+    const currentPost = posts.find((post) => post._id === postId);
+
     try {
       // Update the UI first for better UX
       setFavorited((v) => !v);
@@ -63,12 +65,18 @@ function Favorites() {
       setPosts((prevPosts) => {
         return prevPosts.filter((post) => post._id !== postId);
       });
-      
+
       // Send the request to the server
       await toggleFavoritePost({ token, postId });
     } catch (error) {
       // If the request fails, set the state to the previous value
       setFavorited((v) => !v);
+
+      // [OWN COMPONENT LOGIC] Undo the favorites posts
+      setPosts((prevPosts) => {
+        return [...prevPosts, currentPost];
+      });
+
       console.log(error);
     }
   };

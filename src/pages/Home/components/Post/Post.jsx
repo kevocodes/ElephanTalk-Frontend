@@ -18,7 +18,6 @@ import PostDetails from "./PostDetails/PostDetails";
 
 function Post(props) {
   const { info, setPosts, onLike, onFavorite } = props;
-  console.log(props);
 
   const {
     description,
