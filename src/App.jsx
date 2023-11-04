@@ -6,6 +6,7 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Favorites from "./pages/Favorites/Favorites";
 import Own from "./pages/Own/Own";
+import Details from "./pages/Details/Details";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/favorites" element={<Favorites />} />
             <Route path="/own" element={<Own />} />
-            <Route path="/post/:id" element={<h1>Post</h1>} />
+            <Route path="/post/:id" element={<Details />} />
             <Route path="/edit/:id" element={<h1>Edit post</h1>} />
             <Route path="/create" element={<h1>Create post</h1>} />
             <Route path="*" element={<h1>404</h1>} />
