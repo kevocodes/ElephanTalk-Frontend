@@ -6,17 +6,10 @@ import {
   DropdownTrigger,
   useDisclosure,
 } from "@nextui-org/react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { deletePost, hidePost } from "../../../../../services/posts.service";
-import { useAuth } from "../../../../../utils/tempUser";
 import ConfirmationModal from "../../../../../components/ConfirmationModal/ConfirmationModal";
 import { useState } from "react";
 
-function OptionsDropdown({ isActive, setIsActive, postId, setPosts }) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const { token } = useAuth();
-
+function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
   const {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
@@ -33,45 +26,11 @@ function OptionsDropdown({ isActive, setIsActive, postId, setPosts }) {
 
   const [loading, setLoading] = useState(false);
 
-  const handleEdit = () => {
-    navigate(`/edit/${postId}`);
-  };
+  const handleEdit = () => onEdit();
 
-  const handleDelete = async () => {
-    try {
-      setLoading(true);
-      await deletePost({ token, postId });
-      setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
-      setLoading(false);
-      onCloseDelete();
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      onCloseDelete();
-    }
-  };
+  const handleDelete = async () => onDelete(setLoading, onCloseDelete);
 
-  const handleHide = async () => {
-    try {
-      setLoading(true);
-      await hidePost({ token, postId });
-      setIsActive((v) => !v);
-      
-      // If the user is not in the own page, remove the post from the feed
-      if (location.pathname !== "/own") {
-        setPosts((prevPosts) =>
-        prevPosts.filter((post) => post._id !== postId)
-        );
-      }   
-      
-      setLoading(false);
-      onCloseHide();
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      onCloseHide();
-    }
-  };
+  const handleHide = async () => onHide(setLoading, onCloseHide);
 
   return (
     <>
