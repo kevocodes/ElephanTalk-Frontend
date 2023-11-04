@@ -9,6 +9,7 @@ import EmailInput from './components/inputs/EmailInput'
 import PasswordInput from './components/inputs/PasswordInput'
 import LoginButton from './components/butttons/LoginButton'
 import logo from "../../assets/logo.webp"
+import { Link } from 'react-router-dom'
 
 
 export default function Login() {
@@ -46,9 +47,9 @@ export default function Login() {
             <div className='flex flex-col w-full pl-2 pr-2'>
               <h1 className='text-sm pb-2 sm:mt-4'>
                 Need to create an account?{' '}
-                <a href="" className='text-foreground hover:text-primary-500'>
+                <Link to="/register" className='text-foreground hover:text-primary-500'>
                   Sign up
-                </a>
+                </Link>
               </h1>
               <LoginButton/>
             </div>
