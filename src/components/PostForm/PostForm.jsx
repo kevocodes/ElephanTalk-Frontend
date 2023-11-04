@@ -66,7 +66,7 @@ function PostForm({
             value={formValues.description}
             label="Description"
             errorMessage={
-              !isValidUrl
+              !isDescriptionValid
                 ? "Please enter a description of at least 8 characters."
                 : ""
             }
