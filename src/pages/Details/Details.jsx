@@ -6,7 +6,7 @@ import {
   CardFooter,
   Image,
 } from "@nextui-org/react";
-import React from "react";
+import {useRef} from "react";
 import CommentCard from "./components/CommentCard/CommentCard";
 import ActionsControllers from "../Home/components/Post/ActionsControllers/ActionsControllers";
 import InteractionsDetails from "../Home/components/Post/InteractionsDetails/InteractionsDetails";
@@ -15,6 +15,12 @@ import PostDetails from "../Home/components/Post/PostDetails/PostDetails";
 import CommentSection from "./components/CommentSection/CommentSection";
 
 function Details() {
+  const inputRef = useRef(null);
+
+  const handleComment = () => {
+    inputRef.current.focus();
+ }
+
   return (
     <main className="flex-1 absolute top-0 py-14 lg:pb-0 flex flex-col justify-center items-center w-full h-screen">
       <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full ">
@@ -42,12 +48,12 @@ function Details() {
            
           </div>
           <div className="lg:w-1/2 flex flex-col h-full lg:overflow-hidden lg:mt-0 mt-2 gap-3 lg:px-2 lg:pb-2">
-          <ActionsControllers />
+          <ActionsControllers  onComment={handleComment}/>
             <PostDetails  />
             <InteractionsDetails />
             <div className="w-full lg:order-5">
               
-            <CommentForm />
+            <CommentForm inputRef={inputRef}/>
             </div>
             <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg">
 
