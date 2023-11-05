@@ -134,7 +134,7 @@ function Post({ info, setPosts, onLike, onFavorite }) {
         <InteractionsDetails
           likes={postLikes}
           comments={postComments.length}
-          postId={postId}
+          onComment={handleComment}
         />
 
         <PostDetails description={description} />

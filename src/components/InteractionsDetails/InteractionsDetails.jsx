@@ -1,14 +1,16 @@
-import { Link } from "react-router-dom";
 import LikesDetails from "./LikesDetails/LikesDetails";
 
-function InteractionsDetails({ likes = [], comments = 0, postId }) {
+function InteractionsDetails({ likes = [], comments = 0, onComment }) {
   return (
     <div className="flex items-center justify-between w-full">
       <LikesDetails likes={likes} />
 
-      <Link to={`/post/${postId}`} className="text-small font-semibold">
-        <p className="text-small font-semibold ml-2">{comments} comments</p>
-      </Link>
+      <p
+        className="text-small hover:cursor-pointer font-semibold"
+        onClick={onComment}
+      >
+        {comments} comments
+      </p>
     </div>
   );
 }
