@@ -8,13 +8,13 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { deletePost, hidePost } from "../../../../services/posts.service";
-import { useAuth } from "../../../../utils/tempUser";
-import ActionsControllers from "./ActionsControllers/ActionsControllers";
-import CommentForm from "./CommentForm/CommentForm";
-import InteractionsDetails from "./InteractionsDetails/InteractionsDetails";
-import OptionsDropdown from "./OptionsDropdown/OptionsDropdown";
-import PostDetails from "./PostDetails/PostDetails";
+import { deletePost, hidePost } from "../../services/posts.service";
+import { useAuth } from "../../utils/tempUser";
+import ActionsControllers from "../ActionsControllers/ActionsControllers";
+import CommentForm from "../CommentForm/CommentForm";
+import InteractionsDetails from "../InteractionsDetails/InteractionsDetails";
+import OptionsDropdown from "../OptionsDropdown/OptionsDropdown";
+import PostDetails from "../PostDetails/PostDetails";
 
 function Post({ info, setPosts, onLike, onFavorite }) {
   const navigate = useNavigate();

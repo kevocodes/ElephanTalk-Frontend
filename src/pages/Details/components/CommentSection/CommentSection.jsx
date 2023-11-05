@@ -1,9 +1,9 @@
 import React from "react";
 import CommentCard from "../CommentCard/CommentCard";
-import ActionsControllers from "../../../Home/components/Post/ActionsControllers/ActionsControllers";
-import InteractionsDetails from "../../../Home/components/Post/InteractionsDetails/InteractionsDetails";
-import CommentForm from "../../../Home/components/Post/CommentForm/CommentForm";
-import PostDetails from "../../../Home/components/Post/PostDetails/PostDetails";
+import ActionsControllers from "../../../../components/ActionsControllers/ActionsControllers";
+import InteractionsDetails from "../../../../components/InteractionsDetails/InteractionsDetails";
+import CommentForm from "../../../../components/CommentForm/CommentForm";
+import PostDetails from "../../../../components/PostDetails/PostDetails";
 
 function CommentSection() {
   return (

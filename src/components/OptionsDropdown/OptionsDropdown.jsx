@@ -6,7 +6,7 @@ import {
   DropdownTrigger,
   useDisclosure,
 } from "@nextui-org/react";
-import ConfirmationModal from "../../../../../components/ConfirmationModal/ConfirmationModal";
+import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import { useState } from "react";
 
 function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
