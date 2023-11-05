@@ -6,7 +6,6 @@ import {
 } from "../../services/posts.service";
 import { useAuth } from "../../utils/tempUser";
 import Post from "../../components/Post/Post";
-import PostSkeleton from "../../components/PostLoader/PostSkeleton/PostSkeleton";
 import PostLoader from "../../components/PostLoader/PostLoader";
 
 function Home() {
