@@ -6,8 +6,10 @@ import {
 } from "../../services/posts.service";
 import { useAuth } from "../../utils/tempUser";
 import Post from "../../components/Post/Post";
+import PostLoader from "../../components/PostLoader/PostLoader";
 
 function Favorites() {
+  const [loading, setLoading] = useState(false);
   const [posts, setPosts] = useState([]);
 
   const { token, user } = useAuth();
@@ -15,10 +17,13 @@ function Favorites() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
+        setLoading(true);
         const { data } = await getPosts({ token, endpoint: "favorites" });
         setPosts(data);
+        setLoading(false);
         console.log(data);
       } catch (error) {
+        setLoading(false);
         console.log(error);
       }
     };
@@ -82,16 +87,19 @@ function Favorites() {
   };
 
   return (
-    <main className="flex flex-col gap-4 items-center py-4">
-      {posts.map((post) => (
-        <Post
-          key={post._id}
-          info={post}
-          setPosts={setPosts}
-          onLike={handleLike}
-          onFavorite={handleFavorite}
-        />
-      ))}
+    <main className="flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
+      {loading && <PostLoader quantity={3} />}
+
+      {!loading &&
+        posts.map((post) => (
+          <Post
+            key={post._id}
+            info={post}
+            setPosts={setPosts}
+            onLike={handleLike}
+            onFavorite={handleFavorite}
+          />
+        ))}
     </main>
   );
 }
