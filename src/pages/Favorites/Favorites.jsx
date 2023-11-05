@@ -82,7 +82,7 @@ function Favorites() {
   };
 
   return (
-    <main className="flex flex-col gap-4 items-center py-4">
+    <main className="flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
       {posts.map((post) => (
         <Post
           key={post._id}
