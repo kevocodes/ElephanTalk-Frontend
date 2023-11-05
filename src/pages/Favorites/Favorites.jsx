@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "../../utils/tempUser";
 import {
   getPosts,
   toggleFavoritePost,
   toggleLikePost,
 } from "../../services/posts.service";
+import { useAuth } from "../../utils/tempUser";
 import Post from "../Home/components/Post/Post";
 
 function Favorites() {

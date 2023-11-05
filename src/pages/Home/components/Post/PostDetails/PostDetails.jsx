@@ -1,10 +1,6 @@
-function PostDetails({ description="Descripcion default para pruebas" }) {
+function PostDetails({ description }) {
   return (
-    <div>
-      {description && (
-        <p className="text-small">{description}</p>
-      )}
-    </div>
+    <div>{description && <p className="text-small">{description}</p>}</div>
   );
 }
 

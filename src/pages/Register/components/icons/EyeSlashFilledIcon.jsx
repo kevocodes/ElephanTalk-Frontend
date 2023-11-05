@@ -30,4 +30,4 @@ export const EyeSlashFilledIcon = (props) => (
       fill="currentColor"
     />
   </svg>
-)
+);

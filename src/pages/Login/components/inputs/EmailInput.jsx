@@ -1,4 +1,4 @@
-import { Input } from '@nextui-org/react'
+import { Input } from "@nextui-org/react";
 
 export default function EmailInput({ onChange, value }) {
   return (
@@ -8,10 +8,10 @@ export default function EmailInput({ onChange, value }) {
       label="Username or Email"
       variant="bordered"
       color="primary-50"
-      onClear={() => console.log('input cleared')}
+      onClear={() => console.log("input cleared")}
       className="w-full  pt-4 pb-2"
       onChange={onChange}
       value={value}
     />
-  )
+  );
 }

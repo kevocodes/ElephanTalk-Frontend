@@ -16,11 +16,10 @@ import InteractionsDetails from "./InteractionsDetails/InteractionsDetails";
 import OptionsDropdown from "./OptionsDropdown/OptionsDropdown";
 import PostDetails from "./PostDetails/PostDetails";
 
-
-function Post(props) {
-
+function Post({ info, setPosts, onLike, onFavorite }) {
   const navigate = useNavigate();
-  const { info, setPosts, onLike, onFavorite } = props;
+  const location = useLocation();
+  const { user: currentUser, token } = useAuth();
 
   const {
     description,
@@ -33,9 +32,6 @@ function Post(props) {
     isFavorite,
     active,
   } = info;
-  const location = useLocation();
-
-  const { user: currentUser, token } = useAuth();
 
   const [postLikes, setLikes] = useState(likes);
   const [postComments, setPostsComments] = useState(comments);
@@ -43,6 +39,10 @@ function Post(props) {
 
   const handleLike = async ({ setLiked, liked }) => {
     await onLike({ setLiked, liked, setLikes, postId });
+  };
+
+  const handleComment = () => {
+    navigate(`/post/${postId}`);
   };
 
   const handleFavorite = async ({ setFavorited }) => {
@@ -88,10 +88,6 @@ function Post(props) {
       onClose();
     }
   };
-
- const handleComment = () => {
-    navigate(`/post/${postId}`);
- }
 
   return (
     <Card className="max-w-[468px]">

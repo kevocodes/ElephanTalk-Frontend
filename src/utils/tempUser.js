@@ -4,7 +4,7 @@ export const useAuth = () => {
     user: {
       _id: "6544274e9fabd592957bbadc",
       username: "kevocodes",
-      picture: "https://i.pravatar.cc/150?u=kevocodes"
-    }
-  }
-}
+      picture: "https://i.pravatar.cc/150?u=kevocodes",
+    },
+  };
+};

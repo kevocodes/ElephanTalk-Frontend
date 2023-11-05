@@ -44,7 +44,7 @@ export const toggleFavoritePost = async ({ token, postId }) => {
   if (!response.ok) {
     throw new Error("Error adding post to favorites");
   }
-  
+
   return true;
 };
 
@@ -95,4 +95,4 @@ export const hidePost = async ({ token, postId }) => {
   }
 
   return true;
-}
+};
