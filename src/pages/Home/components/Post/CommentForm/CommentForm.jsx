@@ -4,7 +4,7 @@ import { useState } from "react";
 import { commentPost } from "../../../../../services/posts.service";
 import { useAuth } from "../../../../../utils/tempUser";
 
-function CommentForm({ setPostsComments, postId }) {
+function CommentForm({ setPostsComments, postId, inputRef= null }) {
   const { token } = useAuth();
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,6 +26,7 @@ function CommentForm({ setPostsComments, postId }) {
   return (
     <form className="w-full" onSubmit={handleSend}>
       <Input
+        ref={inputRef}
         value={value}
         onValueChange={setValue}
         name="comment"

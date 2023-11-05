@@ -16,7 +16,10 @@ import InteractionsDetails from "./InteractionsDetails/InteractionsDetails";
 import OptionsDropdown from "./OptionsDropdown/OptionsDropdown";
 import PostDetails from "./PostDetails/PostDetails";
 
+
 function Post(props) {
+
+  const navigate = useNavigate();
   const { info, setPosts, onLike, onFavorite } = props;
 
   const {
@@ -31,7 +34,6 @@ function Post(props) {
     active,
   } = info;
   const location = useLocation();
-  const navigate = useNavigate();
 
   const { user: currentUser, token } = useAuth();
 
@@ -87,6 +89,10 @@ function Post(props) {
     }
   };
 
+ const handleComment = () => {
+    navigate(`/post/${postId}`);
+ }
+
   return (
     <Card className="max-w-[468px]">
       <CardHeader className="justify-between px-5">
@@ -126,6 +132,7 @@ function Post(props) {
           isActive={isActive}
           onLike={handleLike}
           onFavorite={handleFavorite}
+          onComment={handleComment}
         />
 
         <InteractionsDetails
