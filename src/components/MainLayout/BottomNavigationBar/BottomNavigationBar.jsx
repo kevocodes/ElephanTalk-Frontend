@@ -16,7 +16,7 @@ function BottomNavigationBar() {
       height="3.5rem"
       classNames={bottomNavBarClassNames}
     >
-      <LinksSection classNames="md:hidden flex"/>
+      <LinksSection classNames="md:hidden flex" />
     </Navbar>
   );
 }

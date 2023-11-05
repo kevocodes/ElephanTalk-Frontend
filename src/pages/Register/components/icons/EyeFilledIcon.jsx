@@ -18,4 +18,4 @@ export const EyeFilledIcon = (props) => (
       fill="currentColor"
     />
   </svg>
-)
+);

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPosts, toggleFavoritePost, toggleLikePost } from "../../services/posts.service";
 import { useAuth } from "../../utils/tempUser";
-import Post from "./components/Post/Post";
+import Post from "../../components/Post/Post";
 
 function Home() {
   const [posts, setPosts] = useState([]);

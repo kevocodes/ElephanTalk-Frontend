@@ -6,12 +6,12 @@ import {
   CardFooter,
   Image,
 } from "@nextui-org/react";
-import {useRef} from "react";
+import { useRef } from "react";
 import CommentCard from "./components/CommentCard/CommentCard";
-import ActionsControllers from "../Home/components/Post/ActionsControllers/ActionsControllers";
-import InteractionsDetails from "../Home/components/Post/InteractionsDetails/InteractionsDetails";
-import CommentForm from "../Home/components/Post/CommentForm/CommentForm";
-import PostDetails from "../Home/components/Post/PostDetails/PostDetails";
+import ActionsControllers from "../../components/ActionsControllers/ActionsControllers";
+import InteractionsDetails from "../../components/InteractionsDetails/InteractionsDetails";
+import CommentForm from "../../components/CommentForm/CommentForm";
+import PostDetails from "../../components/PostDetails/PostDetails";
 import CommentSection from "./components/CommentSection/CommentSection";
 
 function Details() {
@@ -19,7 +19,7 @@ function Details() {
 
   const handleComment = () => {
     inputRef.current.focus();
- }
+  };
 
   return (
     <main className="flex-1 absolute top-0 py-14 lg:pb-0 flex flex-col justify-center items-center w-full h-screen">
@@ -45,38 +45,33 @@ function Details() {
               className="object-cover rounded-xl w-full"
               src="https://nextui-docs-v2.vercel.app/images/hero-card-complete.jpeg"
             />
-           
           </div>
           <div className="lg:w-1/2 flex flex-col h-full lg:overflow-hidden lg:mt-0 mt-2 gap-3 lg:px-2 lg:pb-2">
-          <ActionsControllers  onComment={handleComment}/>
-            <PostDetails  />
-            <InteractionsDetails />
+            <ActionsControllers onComment={handleComment} />
+            <PostDetails description="Descripcion default para pruebas" />
+            <InteractionsDetails onComment={handleComment}/>
             <div className="w-full lg:order-5">
-              
-            <CommentForm inputRef={inputRef}/>
+              <CommentForm inputRef={inputRef} />
             </div>
             <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg">
+              <CommentCard />
 
-            <CommentCard />
-            
-            <CommentCard />
-            
-            <CommentCard />
-            
-            <CommentCard />
-            <CommentCard />
-            
-            <CommentCard />
-            
-            <CommentCard />
-            <CommentCard />
-            
-            <CommentCard />
-            
-            <CommentCard />
+              <CommentCard />
+
+              <CommentCard />
+
+              <CommentCard />
+              <CommentCard />
+
+              <CommentCard />
+
+              <CommentCard />
+              <CommentCard />
+
+              <CommentCard />
+
+              <CommentCard />
             </div>
-            
-            
           </div>
         </CardBody>
       </Card>

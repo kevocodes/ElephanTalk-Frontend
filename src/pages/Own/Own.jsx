@@ -1,7 +1,11 @@
 import { useEffect, useState } from "react";
-import { getPosts, toggleFavoritePost, toggleLikePost } from "../../services/posts.service";
+import {
+  getPosts,
+  toggleFavoritePost,
+  toggleLikePost,
+} from "../../services/posts.service";
 import { useAuth } from "../../utils/tempUser";
-import Post from "../Home/components/Post/Post";
+import Post from "../../components/Post/Post";
 
 function Own() {
   const [posts, setPosts] = useState([]);
