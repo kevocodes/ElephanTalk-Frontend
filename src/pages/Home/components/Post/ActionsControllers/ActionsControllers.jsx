@@ -7,7 +7,7 @@ import ControllerAction from "./ControllerAction/ControllerAction";
 import { useNavigate } from "react-router-dom";
 import { Chip } from "@nextui-org/react";
 
-function ActionsControllers({ postId, isLiked, isFavorite, isActive, onLike, onFavorite }) {
+function ActionsControllers({ isLiked, isFavorite, isActive, onLike, onFavorite, onComment }) {
   const navigate = useNavigate();
 
   const [favorited, setFavorited] = useState(isFavorite);
@@ -21,6 +21,10 @@ function ActionsControllers({ postId, isLiked, isFavorite, isActive, onLike, onF
     await onFavorite({ setFavorited });
   }
 
+  const handleComment = ()  => {
+    onComment();
+  }
+
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-[2px]">
@@ -32,7 +36,7 @@ function ActionsControllers({ postId, isLiked, isFavorite, isActive, onLike, onF
 
         <ControllerAction
           Component={CommentIcon}
-          action={() => navigate(`/post/${postId}`)}
+          action={handleComment}
         />
       </div>
       <div className="flex justify-between items-center gap-1">

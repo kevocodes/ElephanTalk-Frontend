@@ -41,12 +41,16 @@ function Details() {
             />
            
           </div>
-          <div className="lg:w-1/2 flex flex-col h-full lg:overflow-hidden lg:mt-0 mt-2 gap-3 lg:px-2">
+          <div className="lg:w-1/2 flex flex-col h-full lg:overflow-hidden lg:mt-0 mt-2 gap-3 lg:px-2 lg:pb-2">
           <ActionsControllers />
             <PostDetails  />
             <InteractionsDetails />
+            <div className="w-full lg:order-5">
+              
             <CommentForm />
-            <div className="flex flex-col h-full lg:overflow-auto gap-3 lg:px-2">
+            </div>
+            <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg">
+
             <CommentCard />
             
             <CommentCard />
