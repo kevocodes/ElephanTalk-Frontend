@@ -9,6 +9,8 @@ function PostList({
   setPosts,
   onLike,
   onFavorite,
+  onDelete,
+  onHide,
 }) {
   const [ref, inView] = useInView();
 
@@ -30,6 +32,8 @@ function PostList({
               setPosts={setPosts}
               onLike={onLike}
               onFavorite={onFavorite}
+              onDelete={onDelete}
+              onHide={onHide}
             />
           );
         }
@@ -41,6 +45,8 @@ function PostList({
             setPosts={setPosts}
             onLike={onLike}
             onFavorite={onFavorite}
+            onDelete={onDelete}
+            onHide={onHide}
           />
         );
       })}

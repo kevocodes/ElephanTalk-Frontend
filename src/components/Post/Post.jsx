@@ -7,8 +7,7 @@ import {
   Image,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
-import { deletePost, hidePost } from "../../services/posts.service";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../utils/tempUser";
 import ActionsControllers from "../ActionsControllers/ActionsControllers";
 import CommentForm from "../CommentForm/CommentForm";
@@ -16,10 +15,9 @@ import InteractionsDetails from "../InteractionsDetails/InteractionsDetails";
 import OptionsDropdown from "../OptionsDropdown/OptionsDropdown";
 import PostDetails from "../PostDetails/PostDetails";
 
-function Post({ info, setPosts, onLike, onFavorite, measureRef }) {
+function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { user: currentUser, token } = useAuth();
+  const { user: currentUser } = useAuth();
 
   const {
     description,
@@ -50,47 +48,19 @@ function Post({ info, setPosts, onLike, onFavorite, measureRef }) {
   };
 
   const handleEdit = () => {
-    navigate(`/edit/${postId}`);
+    navigate(`/edit/v${postId}`);
   };
 
   const handleDelete = async (setLoading, onClose) => {
-    try {
-      setLoading(true);
-      await deletePost({ token, postId });
-      setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
-      setLoading(false);
-      onClose();
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      onClose();
-    }
+    await onDelete({ setLoading, onClose, postId });
   };
 
   const handleHide = async (setLoading, onClose) => {
-    try {
-      setLoading(true);
-      await hidePost({ token, postId });
-      setIsActive((v) => !v);
-
-      // If the user is not in the own page, remove the post from the feed
-      if (location.pathname !== "/own") {
-        setPosts((prevPosts) =>
-          prevPosts.filter((post) => post._id !== postId)
-        );
-      }
-
-      setLoading(false);
-      onClose();
-    } catch (error) {
-      console.log(error);
-      setLoading(false);
-      onClose();
-    }
+    await onHide({ setLoading, onClose, postId, setIsActive });
   };
 
   return (
-    <Card className="max-w-[468px]"  ref={measureRef}>
+    <Card className="max-w-[468px]" ref={measureRef}>
       <CardHeader className="justify-between px-5">
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="md" src={user.picture} />

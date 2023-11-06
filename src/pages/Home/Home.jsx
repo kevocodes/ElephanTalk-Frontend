@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import {
+  deletePost,
   getPosts,
+  hidePost,
   toggleFavoritePost,
   toggleLikePost,
 } from "../../services/posts.service";
@@ -12,7 +14,7 @@ function Home() {
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { token, user } = useAuth();
 
@@ -22,7 +24,7 @@ function Home() {
 
     const fetchPosts = async () => {
       try {
-        setLoading(true);
+        setIsLoading(true);
         const { data } = await getPosts({
           token,
           query: `page=${page}&limit=${import.meta.env.VITE_POSTS_PER_PAGE}`,
@@ -33,10 +35,10 @@ function Home() {
           console.log(`fetching posts from page #${page}`);
           setPosts((prevPosts) => [...prevPosts, ...data]);
           setHasMorePosts(data.length > 0);
-          setLoading(false);
+          setIsLoading(false);
         }
       } catch (error) {
-        setLoading(false);
+        setIsLoading(false);
         console.log(error);
       }
     };
@@ -50,7 +52,7 @@ function Home() {
 
   const loadMore = useCallback(() => {
     setPage((page) => page + 1);
-    setLoading(true);
+    setIsLoading(true);
   }, []);
 
   const handleLike = async ({ setLiked, liked, setLikes, postId }) => {
@@ -95,6 +97,35 @@ function Home() {
     }
   };
 
+  const handleDelete = async ({ setLoading, onClose, postId }) => {
+    try {
+      setLoading(true);
+      await deletePost({ token, postId });
+      setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+      setLoading(false);
+      onClose();
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      onClose();
+    }
+  };
+
+  const handleHide = async ({ setLoading, onClose, postId, setIsActive }) => {
+    try {
+      setLoading(true);
+      await hidePost({ token, postId });
+      setIsActive((v) => !v);
+      setPosts((prevPosts) => prevPosts.filter((post) => post._id !== postId));
+      setLoading(false);
+      onClose();
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      onClose();
+    }
+  };
+
   return (
     <main className="flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
       {posts.length > 0 && (
@@ -102,15 +133,16 @@ function Home() {
           hasMorePosts={hasMorePosts}
           loadMore={loadMore}
           posts={posts}
-          setPosts={setPosts}
           onLike={handleLike}
           onFavorite={handleFavorite}
+          onDelete={handleDelete}
+          onHide={handleHide}
         />
       )}
 
-      {loading && <PostLoader />}
+      {isLoading && <PostLoader />}
     </main>
   );
-} 
+}
 
 export default Home;
