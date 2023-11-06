@@ -16,7 +16,7 @@ import InteractionsDetails from "../InteractionsDetails/InteractionsDetails";
 import OptionsDropdown from "../OptionsDropdown/OptionsDropdown";
 import PostDetails from "../PostDetails/PostDetails";
 
-function Post({ info, setPosts, onLike, onFavorite }) {
+function Post({ info, setPosts, onLike, onFavorite, measureRef }) {
   const navigate = useNavigate();
   const location = useLocation();
   const { user: currentUser, token } = useAuth();
@@ -90,7 +90,7 @@ function Post({ info, setPosts, onLike, onFavorite }) {
   };
 
   return (
-    <Card className="max-w-[468px]">
+    <Card className="max-w-[468px]"  ref={measureRef}>
       <CardHeader className="justify-between px-5">
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="md" src={user.picture} />

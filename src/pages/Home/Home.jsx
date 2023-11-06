@@ -1,27 +1,40 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   getPosts,
   toggleFavoritePost,
   toggleLikePost,
 } from "../../services/posts.service";
 import { useAuth } from "../../utils/tempUser";
-import Post from "../../components/Post/Post";
 import PostLoader from "../../components/PostLoader/PostLoader";
+import PostList from "../../components/PostList/PostList";
 
 function Home() {
-  const [loading, setLoading] = useState(false);
+  const [page, setPage] = useState(1);
   const [posts, setPosts] = useState([]);
+  const [hasMorePosts, setHasMorePosts] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { token, user } = useAuth();
 
   useEffect(() => {
+    // Boolean flag to check if the component is mounted.
+    let isMounted = true;
+
     const fetchPosts = async () => {
       try {
         setLoading(true);
-        const { data } = await getPosts({ token });
-        setPosts(data);
-        setLoading(false);
-        console.log(data);
+        const { data } = await getPosts({
+          token,
+          query: `page=${page}&limit=${import.meta.env.VITE_POSTS_PER_PAGE}`,
+        });
+
+        // If the component is unmounted, don't update the state.
+        if (isMounted) {
+          console.log(`fetching posts from page #${page}`);
+          setPosts((prevPosts) => [...prevPosts, ...data]);
+          setHasMorePosts(data.length > 0);
+          setLoading(false);
+        }
       } catch (error) {
         setLoading(false);
         console.log(error);
@@ -29,7 +42,16 @@ function Home() {
     };
 
     fetchPosts();
-  }, [setPosts, token]);
+    // Cleanup function to set the isMounted flag to false.
+    return () => {
+      isMounted = false;
+    };
+  }, [token, page]);
+
+  const loadMore = useCallback(() => {
+    setPage((page) => page + 1);
+    setLoading(true);
+  }, []);
 
   const handleLike = async ({ setLiked, liked, setLikes, postId }) => {
     try {
@@ -75,20 +97,20 @@ function Home() {
 
   return (
     <main className="flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
-      {loading && <PostLoader quantity={3} />}
+      {posts.length > 0 && (
+        <PostList
+          hasMorePosts={hasMorePosts}
+          loadMore={loadMore}
+          posts={posts}
+          setPosts={setPosts}
+          onLike={handleLike}
+          onFavorite={handleFavorite}
+        />
+      )}
 
-      {!loading &&
-        posts.map((post) => (
-          <Post
-            key={post._id}
-            info={post}
-            setPosts={setPosts}
-            onLike={handleLike}
-            onFavorite={handleFavorite}
-          />
-        ))}
+      {loading && <PostLoader />}
     </main>
   );
-}
+} 
 
 export default Home;
