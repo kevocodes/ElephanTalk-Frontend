@@ -90,6 +90,12 @@ function Favorites() {
     try {
       // Update the UI first for better UX
       setFavorited((v) => !v);
+
+      // [OWN COMPONENT LOGIC] Update the favorites posts
+      setPosts((prevPosts) => {
+        return prevPosts.filter((post) => post._id !== postId);
+      });
+
       // Send the request to the server
       await toggleFavoritePost({ token, postId });
     } catch (error) {
