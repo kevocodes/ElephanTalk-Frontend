@@ -22,11 +22,14 @@ import PostDetails from "../../components/PostDetails/PostDetails";
 import CommentSection from "./components/CommentSection/CommentSection";
 
 function Details() {
+  const [loading, setLoading] = useState(false);
   const inputRef = useRef(null);
   const postId = window.location.pathname.split('/').pop();
   const { token, user } = useAuth();
   const [post, setPost] = useState('')
   const [postLikes, setLikes] = useState();
+  const [comments, setComments] = useState([]);
+ 
 
   const handleComment = () => {
     inputRef.current.focus();
@@ -34,16 +37,20 @@ function Details() {
 
   const getData = async () => {
     try {
+      setLoading(true);
       console.log(postId);
       let response = await getPosts({ token, endpoint: postId });
       if (response) {
         console.log(response);
         setPost(response.data);
-        setLikes(response.data.likes);
-        console.log();
+        setComments(response.data.comments);
+        console.log(response.data.isLiked);
+        console.log(response.data.comments);
+        setLoading(false);
       } 
     } catch (error) {
       console.error('Error al obtener datos de la API:', error);
+      setLoading(false);
     }
 };
 
@@ -64,39 +71,32 @@ useEffect(() => {
             </div>
           </div>
         </CardHeader>
-        <CardBody className="flex flex-col w-full max-h-full py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row ">
-          <div className="lg:w-1/2 lg:flex lg:h-full lg:items-center lg:justify-center">
+        <CardBody className="flex flex-col  w-full max-h-full py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row ">
+          <div className="lg:w-1/2 lg:flex overflow-hidden lg:h-full lg:items-center lg:justify-center">
             <Image
               alt="Card background "
-              className="object-cover rounded-xl w-full"
+              className="object-cover rounded-xl"
               src={post ? post.image : ''}
+              width={600}
             />
           </div>
           <div className="lg:w-1/2 flex flex-col h-full lg:overflow-hidden lg:mt-0 mt-2 gap-3 lg:px-2 lg:pb-2">
-            <ActionsControllers onComment={handleComment}   />
+            <ActionsControllers onComment={handleComment}  isLiked={post ? post.isLiked : false} />
             <PostDetails description={post ? post.description : ''} />
             <InteractionsDetails onComment={handleComment} likes={post.likes} comments={post ? post.comments.length : ''}/>
             <div className="w-full lg:order-5">
               <CommentForm inputRef={inputRef} />
             </div>
             <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg">
-              <CommentCard />
 
-              <CommentCard />
+            {!loading &&
+           comments.map((comments) => (
+          <CommentCard
+          key={comments.createdAt}
+            info={comments}
+          />
+        ))}
 
-              <CommentCard />
-
-              <CommentCard />
-              <CommentCard />
-
-              <CommentCard />
-
-              <CommentCard />
-              <CommentCard />
-
-              <CommentCard />
-
-              <CommentCard />
             </div>
           </div>
         </CardBody>
