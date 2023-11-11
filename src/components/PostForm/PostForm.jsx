@@ -52,7 +52,10 @@ function PostForm({
   // it checks if the form is valid
   // it does not need to execute validateImage again because the effect makes it right away it changes
   function isFormValid() {
-    return isImageValid && validateDescription(formValues.description);
+    return (
+      validateImage(formValues.image) &&
+      validateDescription(formValues.description)
+    );
   }
 
   return (
@@ -61,7 +64,7 @@ function PostForm({
       <Divider />
       <CardBody>
         <form className="flex flex-col gap-2">
-        <Input
+          <Input
             variant="bordered"
             name="image"
             value={formValues.image}
