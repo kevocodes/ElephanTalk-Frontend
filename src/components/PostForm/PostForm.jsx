@@ -69,21 +69,7 @@ function PostForm({
       <Divider />
       <CardBody>
         <form className="flex flex-col gap-2">
-          <Textarea
-            name="description"
-            value={formValues.description}
-            label="Description"
-            errorMessage={
-              !isDescriptionValid
-                ? "Please enter a description of at least 8 characters."
-                : ""
-            }
-            variant="bordered"
-            isRequired={true}
-            isInvalid={!isDescriptionValid}
-            onChange={handleChange}
-          />
-          <Input
+        <Input
             variant="bordered"
             name="image"
             value={formValues.image}
@@ -95,6 +81,22 @@ function PostForm({
             errorMessage={
               !isImageValid ? "Please enter a valid image URL." : ""
             }
+          />
+          <Textarea
+            name="description"
+            value={formValues.description}
+            label="Description"
+            placeholder="Tell what you think about this post"
+            errorMessage={
+              !isDescriptionValid
+                ? "Please enter a description of at least 8 characters."
+                : ""
+            }
+            variant="bordered"
+            isRequired={true}
+            isInvalid={!isDescriptionValid}
+            onChange={handleChange}
+            maxRows={4}
           />
           <ImagePreview />
           <Button className="font-extrabold" type="submit" color="primary">
