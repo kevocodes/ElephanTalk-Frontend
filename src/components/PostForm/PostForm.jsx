@@ -49,7 +49,7 @@ function PostForm({
   // it checks if the form is valid
   function isFormValid() {
     return (
-      validateImage(formValues.image) &&
+      isImageValid &&
       validateDescription(formValues.description)
     );
   }
