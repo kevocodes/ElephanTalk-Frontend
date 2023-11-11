@@ -6,7 +6,7 @@ import {
 } from "../../services/posts.service";
 
 import { useAuth } from "../../utils/tempUser";
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 import PostDetail from "./components/PostDetail/PostDetail";

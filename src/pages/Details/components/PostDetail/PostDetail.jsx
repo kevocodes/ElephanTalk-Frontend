@@ -143,8 +143,7 @@ function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  
             />
           </div>
           <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg">
-            {comments.length > 0 &&
-              comments.map((comment) => (
+            {comments.map((comment) => (
                 <CommentCard key={comment._id} info={comment} />
               ))}
           </div>
