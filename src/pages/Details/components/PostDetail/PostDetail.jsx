@@ -11,22 +11,26 @@ import ActionsControllers from "../../../../components/ActionsControllers/Action
 import InteractionsDetails from "../../../../components/InteractionsDetails/InteractionsDetails";
 import PostDetails from "../../../../components/PostDetails/PostDetails";
 import CommentForm from "../../../../components/CommentForm/CommentForm";
-import { useEffect } from "react";
+import { useRef, useState, useEffect } from "react";
 
-function PostDetail({loading, inputRef, post, comments, setComments, postId, handleComment }) {
-  const {
-    description,
-    image,
-    user,
-    likes,
-    isLiked,
-    isFavorite,
-    active,
-  } = post;
+function PostDetail({ post, comments, setComments, postId, onLike, onFavorite  }) {
+  const { description, image, user, likes, isLiked, isFavorite, active } = post;
 
-useEffect(() => { 
-  console.log(isLiked);
-}, [post]);
+  const [postLikes, setLikes] = useState(likes);
+
+  const handleLike = async ({ setLiked, liked }) => {
+    await onLike({ setLiked, liked, setLikes, postId });
+  };
+
+  const handleFavorite = async ({ setFavorited }) => {
+    await onFavorite({ setFavorited, postId });
+  };
+
+  const inputRef = useRef(null);
+
+  const handleComment = () => {
+    inputRef.current.focus();
+  };
 
   return (
     <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full ">
@@ -62,6 +66,8 @@ useEffect(() => {
             onComment={handleComment}
             isLiked={isLiked}
             isFavorite={isFavorite}
+            onLike={handleLike}
+            onFavorite={handleFavorite}
           />
           <PostDetails description={post ? description : ""} />
           <InteractionsDetails
@@ -77,8 +83,7 @@ useEffect(() => {
             />
           </div>
           <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg">
-            {!loading &&
-              comments.length > 0 &&
+            {comments.length > 0 &&
               comments.map((comment) => (
                 <CommentCard key={comment._id} info={comment} />
               ))}
