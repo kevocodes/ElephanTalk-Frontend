@@ -14,6 +14,11 @@ function ImagePreview({ image }) {
     setIsImageValid(true);
   }, [image]);
 
+  // So this will be triggered when the onError of the Image is called
+  const handleImageError = () => {
+    setIsImageValid(false);
+  };
+
   return (
     <div className="flex flex-col gap-2 py-4">
       <h1 className="text-xl text-left w-full font-bold">Preview:</h1>
@@ -23,6 +28,7 @@ function ImagePreview({ image }) {
           src={isImageValid ? imageSrc : noPreview}
           alt="Image preview"
           objectFit="cover"
+          onError={handleImageError}
         />
       </div>
     </div>
