@@ -1,7 +1,7 @@
 const BASE_URL = import.meta.env.VITE_PUBLIC_API_URL;
 
-export const getPosts = async ({ token, endpoint = "" }) => {
-  const response = await fetch(`${BASE_URL}/posts/${endpoint}`, {
+export const getPosts = async ({ token, endpoint = "", query="" }) => {
+  const response = await fetch(`${BASE_URL}/posts/${endpoint}?${query}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
