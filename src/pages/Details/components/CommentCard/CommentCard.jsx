@@ -11,7 +11,7 @@ import {
 } from "@nextui-org/react";
 
 export default function App({ info }) {
-  const { content, user } = info;
+  const { content, user, _id } = info;
 
   return (
     <div className="flex items-center justify-between w-full">

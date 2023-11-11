@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HeartIcon from "./HeartIcon/HeartIcon";
 import FavoriteIcon from "./FavoriteIcon/FavoriteIcon";
 import CommentIcon from "./CommentIcon/CommentIcon";
@@ -24,7 +24,7 @@ function ActionsControllers({ isLiked, isFavorite, isActive, onLike, onFavorite,
   const handleComment = ()  => {
     onComment();
   }
-
+  
   return (
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-[2px]">
