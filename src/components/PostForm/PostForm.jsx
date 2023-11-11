@@ -34,6 +34,7 @@ function PostForm({
     setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
   };
 
+  // TODO: Update this validation, it requires to check a valid url, not image
   function validateImage(url) {
     const pattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
     // This checks if the url is valid and stores the result
@@ -50,7 +51,6 @@ function PostForm({
 
   // This function is called when the form is submitted
   // it checks if the form is valid
-  // it does not need to execute validateImage again because the effect makes it right away it changes
   function isFormValid() {
     return (
       validateImage(formValues.image) &&
