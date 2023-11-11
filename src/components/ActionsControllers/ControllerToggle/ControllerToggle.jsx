@@ -1,6 +1,12 @@
 import { Button } from "@nextui-org/react";
+import { useEffect } from "react";
 
 function ControllerToggle({ state, action, Component }) {
+
+  useEffect(() => {
+    console.log(state);
+  }, []);
+  
   return (
     <Button
       isIconOnly
