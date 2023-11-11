@@ -28,14 +28,6 @@ function PostForm({
   const [isImageValid, setIsImageValid] = useState(true);
   const [isDescriptionValid, setIsDescriptionValid] = useState(true);
 
-  // This effect is needed to tell the image preview
-  // if it can be displayed or not
-  useEffect(() => {
-    if (formValues.image != "") {
-      validateImage(formValues.image);
-    }
-  }, [formValues.image]);
-
   const handleChange = (event) => {
     const { name, value } = event.target;
     console.log(name);
