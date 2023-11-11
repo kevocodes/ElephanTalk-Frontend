@@ -33,13 +33,10 @@ function PostForm({
     setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
   };
 
-  // TODO: Update this validation, it requires to check a valid url, not image
-  function validateImage(url) {
-    const pattern = /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/i;
-    // This checks if the url is valid and stores the result
-    const result = pattern.test(url);
-    setIsImageValid(result);
-    return result;
+  // This will be passed as a callback to the ImagePreview component
+  // So it will manage if it can be rendered or not
+  function validateImage(isValid) {
+    setIsImageValid(isValid);
   }
 
   function validateDescription(description) {
@@ -92,7 +89,12 @@ function PostForm({
             onChange={handleChange}
             maxRows={4}
           />
-          {formValues.image && <ImagePreview image={formValues.image} />}
+          {formValues.image && (
+            <ImagePreview
+              image={formValues.image}
+              onValidityChange={validateImage}
+            />
+          )}
           <Button className="font-extrabold" type="submit" color="primary">
             Submit
           </Button>
