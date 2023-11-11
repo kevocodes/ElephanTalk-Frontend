@@ -93,7 +93,7 @@ function PostForm({
             onChange={handleChange}
             maxRows={4}
           />
-          <ImagePreview />
+          {formValues.image && <ImagePreview image={formValues.image} />}
           <Button className="font-extrabold" type="submit" color="primary">
             Submit
           </Button>
