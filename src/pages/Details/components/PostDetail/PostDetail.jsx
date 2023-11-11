@@ -7,16 +7,26 @@ import {
   Image,
 } from "@nextui-org/react";
 import CommentCard from "../CommentCard/CommentCard";
+import { useAuth } from "../../../../utils/tempUser";
+
+import { useLocation, useNavigate } from "react-router-dom";
+import { deletePost, hidePost } from "../../../../services/posts.service";
 import ActionsControllers from "../../../../components/ActionsControllers/ActionsControllers";
 import InteractionsDetails from "../../../../components/InteractionsDetails/InteractionsDetails";
 import PostDetails from "../../../../components/PostDetails/PostDetails";
 import CommentForm from "../../../../components/CommentForm/CommentForm";
 import { useRef, useState, useEffect } from "react";
+import OptionsDropdown from "../../../../components/OptionsDropdown/OptionsDropdown";
 
-function PostDetail({ post, comments, setComments, postId, onLike, onFavorite  }) {
+function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  }) {
   const { description, image, user, likes, isLiked, isFavorite, active } = post;
-
+  const { user: currentUser, token } = useAuth();
   const [postLikes, setLikes] = useState(likes);
+  
+  const navigate = useNavigate();
+  
+  const [isActive, setIsActive] = useState(active);
+
 
   const handleLike = async ({ setLiked, liked }) => {
     await onLike({ setLiked, liked, setLikes, postId });
@@ -24,6 +34,8 @@ function PostDetail({ post, comments, setComments, postId, onLike, onFavorite  }
 
   const handleFavorite = async ({ setFavorited }) => {
     await onFavorite({ setFavorited, postId });
+    console.log(currentUser._id);
+    console.log(user._id);
   };
 
   const inputRef = useRef(null);
@@ -31,6 +43,42 @@ function PostDetail({ post, comments, setComments, postId, onLike, onFavorite  }
   const handleComment = () => {
     inputRef.current.focus();
   };
+
+  const handleEdit = () => {
+    navigate(`/edit/${postId}`);
+  };
+
+  const handleDelete = async (setLoading, onClose) => {
+    try {
+      setLoading(true);
+      await deletePost({ token, postId });
+      setLoading(false);
+      onClose();
+    navigate(`/`);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      onClose();
+    }
+  };
+
+  const handleHide = async (setLoading, onClose) => {
+    try {
+      setLoading(true);
+      await hidePost({ token, postId });
+      setIsActive((v) => !v);
+
+      
+
+      setLoading(false);
+      onClose();
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      onClose();
+    }
+  };
+
 
   return (
     <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full ">
@@ -50,7 +98,17 @@ function PostDetail({ post, comments, setComments, postId, onLike, onFavorite  }
               {post ? `@${user.username}` : ""}
             </p>
           </div>
+          
         </div>
+        {post && currentUser._id === user._id && (
+          <OptionsDropdown
+          isActive={active}
+            setIsActive={isActive}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onHide={handleHide}
+          />
+        )}
       </CardHeader>
       <CardBody className="flex flex-col  w-full max-h-full py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row ">
         <div className="lg:w-1/2 lg:flex overflow-hidden lg:h-full lg:items-center lg:justify-center">
@@ -66,12 +124,14 @@ function PostDetail({ post, comments, setComments, postId, onLike, onFavorite  }
             onComment={handleComment}
             isLiked={isLiked}
             isFavorite={isFavorite}
+            isActive={isActive}
             onLike={handleLike}
             onFavorite={handleFavorite}
           />
           <PostDetails description={post ? description : ""} />
           <InteractionsDetails
             onComment={handleComment}
+            
             likes={likes}
             comments={post ? comments.length : ""}
           />
