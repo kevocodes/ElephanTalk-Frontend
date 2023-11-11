@@ -21,6 +21,9 @@ function ImagePreview({ image, onValidityChange }) {
   // So this will be triggered when the onError of the Image is called
   const handleImageError = () => {
     setIsImageValid(false);
+    if (onValidityChange) {
+      onValidityChange(false);
+    }
   };
 
   return (
