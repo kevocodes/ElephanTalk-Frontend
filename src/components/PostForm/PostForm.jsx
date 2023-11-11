@@ -30,7 +30,6 @@ function PostForm({
 
   const handleChange = (event) => {
     const { name, value } = event.target;
-    console.log(name);
     setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
   };
 
