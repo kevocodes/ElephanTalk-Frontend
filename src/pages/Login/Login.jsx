@@ -23,6 +23,7 @@ export default function Login() {
 
   const [loading, setLoading] = useState(false);
   const {
+    reset,
     handleSubmit,
     register,
     formState: { errors },
@@ -35,13 +36,14 @@ export default function Login() {
       setLoading(true);
       const token = await signIn(data);
       const userInfo = await validateSession({ token });
-      setToken(token);
       setUser(userInfo);
+      setToken(token);
       navigate("/");
       setLoading(false);
     } catch (error) {
       console.error(error);
       logout();
+      reset();
       setLoading(false);
     }
   };
