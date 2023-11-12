@@ -2,10 +2,10 @@ import { Input } from "@nextui-org/react";
 import SendButton from "./SendButton/SendButton";
 import { useState } from "react";
 import { commentPost } from "../../services/posts.service";
-import { useAuth } from "../../utils/tempUser";
+import { useAuthStore } from "../../store/auth.store";
 
 function CommentForm({ setPostsComments, postId, inputRef= null }) {
-  const { token } = useAuth();
+  const token = useAuthStore((state) => state.token);
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 

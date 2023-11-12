@@ -1,20 +1,20 @@
-
 import {
   getPosts,
   toggleFavoritePost,
   toggleLikePost,
 } from "../../services/posts.service";
 
-import { useAuth } from "../../utils/tempUser";
 import { useState, useEffect } from "react";
 
 import { useParams } from "react-router-dom";
 import PostDetail from "./components/PostDetail/PostDetail";
+import { useAuthStore } from "../../store/auth.store";
 
 
 function Details() {
   const [loading, setLoading] = useState(false);
-  const { token, user } = useAuth();
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
   const [post, setPost] = useState("");
 
   const [comments, setComments] = useState([]);

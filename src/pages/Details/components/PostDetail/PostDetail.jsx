@@ -1,32 +1,32 @@
-import {
-  Avatar,
-  Card,
-  CardHeader,
-  CardBody,
-  CardFooter,
-  Image,
-} from "@nextui-org/react";
+import { Avatar, Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import CommentCard from "../CommentCard/CommentCard";
-import { useAuth } from "../../../../utils/tempUser";
 
-import { useLocation, useNavigate } from "react-router-dom";
-import { deletePost, hidePost } from "../../../../services/posts.service";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import ActionsControllers from "../../../../components/ActionsControllers/ActionsControllers";
-import InteractionsDetails from "../../../../components/InteractionsDetails/InteractionsDetails";
-import PostDetails from "../../../../components/PostDetails/PostDetails";
 import CommentForm from "../../../../components/CommentForm/CommentForm";
-import { useRef, useState, useEffect } from "react";
+import InteractionsDetails from "../../../../components/InteractionsDetails/InteractionsDetails";
 import OptionsDropdown from "../../../../components/OptionsDropdown/OptionsDropdown";
+import PostDetails from "../../../../components/PostDetails/PostDetails";
+import { deletePost, hidePost } from "../../../../services/posts.service";
+import { useAuthStore } from "../../../../store/auth.store";
 
-function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  }) {
+function PostDetail({
+  post,
+  comments,
+  setComments,
+  postId,
+  onLike,
+  onFavorite,
+}) {
+  const currentUser = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
   const { description, image, user, likes, isLiked, isFavorite, active } = post;
-  const { user: currentUser, token } = useAuth();
   const [postLikes, setLikes] = useState(likes);
-  
-  const navigate = useNavigate();
-  
-  const [isActive, setIsActive] = useState(active);
 
+  const navigate = useNavigate();
+
+  const [isActive, setIsActive] = useState(active);
 
   const handleLike = async ({ setLiked, liked }) => {
     await onLike({ setLiked, liked, setLikes, postId });
@@ -54,7 +54,7 @@ function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  
       await deletePost({ token, postId });
       setLoading(false);
       onClose();
-    navigate(`/`);
+      navigate(`/`);
     } catch (error) {
       console.log(error);
       setLoading(false);
@@ -68,8 +68,6 @@ function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  
       await hidePost({ token, postId });
       setIsActive((v) => !v);
 
-      
-
       setLoading(false);
       onClose();
     } catch (error) {
@@ -78,7 +76,6 @@ function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  
       onClose();
     }
   };
-
 
   return (
     <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full ">
@@ -98,11 +95,10 @@ function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  
               {post ? `@${user.username}` : ""}
             </p>
           </div>
-          
         </div>
         {post && currentUser._id === user._id && (
           <OptionsDropdown
-          isActive={active}
+            isActive={active}
             setIsActive={isActive}
             onEdit={handleEdit}
             onDelete={handleDelete}
@@ -131,8 +127,7 @@ function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  
           <PostDetails description={post ? description : ""} />
           <InteractionsDetails
             onComment={handleComment}
-            
-            likes={likes}
+            likes={postLikes}
             comments={post ? comments.length : ""}
           />
           <div className="w-full lg:order-5">
@@ -144,8 +139,8 @@ function PostDetail({ post,  comments, setComments, postId, onLike, onFavorite  
           </div>
           <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg">
             {comments.map((comment) => (
-                <CommentCard key={comment._id} info={comment} />
-              ))}
+              <CommentCard key={comment._id} info={comment} />
+            ))}
           </div>
         </div>
       </CardBody>

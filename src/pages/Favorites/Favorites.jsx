@@ -6,9 +6,9 @@ import {
   toggleFavoritePost,
   toggleLikePost,
 } from "../../services/posts.service";
-import { useAuth } from "../../utils/tempUser";
 import PostLoader from "../../components/PostLoader/PostLoader";
 import PostList from "../../components/PostList/PostList";
+import { useAuthStore } from "../../store/auth.store";
 
 function Favorites() {
   const [page, setPage] = useState(1);
@@ -16,7 +16,8 @@ function Favorites() {
   const [hasMorePosts, setHasMorePosts] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { token, user } = useAuth();
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     // Boolean flag to check if the component is mounted.
@@ -59,7 +60,7 @@ function Favorites() {
   const handleLike = async ({ setLiked, liked, setLikes, postId }) => {
     try {
       // Update the UI first for better UX
-      setLiked(false);
+      setLiked((v) => !v);
 
       setLikes((prevLikes) => {
         if (!liked) return [...prevLikes, user];
@@ -71,7 +72,7 @@ function Favorites() {
       await toggleLikePost({ token, postId });
     } catch (error) {
       // If the request fails, set the UI to the previous state
-      setLiked(true); // toggle the like state
+      setLiked((v) => !v); // toggle the like state
 
       setLikes((prevLikes) => {
         // Undo the like

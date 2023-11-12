@@ -8,7 +8,7 @@ import {
   toggleFavoritePost,
   toggleLikePost,
 } from "../../services/posts.service";
-import { useAuth } from "../../utils/tempUser";
+import { useAuthStore } from "../../store/auth.store";
 
 function Own() {
   const [page, setPage] = useState(1);
@@ -16,7 +16,8 @@ function Own() {
   const [hasMorePosts, setHasMorePosts] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const { token, user } = useAuth();
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
 
   useEffect(() => {
     // Boolean flag to check if the component is mounted.
