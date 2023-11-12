@@ -1,17 +1,36 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AppProvider from "./providers/app.provider";
+import { useEffect } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import MainLayout from "./components/MainLayout/MainLayout";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Details from "./pages/Details/Details";
+import Favorites from "./pages/Favorites/Favorites";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
-import Favorites from "./pages/Favorites/Favorites";
 import Own from "./pages/Own/Own";
-import Details from "./pages/Details/Details";
-import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Register from "./pages/Register/Register";
+import AppProvider from "./providers/app.provider";
+import { validateSession } from "./services/auth.service";
 import { useAuthStore } from "./store/auth.store";
 
 function App() {
   const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
+  const logout = useAuthStore((state) => state.logout);
+
+  useEffect(() => {
+    async function validate() {
+      try {
+        const userInfo = await validateSession({ token });
+        setUser(userInfo);
+      } catch (error) {
+        logout();
+      }
+    }
+
+    if (token) validate();
+  }, [token, setUser, logout]);
+
   return (
     <AppProvider>
       <Router>
@@ -19,7 +38,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route
-            element={<ProtectedRoute redirectTo="/login" isAllowed={!!token} />}
+            element={
+              <ProtectedRoute
+                redirectTo="/login"
+                isAllowed={Boolean(token && user)}
+              />
+            }
           >
             <Route element={<MainLayout />}>
               <Route path="/" element={<Home />} />
