@@ -1,19 +1,16 @@
-export const exampleRequest = async (token) => {
-  const response = await fetch("", {
+const BASE_URL = import.meta.env.VITE_PUBLIC_API_URL;
+
+export const signIn = async ({ username, password }) => {
+  const response = await fetch(`${BASE_URL}/auth/login`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      authorization: `Bearer ${token}}`,
-    },
-    body: JSON.stringify({
-      // ...
-    }),
+    body: JSON.stringify({ username, password }),
   });
 
-  if (response.ok) {
-    // Happy path
-    return; /* DATA DE LA*/
+  if (!response.ok) {
+    throw new Error("Error signing in");
   }
 
-  return {} || [];
+  const data = await response.json();
+
+  return data.access_token; 
 };
