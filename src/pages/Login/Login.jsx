@@ -11,12 +11,15 @@ import LoginButton from "./components/butttons/LoginButton";
 import logo from "../../assets/logo.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { signIn } from "../../services/auth.service";
+import { signIn, validateSession } from "../../services/auth.service";
 import { useAuthStore } from "../../store/auth.store";
 
 export default function Login() {
   const navigate = useNavigate();
   const setToken = useAuthStore((state) => state.setToken);
+  const setUser = useAuthStore((state) => state.setUser);
+  const logout = useAuthStore((state) => state.logout);
+
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -35,11 +38,14 @@ export default function Login() {
     try {
       setLoading(true);
       const token = await signIn(formData);
+      const userInfo = await validateSession({ token });
       setToken(token);
+      setUser(userInfo);
       navigate("/");
       setLoading(false);
     } catch (error) {
       console.error(error);
+      logout();
       setLoading(false);
     }
   };
@@ -85,7 +91,7 @@ export default function Login() {
                   Sign up
                 </Link>
               </h1>
-              <LoginButton loading={loading}/>
+              <LoginButton loading={loading} />
             </div>
           </CardFooter>
         </Card>

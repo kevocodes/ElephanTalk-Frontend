@@ -16,20 +16,20 @@ function App() {
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
   const setUser = useAuthStore((state) => state.setUser);
-  const logout = useAuthStore((state) => state.logout);
 
   useEffect(() => {
     async function validate() {
+      console.log("validating");
       try {
         const userInfo = await validateSession({ token });
-        setUser(userInfo);
+        if (!user) setUser(userInfo);
       } catch (error) {
-        logout();
+        setUser(null);
       }
     }
 
     if (token) validate();
-  }, [token, setUser, logout]);
+  }, [token, user, setUser]);
 
   return (
     <AppProvider>
