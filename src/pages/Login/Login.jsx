@@ -12,8 +12,10 @@ import logo from "../../assets/logo.webp";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { signIn } from "../../services/auth.service";
+import { useAuthStore } from "../../store/auth.store";
 
 export default function Login() {
+  const setToken = useAuthStore((state) => state.setToken);
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     username: "",
@@ -32,7 +34,7 @@ export default function Login() {
     try {
       setLoading(true);
       const token = await signIn(formData);
-      console.log(token);
+      setToken(token);
       setLoading(false);
     } catch (error) {
       console.error(error);
