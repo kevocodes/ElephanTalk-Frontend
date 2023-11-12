@@ -15,7 +15,31 @@ export const signIn = async ({ username, password }) => {
 
   const { access_token } = await response.json();
 
-  return access_token; 
+  return access_token;
+};
+
+export const signUp = async ({
+  username,
+  name,
+  lastname,
+  email,
+  password,
+}) => {
+  const response = await fetch(`${BASE_URL}/auth/register`, {
+    method: "POST",
+    body: JSON.stringify({ username, name, lastname, email, password }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Can't signing up");
+  }
+
+  const data = await response.json();
+
+  return data;
 };
 
 export const validateSession = async ({ token }) => {
