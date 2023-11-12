@@ -1,6 +1,6 @@
 import { Button } from "@nextui-org/react";
 
-export default function LoginButton({ loading }) {  
+export default function SubmitButton({ loading, text }) {
   return (
     <Button
       isLoading={loading}
@@ -8,7 +8,7 @@ export default function LoginButton({ loading }) {
       className="w-full mb-2 font-bold text-base"
       type="submit"
     >
-      Log in
+      { text }
     </Button>
   );
 }

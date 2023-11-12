@@ -1,7 +1,7 @@
 import { forwardRef, useState } from "react";
 import { Input } from "@nextui-org/react";
-import { EyeFilledIcon } from "../icons/EyeFilledIcon";
-import { EyeSlashFilledIcon } from "../icons/EyeSlashFilledIcon";
+import { EyeFilledIcon } from "./icons/EyeFilledIcon";
+import { EyeSlashFilledIcon } from "./icons/EyeSlashFilledIcon";
 
 export default forwardRef(function PasswordInput({ ...props }, ref) {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,7 +10,6 @@ export default forwardRef(function PasswordInput({ ...props }, ref) {
   return (
     <Input
       ref={ref}
-      label="Password"
       variant="bordered"
       color="primary-50"
       endContent={

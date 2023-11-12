@@ -5,15 +5,15 @@ import {
   CardFooter,
   Divider,
 } from "@nextui-org/react";
-import EmailInput from "./components/inputs/EmailInput";
-import PasswordInput from "./components/inputs/PasswordInput";
-import LoginButton from "./components/butttons/LoginButton";
+import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import logo from "../../assets/logo.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { signIn, validateSession } from "../../services/auth.service";
 import { useAuthStore } from "../../store/auth.store";
 import { useState } from "react";
+import TextInput from "../../components/TextInput/TextInput";
+import SubmitButton from "../../components/SubmitButton/SubmitButton";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -68,13 +68,14 @@ export default function Login() {
           </CardHeader>
           <Divider />
           <CardBody>
-            <EmailInput
+            <TextInput
               {...register("username", {
                 required: {
                   value: true,
                   message: "Username or Email is required",
                 },
               })}
+              label="Username or Email"
               isInvalid={Boolean(errors.username)}
               errorMessage={errors.username?.message}
             />
@@ -85,6 +86,7 @@ export default function Login() {
                   message: "Password is required",
                 },
               })}
+              label="Password"
               isInvalid={Boolean(errors.password)}
               errorMessage={errors.password?.message}
             />
@@ -101,7 +103,7 @@ export default function Login() {
                   Sign up
                 </Link>
               </h1>
-              <LoginButton loading={loading} />
+              <SubmitButton loading={loading} text="Sign In"/>
             </div>
           </CardFooter>
         </Card>
