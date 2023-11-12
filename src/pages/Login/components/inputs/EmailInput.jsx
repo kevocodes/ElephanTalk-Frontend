@@ -4,11 +4,11 @@ export default function EmailInput({ onChange, value }) {
   return (
     <Input
       isClearable
-      type="email"
+      name="username"
+      type="text"
       label="Username or Email"
       variant="bordered"
       color="primary-50"
-      onClear={() => console.log("input cleared")}
       className="w-full  pt-4 pb-2"
       onChange={onChange}
       value={value}

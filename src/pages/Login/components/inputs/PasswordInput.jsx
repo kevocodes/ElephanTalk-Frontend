@@ -9,6 +9,7 @@ export default function PasswordInput({ onChange, value }) {
   const toggleVisibility = () => setIsVisible(!isVisible);
   return (
     <Input
+      name="password"
       label="Password"
       variant="bordered"
       color="primary-50"
@@ -26,7 +27,7 @@ export default function PasswordInput({ onChange, value }) {
         </button>
       }
       type={isVisible ? "text" : "password"}
-      className="w-full pt-4  "
+      className="w-full pt-4"
       onChange={onChange}
       value={value}
     />

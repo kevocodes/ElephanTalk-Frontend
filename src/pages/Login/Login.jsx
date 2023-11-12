@@ -10,34 +10,64 @@ import PasswordInput from "./components/inputs/PasswordInput";
 import LoginButton from "./components/butttons/LoginButton";
 import logo from "../../assets/logo.webp";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { signIn } from "../../services/auth.service";
 
 export default function Login() {
+  const [loading, setLoading] = useState(false);
+  const [formData, setFormData] = useState({
+    username: "",
+    password: "",
+  });
+
+  const createHandleInputChange = (key) => (e) => {
+    setFormData({
+      ...formData,
+      [key]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      setLoading(true);
+      const token = await signIn(formData);
+      console.log(token);
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
   return (
     <main className="h-screen grid justify-items-center bg-login  bg-cover bg-center bg-no-repeat  ">
       <div className="flex flex-col justify-center  lg:h-full  md:w-96  sm:mx-2 md:m-auto  sm:m-auto sm:my-8 sm:h-80">
         <Card
+          as={"form"}
+          onSubmit={handleSubmit}
           isBlurred
           className="border-none bg-background/60 dark:bg-default-100/50 w-full"
           shadow="sm"
         >
           <CardHeader className="flex gap-3 flex-col">
-            <img
-              alt="logo logo"
-              height={80}
-              radius="sm"
-              src={logo}
-              width={220}
-            />
+            <img alt="logo logo" height={80} src={logo} width={220} />
             <div className="flex flex-col pl-2">
-              <p className="text-small text-default-500 text-foreground">
+              <p className="text-small text-foreground">
                 Connect with phantastic people
               </p>
             </div>
           </CardHeader>
           <Divider />
           <CardBody>
-            <EmailInput />
-            <PasswordInput />
+            <EmailInput
+              onChange={createHandleInputChange("username")}
+              value={formData.username}
+            />
+            <PasswordInput
+              onChange={createHandleInputChange("password")}
+              value={formData.password}
+            />
           </CardBody>
 
           <CardFooter>
@@ -51,7 +81,7 @@ export default function Login() {
                   Sign up
                 </Link>
               </h1>
-              <LoginButton />
+              <LoginButton loading={loading}/>
             </div>
           </CardFooter>
         </Card>
