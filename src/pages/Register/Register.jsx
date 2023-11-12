@@ -9,33 +9,47 @@ import logo from "../../assets/logo.webp";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAuthStore } from "../../store/auth.store";
 import TextInput from "../../components/TextInput/TextInput";
 import EmailInput from "../../components/EmailInput/EmailInput";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import { signUp } from "../../services/auth.service";
 
 function Register() {
   const navigate = useNavigate();
-  const setToken = useAuthStore((state) => state.setToken);
 
   const [loading, setLoading] = useState(false);
   const {
-    reset,
     handleSubmit,
     register,
     getValues,
+    setError,
     formState: { errors },
   } = useForm();
 
   const onSubmit = async (data, e) => {
-    console.log(data);
     e.preventDefault();
     try {
-      console.log("entro");
+      setLoading(true);
+      delete data.confirmedPassword;
+      const { username } = await signUp(data);
+      navigate("/login");
+      setLoading(false);
     } catch (error) {
       console.error(error);
-      reset();
+      if (error.message.toLowerCase().includes("username")) {
+        setError("username", {
+          type: "manual",
+          message: "Username already exists",
+        });
+      }
+
+      if (error.message.toLowerCase().includes("email")) {
+        setError("email", {
+          type: "manual",
+          message: "Email already exists",
+        });
+      }
       setLoading(false);
     }
   };
@@ -98,7 +112,7 @@ function Register() {
                   maxLength: {
                     value: 15,
                     message: "Username must have at most 15 characters",
-                  }
+                  },
                 })}
                 label="Username"
                 isInvalid={Boolean(errors.username)}
@@ -127,7 +141,7 @@ function Register() {
                   minLength: {
                     value: 8,
                     message: "Password must have at least 8 characters",
-                  }
+                  },
                 })}
                 label="Password"
                 isInvalid={Boolean(errors.password)}
@@ -142,7 +156,8 @@ function Register() {
                   validate: (value) => {
                     if (value !== getValues("password")) {
                       return "Passwords do not match";
-                  } }
+                    }
+                  },
                 })}
                 label="Confirm password"
                 isInvalid={Boolean(errors.confirmedPassword)}
