@@ -10,9 +10,10 @@ import PasswordInput from "./components/inputs/PasswordInput";
 import LoginButton from "./components/butttons/LoginButton";
 import logo from "../../assets/logo.webp";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { signIn, validateSession } from "../../services/auth.service";
 import { useAuthStore } from "../../store/auth.store";
+import { useState } from "react";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -21,23 +22,18 @@ export default function Login() {
   const logout = useAuthStore((state) => state.logout);
 
   const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-  });
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+  } = useForm();
 
-  const createHandleInputChange = (key) => (e) => {
-    setFormData({
-      ...formData,
-      [key]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  const onSubmit = async (data, e) => {
     e.preventDefault();
+    console.log(data);
     try {
       setLoading(true);
-      const token = await signIn(formData);
+      const token = await signIn(data);
       const userInfo = await validateSession({ token });
       setToken(token);
       setUser(userInfo);
@@ -52,12 +48,12 @@ export default function Login() {
 
   return (
     <main className="h-screen grid justify-items-center bg-login  bg-cover bg-center bg-no-repeat  ">
-      <div className="flex flex-col justify-center  lg:h-full  md:w-96  sm:mx-2 md:m-auto  sm:m-auto sm:my-8 sm:h-80">
+      <div className="flex flex-col justify-center  lg:h-full  md:w-96  sm:mx-2 md:m-auto sm:m-auto sm:my-8 sm:h-80">
         <Card
-          as={"form"}
-          onSubmit={handleSubmit}
           isBlurred
-          className="border-none bg-background/60 dark:bg-default-100/50 w-full"
+          as={"form"}
+          onSubmit={handleSubmit(onSubmit)}
+          className="border-none w-full"
           shadow="sm"
         >
           <CardHeader className="flex gap-3 flex-col">
@@ -71,12 +67,24 @@ export default function Login() {
           <Divider />
           <CardBody>
             <EmailInput
-              onChange={createHandleInputChange("username")}
-              value={formData.username}
+              {...register("username", {
+                required: {
+                  value: true,
+                  message: "Username or Email is required",
+                },
+              })}
+              isInvalid={Boolean(errors.username)}
+              errorMessage={errors.username?.message}
             />
             <PasswordInput
-              onChange={createHandleInputChange("password")}
-              value={formData.password}
+              {...register("password", {
+                required: {
+                  value: true,
+                  message: "Password is required",
+                },
+              })}
+              isInvalid={Boolean(errors.password)}
+              errorMessage={errors.password?.message}
             />
           </CardBody>
 

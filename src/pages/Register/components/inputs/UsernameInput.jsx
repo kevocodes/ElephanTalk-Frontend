@@ -1,9 +1,9 @@
 import { Input } from "@nextui-org/react"
-export default function LastNameInput({ onChange, value }) {
+export default function UsernameInput({ onChange, value }) {
   return (
     <Input
       type="text"
-      label="First Name"
+      label="Username"
       variant="bordered"
       color="primary-50"
       className="w-full"
