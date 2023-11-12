@@ -13,7 +13,24 @@ export const signIn = async ({ username, password }) => {
     throw new Error("Can't signing in");
   }
 
-  const data = await response.json();
+  const { access_token } = await response.json();
 
-  return data.access_token; 
+  return access_token; 
+};
+
+export const validateSession = async ({ token }) => {
+  const response = await fetch(`${BASE_URL}/auth/whoami`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Can't validate session");
+  }
+
+  const { data } = await response.json();
+
+  return data;
 };
