@@ -14,6 +14,9 @@ export default {
         'login': "url('/src/assets/login/login-register-background.webp')",
       }
     },
+    minHeight: {
+      '1/4': '20%',
+    },
     fontFamily: {
       montserrat: ["Montserrat", "sans-serif"],
       oswald: ["Oswald", "sans-serif"],

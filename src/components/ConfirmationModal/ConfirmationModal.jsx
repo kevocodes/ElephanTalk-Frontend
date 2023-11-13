@@ -8,7 +8,15 @@ import {
   ModalHeader,
 } from "@nextui-org/react";
 
-function ConfirmationModal({ isOpen, onOpenChange, action, actionText, title, description, loading }) {
+function ConfirmationModal({
+  isOpen,
+  onOpenChange,
+  action,
+  actionText,
+  title,
+  description,
+  loading,
+}) {
   return (
     <>
       <Modal
@@ -23,21 +31,22 @@ function ConfirmationModal({ isOpen, onOpenChange, action, actionText, title, de
           {(onClose) => (
             <>
               <ModalHeader className="flex flex-col gap-1">
-                <p className="font-semibold text-center">
-                  { title }
-                </p>
+                <p className="font-semibold text-center">{title}</p>
               </ModalHeader>
-              <Divider /> 
+              <Divider />
               <ModalBody className="pb-0">
-                <p className="text-small">
-                  { description }
-                </p>
+                <p className="text-small">{description}</p>
               </ModalBody>
               <ModalFooter>
                 <Button color="default" variant="light" onPress={onClose}>
                   Close
                 </Button>
-                <Button color="danger" variant="light" onPress={action} isLoading={loading}>
+                <Button
+                  color="danger"
+                  variant="light"
+                  onPress={action}
+                  isLoading={loading}
+                >
                   {actionText}
                 </Button>
               </ModalFooter>

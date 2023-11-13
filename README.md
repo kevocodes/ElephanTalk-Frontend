@@ -7,6 +7,6 @@ Make sure you have the following environment variables:
 # Public API base URL
 VITE_PUBLIC_API_URL=""
 
-# [TEMP] temp user token
-VITE_TEMP_USER_TOKEN=""
+# Quantity of posts per page for infinite scroll
+VITE_POSTS_PER_PAGE=10
 ```
