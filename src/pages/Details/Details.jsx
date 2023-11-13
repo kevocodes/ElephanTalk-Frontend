@@ -11,14 +11,13 @@ import PostDetail from "./components/PostDetail/PostDetail";
 import { useAuthStore } from "../../store/auth.store";
 
 function Details() {
-  const [loading, setLoading] = useState(true);
+  const { id: postId } = useParams();
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
-  const [post, setPost] = useState("");
-
+  
+  const [loading, setLoading] = useState(true);
+  const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
-
-  const { id: postId } = useParams();
 
   useEffect(() => {
     const getData = async () => {
