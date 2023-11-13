@@ -48,7 +48,7 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
   };
 
   const handleEdit = () => {
-    navigate(`/edit/v${postId}`);
+    navigate(`/edit/${postId}`);
   };
 
   const handleDelete = async (setLoading, onClose) => {

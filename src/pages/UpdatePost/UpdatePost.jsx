@@ -1,14 +1,66 @@
 import PostForm from "../../components/PostForm/PostForm";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useAuthStore } from "../../store/auth.store";
+import { getPosts, updatePost } from "../../services/posts.service";
+import { showAlert } from "../../utils/toastify.util";
+import { useNavigate } from "react-router-dom"
 
 function UpdatePost() {
-  // Here the logic will change due to the fact we are updating the post
-  // Like getting the id and stuff
+  // States:
+  const [isLoading, setIsLoading] = useState(true);
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  
+  // Hooks:
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const token = useAuthStore((state) => state.token);
+
+  useEffect(() => {
+    if(!isLoading) return;
+
+    const fetchPost = async () => {
+      try {
+        const response = await getPosts({ token: token, endpoint: id });
+        if (response) {
+          setDescription(response.data.description);
+          setImage(response.data.image);
+        }
+      } catch (error) {
+        showAlert("Oops try again later...", "error");
+      } finally {
+        // Either it was successful or not
+        // We want to stop the loading process
+        setIsLoading(false);
+      }
+    };
+
+    fetchPost();
+  }, []);
+
+  async function actionUpdatePost(body) {
+    try {
+      await updatePost({ token: token, postId: id, body: body });
+      showAlert("Post updated successfully");
+      navigate(-1);
+    } catch (error) {
+      console.log(error);
+      showAlert("Oops try again later...", "error");
+    }
+  }
+
   return (
-    <PostForm
-      title="Update Post"
-      description="dummy description"
-      image="dummy image"
-    />
+    <>
+      {!isLoading && (
+        <PostForm
+          title="Update Post"
+          description={description}
+          image={image}
+          action={actionUpdatePost}
+        />
+      )}
+    </>
   );
 }
 
