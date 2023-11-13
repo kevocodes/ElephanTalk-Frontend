@@ -28,10 +28,10 @@ function PostForm({
   const [isImageValid, setIsImageValid] = useState(true);
   const [isDescriptionValid, setIsDescriptionValid] = useState(true);
 
-  const handleFormChange = (event) => {
+  function handleFormChange(event) {
     const { name, value } = event.target;
     setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
-  };
+  }
 
   // This will be passed as a callback to the ImagePreview component
   // So it will manage if it can be rendered or not
@@ -61,12 +61,18 @@ function PostForm({
     );
   }
 
+  function handleFormSubmit(event) {
+    event.preventDefault();
+    if (!isFormValid()) return;
+    // Here the action will be executed
+  }
+
   return (
     <Card className="mx-auto my-8 max-w-[80%] md:max-w-xl lg:max-w-2xl font-monserrat">
       <CardHeader className="font-bold text-2xl p-4">{title}</CardHeader>
       <Divider />
       <CardBody>
-        <form className="flex flex-col gap-2">
+        <form className="flex flex-col gap-2" onSubmit={handleFormSubmit}>
           <Input
             variant="bordered"
             name="image"
