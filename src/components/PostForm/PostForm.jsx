@@ -11,6 +11,7 @@ import {
   Button,
 } from "@nextui-org/react";
 import ImagePreview from "./ImagePreview";
+import { useState } from "react";
 
 function PostForm({
   title = "Create New Post",
@@ -18,11 +19,12 @@ function PostForm({
   image = "",
   action,
 }) {
+  const [isLoading, setIsLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
     watch,
   } = useForm({
     defaultValues: {
@@ -34,10 +36,12 @@ function PostForm({
   const watchImage = watch("image");
 
   // The submit function will receive the form data if all validations pass
-  const onSubmit = (data) => {
+  const onSubmit = async (data) => {
+    setIsLoading(true);
     // Here the action will be executed with form data
     console.log(data);
-    action(data);
+    await action(data);
+    setIsLoading(false);
   };
 
   return (
@@ -76,7 +80,12 @@ function PostForm({
             maxRows={4}
           />
           <ImagePreview image={watchImage} />
-          <Button className="font-extrabold" type="submit" color="primary">
+          <Button
+            isLoading={isLoading}
+            className="font-extrabold"
+            type="submit"
+            color="primary"
+          >
             Submit
           </Button>
         </form>
