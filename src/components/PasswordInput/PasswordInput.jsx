@@ -1,15 +1,15 @@
-import React from "react";
+import { forwardRef, useState } from "react";
 import { Input } from "@nextui-org/react";
-import { EyeFilledIcon } from "../icons/EyeFilledIcon";
-import { EyeSlashFilledIcon } from "../icons/EyeSlashFilledIcon";
+import { EyeFilledIcon } from "./icons/EyeFilledIcon";
+import { EyeSlashFilledIcon } from "./icons/EyeSlashFilledIcon";
 
-export default function PasswordInput({ onChange, value }) {
-  const [isVisible, setIsVisible] = React.useState(false);
+export default forwardRef(function PasswordInput({ ...props }, ref) {
+  const [isVisible, setIsVisible] = useState(false);
 
   const toggleVisibility = () => setIsVisible(!isVisible);
   return (
     <Input
-      label="Password"
+      ref={ref}
       variant="bordered"
       color="primary-50"
       endContent={
@@ -26,9 +26,8 @@ export default function PasswordInput({ onChange, value }) {
         </button>
       }
       type={isVisible ? "text" : "password"}
-      className="w-full pt-4  "
-      onChange={onChange}
-      value={value}
+      className="w-full"
+      {...props}
     />
   );
-}
+});

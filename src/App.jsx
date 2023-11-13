@@ -1,29 +1,59 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import AppProvider from "./providers/app.provider";
+import { useEffect } from "react";
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import MainLayout from "./components/MainLayout/MainLayout";
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
+import Details from "./pages/Details/Details";
+import Favorites from "./pages/Favorites/Favorites";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
-import Favorites from "./pages/Favorites/Favorites";
 import Own from "./pages/Own/Own";
-import Details from "./pages/Details/Details";
+import Register from "./pages/Register/Register";
+import AppProvider from "./providers/app.provider";
+import { validateSession } from "./services/auth.service";
+import { useAuthStore } from "./store/auth.store";
 
 function App() {
+  const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+  const setUser = useAuthStore((state) => state.setUser);
+
+  useEffect(() => {
+    async function validate() {
+      console.log("validating");
+      try {
+        const userInfo = await validateSession({ token });
+        if (!user) setUser(userInfo);
+      } catch (error) {
+        setUser(null);
+      }
+    }
+
+    if (token) validate();
+  }, [token, user, setUser]);
+
   return (
     <AppProvider>
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-
-          <Route element={<MainLayout />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/favorites" element={<Favorites />} />
-            <Route path="/own" element={<Own />} />
-            <Route path="/post/:id" element={<Details />} />
-            <Route path="/edit/:id" element={<h1>Edit post</h1>} />
-            <Route path="/create" element={<h1>Create post</h1>} />
-            <Route path="*" element={<h1>404</h1>} />
+          <Route
+            element={
+              <ProtectedRoute
+                redirectTo="/login"
+                isAllowed={Boolean(token && user)}
+              />
+            }
+          >
+            <Route element={<MainLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/own" element={<Own />} />
+              <Route path="/post/:id" element={<Details />} />
+              <Route path="/edit/:id" element={<h1>Edit post</h1>} />
+              <Route path="/create" element={<h1>Create post</h1>} />
+              <Route path="*" element={<h1>404</h1>} />
+            </Route>
           </Route>
         </Routes>
       </Router>

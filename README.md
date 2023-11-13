@@ -9,7 +9,4 @@ VITE_PUBLIC_API_URL=""
 
 # Quantity of posts per page for infinite scroll
 VITE_POSTS_PER_PAGE=10
-
-# [TEMP] temp user token
-VITE_TEMP_USER_TOKEN=""
 ```

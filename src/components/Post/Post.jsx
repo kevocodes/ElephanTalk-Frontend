@@ -8,16 +8,16 @@ import {
 } from "@nextui-org/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../utils/tempUser";
 import ActionsControllers from "../ActionsControllers/ActionsControllers";
 import CommentForm from "../CommentForm/CommentForm";
 import InteractionsDetails from "../InteractionsDetails/InteractionsDetails";
 import OptionsDropdown from "../OptionsDropdown/OptionsDropdown";
 import PostDetails from "../PostDetails/PostDetails";
+import { useAuthStore } from "../../store/auth.store";
 
 function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
   const navigate = useNavigate();
-  const { user: currentUser } = useAuth();
+  const currentUser = useAuthStore((state) => state.user);
 
   const {
     description,
