@@ -96,3 +96,20 @@ export const hidePost = async ({ token, postId }) => {
 
   return true;
 };
+
+export const createPost = async ({ token, body: postData }) => {
+  const response = await fetch(`${BASE_URL}/posts`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(postData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error creating post");
+  }
+
+  return true;
+}
