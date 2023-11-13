@@ -11,6 +11,8 @@ import Register from "./pages/Register/Register";
 import AppProvider from "./providers/app.provider";
 import { validateSession } from "./services/auth.service";
 import { useAuthStore } from "./store/auth.store";
+import CreatePost from "./pages/CreatePost/CreatePost";
+import UpdatePost from "./pages/UpdatePost/UpdatePost";
 
 function App() {
   const token = useAuthStore((state) => state.token);
@@ -50,8 +52,8 @@ function App() {
               <Route path="/favorites" element={<Favorites />} />
               <Route path="/own" element={<Own />} />
               <Route path="/post/:id" element={<Details />} />
-              <Route path="/edit/:id" element={<h1>Edit post</h1>} />
-              <Route path="/create" element={<h1>Create post</h1>} />
+              <Route path="/edit/:id" element={<UpdatePost />} />
+              <Route path="/create" element={<CreatePost />} />
               <Route path="*" element={<h1>404</h1>} />
             </Route>
           </Route>
