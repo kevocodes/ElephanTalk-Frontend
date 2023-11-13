@@ -10,6 +10,10 @@ export const signIn = async ({ username, password }) => {
   });
 
   if (!response.ok) {
+    if (response.status === 401) {
+      throw new Error("Invalid credentials");
+    }
+    
     throw new Error("Can't signing in");
   }
 
@@ -33,10 +37,10 @@ export const signUp = async ({ username, name, lastname, email, password }) => {
       throw new Error(message.join(" "));
     }
 
-    throw new Error("Can't signing up");
+    throw new Error("[ERROR] Can't signing up");
   }
 
-  const data = await response.json();
+  const { data } = await response.json();
 
   return data;
 };

@@ -1,19 +1,20 @@
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
+  CardHeader,
   Divider,
 } from "@nextui-org/react";
-import logo from "../../assets/logo.webp";
-import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import TextInput from "../../components/TextInput/TextInput";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/logo.webp";
 import EmailInput from "../../components/EmailInput/EmailInput";
 import PasswordInput from "../../components/PasswordInput/PasswordInput";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
+import TextInput from "../../components/TextInput/TextInput";
 import { signUp } from "../../services/auth.service";
+import { showAlert } from "../../utils/toastify.util";
 
 function Register() {
   const navigate = useNavigate();
@@ -33,22 +34,26 @@ function Register() {
       setLoading(true);
       delete data.confirmedPassword;
       const { username } = await signUp(data);
+      showAlert(`Welcome ${username}!`);
       navigate("/login");
       setLoading(false);
     } catch (error) {
-      console.error(error);
-      if (error.message.toLowerCase().includes("username")) {
-        setError("username", {
-          type: "manual",
-          message: "Username already exists",
-        });
-      }
+      const userError = error.message.toLowerCase().includes("username");
+      const emailError = error.message.toLowerCase().includes("email");
+      if (userError && emailError) {
+        userError &&
+          setError("username", {
+            type: "manual",
+            message: "Username already exists",
+          });
 
-      if (error.message.toLowerCase().includes("email")) {
-        setError("email", {
-          type: "manual",
-          message: "Email already exists",
-        });
+        emailError &&
+          setError("email", {
+            type: "manual",
+            message: "Email already exists",
+          });
+      } else {
+        showAlert("Something went wrong, try again later", "error");
       }
       setLoading(false);
     }
@@ -74,8 +79,8 @@ function Register() {
           </CardHeader>
           <Divider />
           <CardBody>
-            <div className="flex flex-col gap-3">
-              <div className="flex md:flex-row flex-col gap-3 md:gap-2">
+            <div className="flex flex-col gap-4">
+              <div className="flex md:flex-row flex-col gap-4 md:gap-2">
                 <TextInput
                   {...register("name", {
                     required: {
@@ -165,7 +170,7 @@ function Register() {
               />
             </div>
           </CardBody>
-          <CardFooter>
+          <CardFooter className="pt-0">
             <div className="flex flex-col gap-2 w-full px-2">
               <h1 className="text-sm">
                 Already have an account?{" "}

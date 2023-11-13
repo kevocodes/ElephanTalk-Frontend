@@ -26,7 +26,7 @@ export default forwardRef(function PasswordInput({ ...props }, ref) {
         </button>
       }
       type={isVisible ? "text" : "password"}
-      className="w-full pt-4"
+      className="w-full"
       {...props}
     />
   );

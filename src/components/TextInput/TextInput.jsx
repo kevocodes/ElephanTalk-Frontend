@@ -8,7 +8,7 @@ export default forwardRef(function TextInput({ ...props }, ref) {
       type="text"
       variant="bordered"
       color="primary-50"
-      className="w-full  pt-4 pb-2"
+      className="w-full"
       {...props}
     />
   );
