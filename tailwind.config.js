@@ -9,7 +9,14 @@ export default {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'login': "url('/src/assets/login/login-register-background.webp')",
+      }
+    },
+    minHeight: {
+      '1/4': '20%',
+    },
     fontFamily: {
       montserrat: ["Montserrat", "sans-serif"],
       oswald: ["Oswald", "sans-serif"],

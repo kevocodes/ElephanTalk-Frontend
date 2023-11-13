@@ -1,8 +1,5 @@
 export const navBarClassNames = {
-  wrapper: [
-    "px-3",
-    "sm:px-6",
-  ],
+  wrapper: ["px-3", "sm:px-6"],
   item: [
     "flex",
     "relative",
@@ -27,11 +24,9 @@ export const bottomNavBarClassNames = {
     "top-auto",
     "border-t",
     "border-b-0",
-    "md:hidden"
+    "md:hidden",
   ],
-  wrapper: [
-    "justify-center",
-  ],
+  wrapper: ["justify-center"],
   item: [
     "flex",
     "relative",
