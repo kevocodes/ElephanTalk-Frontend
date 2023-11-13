@@ -13,9 +13,10 @@ function CreatePost() {
     try {
       await createPost({ token, body });
       showAlert("Post created successfully");
-      navigate("/");
+      navigate(-1);
     } catch (error) {
       console.log(error);
+      showAlert("Oops try again later...", "error");
     }
   }
 
