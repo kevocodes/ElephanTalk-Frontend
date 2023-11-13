@@ -21,13 +21,14 @@ function PostDetail({
 }) {
   const navigate = useNavigate();
 
-  const inputRef = useRef(null);
+  const commentInputRef = useRef(null);
   const commentScrollRef = useRef(null);
 
   const currentUser = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
 
   const { description, image, user, likes, isLiked, isFavorite, active } = post;
+
   const [postLikes, setLikes] = useState(likes);
   const [isActive, setIsActive] = useState(active);
 
@@ -36,8 +37,8 @@ function PostDetail({
     if (commentScrollRef.current) {
       commentScrollRef.current.scrollTop = 0;
     }
-  }, [comments]);  
-  
+  }, [comments]);
+
   const handleLike = async ({ setLiked, liked }) => {
     await onLike({ setLiked, liked, setLikes, postId });
   };
@@ -47,7 +48,7 @@ function PostDetail({
   };
 
   const handleComment = () => {
-    inputRef.current.focus();
+    commentInputRef.current.focus();
   };
 
   const handleEdit = () => {
@@ -87,22 +88,15 @@ function PostDetail({
     <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full">
       <CardHeader className="justify-between px-5 mt-">
         <div className="flex gap-5">
-          <Avatar
-            isBordered
-            radius="full"
-            size="md"
-            src={post ? user.picture : ""}
-          />
+          <Avatar isBordered radius="full" size="md" src={user.picture} />
           <div className="flex flex-col gap-1 items-start justify-center">
             <p className="text-small font-semibold leading-none">
-              {post ? `${user.name} ${user.lastname}` : ""}
+              {`${user.name} ${user.lastname}`}
             </p>
-            <p className="text-small tracking-tight">
-              {post ? `@${user.username}` : ""}
-            </p>
+            <p className="text-small tracking-tight">{`@${user.username}`}</p>
           </div>
         </div>
-        {post && currentUser._id === user._id && (
+        {currentUser._id === user._id && (
           <OptionsDropdown
             isActive={isActive}
             onEdit={handleEdit}
@@ -120,7 +114,7 @@ function PostDetail({
               wrapper: "min-w-full min-h-full w-full h-full",
               img: "object-contain w-full h-full",
             }}
-            src={post ? image : ""}
+            src={image}
           />
         </div>
         <div className="lg:w-1/2 w-full flex flex-col h-full lg:overflow-hidden lg:mt-0 mt-2 gap-3 lg:px-2 lg:pb-2">
@@ -132,23 +126,28 @@ function PostDetail({
             onLike={handleLike}
             onFavorite={handleFavorite}
           />
-          <PostDetails description={post ? description : ""} />
+          <PostDetails description={description} />
           <InteractionsDetails
             onComment={handleComment}
             likes={postLikes}
-            comments={post ? comments.length : ""}
+            comments={comments.length}
           />
           <div className="w-full lg:order-5">
             <CommentForm
-              inputRef={inputRef}
+              inputRef={commentInputRef}
               setPostsComments={setComments}
               postId={postId}
             />
           </div>
-          <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg" ref={commentScrollRef}>
-            {comments.map((comment) => (
-              <CommentCard key={comment._id} info={comment} />
-            )).reverse()}
+          <div
+            className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg"
+            ref={commentScrollRef}
+          >
+            {comments
+              .map((comment) => (
+                <CommentCard key={comment._id} info={comment} />
+              ))
+              .reverse()}
           </div>
         </div>
       </CardBody>

@@ -11,7 +11,7 @@ import PostDetail from "./components/PostDetail/PostDetail";
 import { useAuthStore } from "../../store/auth.store";
 
 function Details() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
   const [post, setPost] = useState("");
@@ -19,6 +19,23 @@ function Details() {
   const [comments, setComments] = useState([]);
 
   const { id: postId } = useParams();
+
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setLoading(true);
+        const { data } = await getPosts({ token, endpoint: postId });
+        setPost(data);
+        setComments(data.comments);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error al obtener datos de la API:", error);
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, [postId, token]);
 
   const handleLike = async ({ setLiked, liked, setLikes, postId }) => {
     try {
@@ -61,25 +78,6 @@ function Details() {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true);
-        let response = await getPosts({ token, endpoint: postId });
-        if (response) {
-          setPost(response.data);
-          setComments(response.data.comments);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error al obtener datos de la API:", error);
-        setLoading(false);
-      }
-    };
-
-    getData();
-  }, [postId, token]);
 
   return (
     <main className="flex-1 absolute top-0 py-16 md:pb-4 lg:pb-0 flex flex-col justify-center items-center w-full lg:h-screen">
