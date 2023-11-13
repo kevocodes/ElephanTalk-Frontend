@@ -2,7 +2,7 @@ import { Image } from "@nextui-org/react";
 import noPreview from "../../assets/no-preview.png";
 import { useState, useEffect } from "react";
 
-function ImagePreview({ image, onValidityChange }) {
+function ImagePreview({ image  }) {
   const [isImageValid, setIsImageValid] = useState(true);
   const [imageSrc, setImageSrc] = useState("");
 
@@ -12,18 +12,11 @@ function ImagePreview({ image, onValidityChange }) {
   useEffect(() => {
     setImageSrc(image);
     setIsImageValid(true);
-
-    if (onValidityChange) {
-      onValidityChange(true);
-    }
   }, [image]);
 
   // So this will be triggered when the onError of the Image is called
   const handleImageError = () => {
     setIsImageValid(false);
-    if (onValidityChange) {
-      onValidityChange(false);
-    }
   };
 
   return (
