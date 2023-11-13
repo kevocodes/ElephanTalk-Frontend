@@ -28,19 +28,26 @@ function PostForm({
   const [isImageValid, setIsImageValid] = useState(true);
   const [isDescriptionValid, setIsDescriptionValid] = useState(true);
 
-  const handleChange = (event) => {
+  const handleFormChange = (event) => {
     const { name, value } = event.target;
     setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
   };
 
   // This will be passed as a callback to the ImagePreview component
   // So it will manage if it can be rendered or not
-  function validateImage(isValid) {
-    setIsImageValid(isValid);
+  function validateUrl(url) {
+    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
+    const result = urlRegex.test(url);
+
+    // We return the result and if there is any error it displays them
+    setIsImageValid(result);
+    return result;
   }
 
   function validateDescription(description) {
     const result = description.length >= 8;
+
+    // So this way we can display the error
     setIsDescriptionValid(result);
     return result;
   }
@@ -48,7 +55,10 @@ function PostForm({
   // This function is called when the form is submitted
   // it checks if the form is valid
   function isFormValid() {
-    return isImageValid && validateDescription(formValues.description);
+    return (
+      validateDescription(formValues.description) &&
+      validateUrl(formValues.image)
+    );
   }
 
   return (
@@ -64,7 +74,7 @@ function PostForm({
             label="Image URL"
             placeholder="Enter the image URL for your post."
             isRequired={true}
-            onChange={handleChange}
+            onChange={handleFormChange}
             isInvalid={!isImageValid}
             errorMessage={
               !isImageValid ? "Please enter a valid image URL." : ""
@@ -83,12 +93,10 @@ function PostForm({
             variant="bordered"
             isRequired={true}
             isInvalid={!isDescriptionValid}
-            onChange={handleChange}
+            onChange={handleFormChange}
             maxRows={4}
           />
-          <ImagePreview
-            image={formValues.image}
-          />
+          <ImagePreview image={formValues.image} />
           <Button className="font-extrabold" type="submit" color="primary">
             Submit
           </Button>
