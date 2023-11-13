@@ -2,6 +2,7 @@ import PostForm from "../../components/PostForm/PostForm"
 import { useAuthStore } from "../../store/auth.store"
 import { useNavigate } from "react-router-dom"
 import { createPost } from "../../services/posts.service";
+import { showAlert } from "../../utils/toastify.util";
 
 function CreatePost() {
 
@@ -11,6 +12,7 @@ function CreatePost() {
   async function actionCreatePost(body) {
     try {
       await createPost({ token, body });
+      showAlert("Post created successfully");
       navigate("/");
     } catch (error) {
       console.log(error);
