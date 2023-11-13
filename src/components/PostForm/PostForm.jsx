@@ -37,6 +37,7 @@ function PostForm({
   const onSubmit = (data) => {
     // Here the action will be executed with form data
     console.log(data);
+    action(data);
   };
 
   return (
