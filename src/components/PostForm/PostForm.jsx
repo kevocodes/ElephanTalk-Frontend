@@ -64,7 +64,6 @@ function PostForm({
             label="Description"
             variant="bordered"
             placeholder="Tell what you think about this post"
-            description="Minimum 8 characters"
             {...register("description", {
               required: "Description is required",
               minLength: {
