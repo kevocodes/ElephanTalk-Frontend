@@ -25,7 +25,7 @@ function ImagePreview({ image  }) {
       <div className="flex justify-center w-full">
         <Image
           className="rounded-md shadow-lg max-h-48"
-          src={isImageValid ? imageSrc : noPreview}
+          src={isImageValid && imageSrc ? imageSrc : noPreview}
           alt="Image preview"
           objectFit="cover"
           onError={handleImageError}

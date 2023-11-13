@@ -48,10 +48,7 @@ function PostForm({
   // This function is called when the form is submitted
   // it checks if the form is valid
   function isFormValid() {
-    return (
-      isImageValid &&
-      validateDescription(formValues.description)
-    );
+    return isImageValid && validateDescription(formValues.description);
   }
 
   return (
@@ -89,12 +86,9 @@ function PostForm({
             onChange={handleChange}
             maxRows={4}
           />
-          {formValues.image && (
-            <ImagePreview
-              image={formValues.image}
-              onValidityChange={validateImage}
-            />
-          )}
+          <ImagePreview
+            image={formValues.image}
+          />
           <Button className="font-extrabold" type="submit" color="primary">
             Submit
           </Button>
