@@ -10,7 +10,6 @@ import { useParams } from "react-router-dom";
 import PostDetail from "./components/PostDetail/PostDetail";
 import { useAuthStore } from "../../store/auth.store";
 
-
 function Details() {
   const [loading, setLoading] = useState(false);
   const token = useAuthStore((state) => state.token);
@@ -82,18 +81,20 @@ function Details() {
     };
 
     getData();
-  }, []);
+  }, [postId, token]);
 
   return (
     <main className="flex-1 absolute top-0 py-14 lg:pb-0 flex flex-col justify-center items-center w-full h-screen">
-      {!loading && <PostDetail
-        post={post}
-        comments={comments}
-        setComments={setComments}
-        postId={postId}
-        onLike={handleLike}
-        onFavorite={handleFavorite}
-      ></PostDetail>}
+      {!loading && (
+        <PostDetail
+          post={post}
+          comments={comments}
+          setComments={setComments}
+          postId={postId}
+          onLike={handleLike}
+          onFavorite={handleFavorite}
+        />
+      )}
     </main>
   );
 }
