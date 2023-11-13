@@ -1,5 +1,5 @@
 import { Image } from "@nextui-org/react";
-import noPreview from "../../assets/no-preview.png";
+import NoPreviewImage from "../../assets/no-preview.png";
 import { useState, useEffect } from "react";
 
 function ImagePreview({ image  }) {
@@ -24,10 +24,9 @@ function ImagePreview({ image  }) {
       <h1 className="text-xl text-left w-full font-bold">Preview:</h1>
       <div className="flex justify-center w-full">
         <Image
-          className="rounded-md shadow-lg max-h-48"
-          src={isImageValid && imageSrc ? imageSrc : noPreview}
+          className="rounded-md shadow-lg max-h-48 object-cover"
+          src={isImageValid && imageSrc ? imageSrc : NoPreviewImage}
           alt="Image preview"
-          objectFit="cover"
           onError={handleImageError}
         />
       </div>

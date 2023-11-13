@@ -1,5 +1,6 @@
 /* eslint no-unused-vars: "warn"*/
-import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+
 import {
   Card,
   CardHeader,
@@ -17,92 +18,64 @@ function PostForm({
   image = "",
   action,
 }) {
-  const [formValues, setFormValues] = useState(() => {
-    // The function returns the initial state value
-    return {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    setValue,
+    watch,
+  } = useForm({
+    defaultValues: {
       description: description,
       image: image,
-    };
+    },
   });
 
-  const [isImageValid, setIsImageValid] = useState(true);
-  const [isDescriptionValid, setIsDescriptionValid] = useState(true);
+  const watchImage = watch("image");
 
-  function handleFormChange(event) {
-    const { name, value } = event.target;
-    setFormValues((prevFormValues) => ({ ...prevFormValues, [name]: value }));
-  }
-
-  // This will be passed as a callback to the ImagePreview component
-  // So it will manage if it can be rendered or not
-  function validateUrl(url) {
-    const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/;
-    const result = urlRegex.test(url);
-
-    // We return the result and if there is any error it displays them
-    setIsImageValid(result);
-    return result;
-  }
-
-  function validateDescription(description) {
-    const result = description.length >= 8;
-
-    // So this way we can display the error
-    setIsDescriptionValid(result);
-    return result;
-  }
-
-  // This function is called when the form is submitted
-  // it checks if the form is valid
-  function isFormValid() {
-    return (
-      validateDescription(formValues.description) &&
-      validateUrl(formValues.image)
-    );
-  }
-
-  function handleFormSubmit(event) {
-    event.preventDefault();
-    if (!isFormValid()) return;
-    // Here the action will be executed
-  }
+  // The submit function will receive the form data if all validations pass
+  const onSubmit = (data) => {
+    // Here the action will be executed with form data
+    console.log(data);
+  };
 
   return (
-    <Card className="mx-auto my-8 max-w-[80%] md:max-w-xl lg:max-w-2xl font-monserrat">
+    <Card className="mx-auto mt-8 mb-20 md:mb-8 max-w-[80%] md:max-w-xl lg:max-w-2xl font-monserrat">
       <CardHeader className="font-bold text-2xl p-4">{title}</CardHeader>
       <Divider />
       <CardBody>
-        <form className="flex flex-col gap-2" onSubmit={handleFormSubmit}>
+        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
           <Input
             variant="bordered"
-            name="image"
-            value={formValues.image}
             label="Image URL"
             placeholder="Enter the image URL for your post."
-            isRequired={true}
-            onChange={handleFormChange}
-            isInvalid={!isImageValid}
-            errorMessage={
-              !isImageValid ? "Please enter a valid image URL." : ""
-            }
+            {...register("image", {
+              required: "Image URL is required",
+              pattern: {
+                value: /^(ftp|http|https):\/\/[^ "]+$/,
+                message: "Please enter a valid image URL",
+              },
+            })}
+            isInvalid={errors.image}
+            errorMessage={errors.image?.message}
           />
           <Textarea
-            name="description"
-            value={formValues.description}
             label="Description"
-            placeholder="Tell what you think about this post"
-            errorMessage={
-              !isDescriptionValid
-                ? "Please enter a description of at least 8 characters."
-                : ""
-            }
             variant="bordered"
-            isRequired={true}
-            isInvalid={!isDescriptionValid}
-            onChange={handleFormChange}
+            placeholder="Tell what you think about this post"
+            description="Minimum 8 characters"
+            {...register("description", {
+              required: "Description is required",
+              minLength: {
+                value: 8,
+                message: "Description must be at least 8 characters",
+              },
+            })}
+            isInvalid={errors.description}
+            errorMessage={errors.description?.message}
             maxRows={4}
           />
-          <ImagePreview image={formValues.image} />
+          <ImagePreview image={watchImage} />
           <Button className="font-extrabold" type="submit" color="primary">
             Submit
           </Button>
