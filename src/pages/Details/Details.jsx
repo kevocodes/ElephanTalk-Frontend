@@ -10,16 +10,31 @@ import { useParams } from "react-router-dom";
 import PostDetail from "./components/PostDetail/PostDetail";
 import { useAuthStore } from "../../store/auth.store";
 
-
 function Details() {
-  const [loading, setLoading] = useState(false);
+  const { id: postId } = useParams();
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
-  const [post, setPost] = useState("");
-
+  
+  const [loading, setLoading] = useState(true);
+  const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
 
-  const { id: postId } = useParams();
+  useEffect(() => {
+    const getData = async () => {
+      try {
+        setLoading(true);
+        const { data } = await getPosts({ token, endpoint: postId });
+        setPost(data);
+        setComments(data.comments);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error al obtener datos de la API:", error);
+        setLoading(false);
+      }
+    };
+
+    getData();
+  }, [postId, token]);
 
   const handleLike = async ({ setLiked, liked, setLikes, postId }) => {
     try {
@@ -63,37 +78,18 @@ function Details() {
     }
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      try {
-        setLoading(true);
-        console.log(postId);
-        let response = await getPosts({ token, endpoint: postId });
-        if (response) {
-          console.log(response);
-          setPost(response.data);
-          setComments(response.data.comments);
-          setLoading(false);
-        }
-      } catch (error) {
-        console.error("Error al obtener datos de la API:", error);
-        setLoading(false);
-      }
-    };
-
-    getData();
-  }, []);
-
   return (
-    <main className="flex-1 absolute top-0 py-14 lg:pb-0 flex flex-col justify-center items-center w-full h-screen">
-      {!loading && <PostDetail
-        post={post}
-        comments={comments}
-        setComments={setComments}
-        postId={postId}
-        onLike={handleLike}
-        onFavorite={handleFavorite}
-      ></PostDetail>}
+    <main className="flex-1 absolute top-0 py-16 md:pb-4 lg:pb-0 flex flex-col justify-center items-center w-full lg:h-screen">
+      {!loading && (
+        <PostDetail
+          post={post}
+          comments={comments}
+          setComments={setComments}
+          postId={postId}
+          onLike={handleLike}
+          onFavorite={handleFavorite}
+        />
+      )}
     </main>
   );
 }

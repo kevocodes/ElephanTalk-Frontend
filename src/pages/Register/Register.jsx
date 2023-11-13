@@ -40,7 +40,7 @@ function Register() {
     } catch (error) {
       const userError = error.message.toLowerCase().includes("username");
       const emailError = error.message.toLowerCase().includes("email");
-      if (userError && emailError) {
+      if (userError || emailError) {
         userError &&
           setError("username", {
             type: "manual",

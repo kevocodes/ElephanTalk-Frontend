@@ -4,8 +4,10 @@ import { useState } from "react";
 import { commentPost } from "../../services/posts.service";
 import { useAuthStore } from "../../store/auth.store";
 
-function CommentForm({ setPostsComments, postId, inputRef= null }) {
+function CommentForm({ setPostsComments, postId, inputRef = null }) {
   const token = useAuthStore((state) => state.token);
+  const user = useAuthStore((state) => state.user);
+
   const [value, setValue] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -15,7 +17,10 @@ function CommentForm({ setPostsComments, postId, inputRef= null }) {
       setLoading(true);
       await commentPost({ content: value, token, postId });
       setValue("");
-      setPostsComments((prev) => [...prev, { content: value }]);
+      setPostsComments((prev) => [
+        ...prev,
+        { content: value, user, _id: crypto.randomUUID() },
+      ]);
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -34,7 +39,7 @@ function CommentForm({ setPostsComments, postId, inputRef= null }) {
         variant="underlined"
         radius="full"
         placeholder="Add your comment..."
-        endContent={<SendButton inputValue={value} loading={loading}/>}
+        endContent={<SendButton inputValue={value} loading={loading} />}
       />
     </form>
   );

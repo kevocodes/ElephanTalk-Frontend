@@ -1,7 +1,7 @@
 import { Avatar, Card, CardBody, CardHeader, Image } from "@nextui-org/react";
 import CommentCard from "../CommentCard/CommentCard";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import ActionsControllers from "../../../../components/ActionsControllers/ActionsControllers";
 import CommentForm from "../../../../components/CommentForm/CommentForm";
@@ -19,14 +19,25 @@ function PostDetail({
   onLike,
   onFavorite,
 }) {
-  const currentUser = useAuthStore((state) => state.user);
-  const token = useAuthStore((state) => state.token);
-  const { description, image, user, likes, isLiked, isFavorite, active } = post;
-  const [postLikes, setLikes] = useState(likes);
-
   const navigate = useNavigate();
 
+  const commentInputRef = useRef(null);
+  const commentScrollRef = useRef(null);
+
+  const currentUser = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
+
+  const { description, image, user, likes, isLiked, isFavorite, active } = post;
+
+  const [postLikes, setLikes] = useState(likes);
   const [isActive, setIsActive] = useState(active);
+
+  // Scroll to top when the comments change
+  useEffect(() => {
+    if (commentScrollRef.current) {
+      commentScrollRef.current.scrollTop = 0;
+    }
+  }, [comments]);
 
   const handleLike = async ({ setLiked, liked }) => {
     await onLike({ setLiked, liked, setLikes, postId });
@@ -34,14 +45,10 @@ function PostDetail({
 
   const handleFavorite = async ({ setFavorited }) => {
     await onFavorite({ setFavorited, postId });
-    console.log(currentUser._id);
-    console.log(user._id);
   };
 
-  const inputRef = useRef(null);
-
   const handleComment = () => {
-    inputRef.current.focus();
+    commentInputRef.current.focus();
   };
 
   const handleEdit = () => {
@@ -78,41 +85,36 @@ function PostDetail({
   };
 
   return (
-    <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full ">
-      <CardHeader className="justify-between px-5 mt-2">
+    <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full">
+      <CardHeader className="justify-between px-5 mt-">
         <div className="flex gap-5">
-          <Avatar
-            isBordered
-            radius="full"
-            size="md"
-            src={post ? user.picture : ""}
-          />
+          <Avatar isBordered radius="full" size="md" src={user.picture} />
           <div className="flex flex-col gap-1 items-start justify-center">
             <p className="text-small font-semibold leading-none">
-              {post ? `${user.name} ${user.lastname}` : ""}
+              {`${user.name} ${user.lastname}`}
             </p>
-            <p className="text-small tracking-tight">
-              {post ? `@${user.username}` : ""}
-            </p>
+            <p className="text-small tracking-tight">{`@${user.username}`}</p>
           </div>
         </div>
-        {post && currentUser._id === user._id && (
+        {currentUser._id === user._id && (
           <OptionsDropdown
-            isActive={active}
-            setIsActive={isActive}
+            isActive={isActive}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onHide={handleHide}
           />
         )}
       </CardHeader>
-      <CardBody className="flex flex-col  w-full max-h-full py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row ">
-        <div className="lg:w-1/2 lg:flex overflow-hidden lg:h-full lg:items-center lg:justify-center">
+      <CardBody className="flex flex-col w-full lg:max-h-full py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row">
+        <div className="w-full lg:w-1/2 flex h-full items-center justify-center">
           <Image
-            alt="Card background "
-            className="object-cover rounded-xl"
-            src={post ? image : ""}
-            width={600}
+            alt="Card background"
+            className="w-full"
+            classNames={{
+              wrapper: "min-w-full min-h-full w-full h-full",
+              img: "object-contain w-full h-full",
+            }}
+            src={image}
           />
         </div>
         <div className="lg:w-1/2 w-full flex flex-col h-full lg:overflow-hidden lg:mt-0 mt-2 gap-3 lg:px-2 lg:pb-2">
@@ -124,23 +126,28 @@ function PostDetail({
             onLike={handleLike}
             onFavorite={handleFavorite}
           />
-          <PostDetails description={post ? description : ""} />
+          <PostDetails description={description} />
           <InteractionsDetails
             onComment={handleComment}
             likes={postLikes}
-            comments={post ? comments.length : ""}
+            comments={comments.length}
           />
           <div className="w-full lg:order-5">
             <CommentForm
-              inputRef={inputRef}
+              inputRef={commentInputRef}
               setPostsComments={setComments}
               postId={postId}
             />
           </div>
-          <div className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg">
-            {comments.map((comment) => (
-              <CommentCard key={comment._id} info={comment} />
-            ))}
+          <div
+            className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg"
+            ref={commentScrollRef}
+          >
+            {comments
+              .map((comment) => (
+                <CommentCard key={comment._id} info={comment} />
+              ))
+              .reverse()}
           </div>
         </div>
       </CardBody>

@@ -21,7 +21,6 @@ function App() {
 
   useEffect(() => {
     async function validate() {
-      console.log("validating");
       try {
         const userInfo = await validateSession({ token });
         if (!user) setUser(userInfo);
