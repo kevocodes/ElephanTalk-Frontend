@@ -1,14 +1,30 @@
 import PostForm from "../../components/PostForm/PostForm";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { useAuthStore } from "../../store/auth.store"
 
 function UpdatePost() {
-  // Here the logic will change due to the fact we are updating the post
-  // Like getting the id and stuff
+  const [isLoading, setIsLoading] = useState(true);
+  const [description, setDescription] = useState("");
+  const [image, setImage] = useState("");
+  const { id } = useParams();
+  const token = useAuthStore((state) => state.token);
+
+  useEffect(() => {
+    console.log(id);
+    setIsLoading(false);
+  }, []);
+
   return (
-    <PostForm
-      title="Update Post"
-      description="dummy description"
-      image="dummy image"
-    />
+    <>
+      {!isLoading && (
+        <PostForm
+          title="Update Post"
+          description="dummy description"
+          image="dummy image"
+        />
+      )}
+    </>
   );
 }
 
