@@ -66,10 +66,8 @@ function Details() {
     const getData = async () => {
       try {
         setLoading(true);
-        console.log(postId);
         let response = await getPosts({ token, endpoint: postId });
         if (response) {
-          console.log(response);
           setPost(response.data);
           setComments(response.data.comments);
           setLoading(false);

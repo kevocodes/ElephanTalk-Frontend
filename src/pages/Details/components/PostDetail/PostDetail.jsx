@@ -19,13 +19,13 @@ function PostDetail({
   onLike,
   onFavorite,
 }) {
-  const currentUser = useAuthStore((state) => state.user);
-  const token = useAuthStore((state) => state.token);
-  const { description, image, user, likes, isLiked, isFavorite, active } = post;
-  const [postLikes, setLikes] = useState(likes);
-
   const navigate = useNavigate();
 
+  const currentUser = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
+
+  const { description, image, user, likes, isLiked, isFavorite, active } = post;
+  const [postLikes, setLikes] = useState(likes);
   const [isActive, setIsActive] = useState(active);
 
   const handleLike = async ({ setLiked, liked }) => {
@@ -34,8 +34,6 @@ function PostDetail({
 
   const handleFavorite = async ({ setFavorited }) => {
     await onFavorite({ setFavorited, postId });
-    console.log(currentUser._id);
-    console.log(user._id);
   };
 
   const inputRef = useRef(null);
@@ -98,8 +96,7 @@ function PostDetail({
         </div>
         {post && currentUser._id === user._id && (
           <OptionsDropdown
-            isActive={active}
-            setIsActive={isActive}
+            isActive={isActive}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onHide={handleHide}
