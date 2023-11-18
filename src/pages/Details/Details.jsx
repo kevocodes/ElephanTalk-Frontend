@@ -81,7 +81,7 @@ function Details() {
   };
 
   return (
-    <main className="flex-1 absolute top-0 py-16 md:pb-4 lg:pb-0 flex flex-col justify-center items-center w-full min-h-[100vh] lg:h-screen">
+    <main className="flex-1 absolute top-0 py-16 md:pb-4 lg:pb-0 flex flex-col justify-center items-center w-full lg:h-screen">
       {!loading && (
         <PostDetail
           post={post}
