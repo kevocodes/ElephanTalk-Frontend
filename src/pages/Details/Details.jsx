@@ -10,6 +10,7 @@ import { useParams } from "react-router-dom";
 import PostDetail from "./components/PostDetail/PostDetail";
 import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
+import PostSkeleton from "../../components/PostLoader/PostSkeleton/PostSkeleton";
 
 function Details() {
   const { id: postId } = useParams();
@@ -29,7 +30,7 @@ function Details() {
         setComments(data.comments);
         setLoading(false);
       } catch (error) {
-        console.error("Error al obtener datos de la API:", error);
+        showAlert("Oops try again later...", "error");
         setLoading(false);
       }
     };
@@ -80,7 +81,7 @@ function Details() {
   };
 
   return (
-    <main className="flex-1 absolute top-0 py-16 md:pb-4 lg:pb-0 flex flex-col justify-center items-center w-full lg:h-screen">
+    <main className="flex-1 absolute top-0 py-16 md:pb-4 lg:pb-0 flex flex-col justify-center items-center w-full min-h-[100vh] lg:h-screen">
       {!loading && (
         <PostDetail
           post={post}
@@ -91,6 +92,7 @@ function Details() {
           onFavorite={handleFavorite}
         />
       )}
+      {loading && <PostSkeleton /> }
     </main>
   );
 }

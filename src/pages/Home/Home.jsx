@@ -141,7 +141,7 @@ function Home() {
       )}
 
       {isLoading && <PostLoader />}
-
+      {/* TODO: create the no post message component */}
       {posts.length === 0 && !isLoading && (
         <p className="text-gray-500 text-lg">No posts yet...</p>
       )}
