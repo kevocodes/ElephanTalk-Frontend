@@ -10,7 +10,7 @@ import {
   Textarea,
   Button,
 } from "@nextui-org/react";
-import ImagePreview from "./ImagePreview";
+import ImagePreview from "./ImagePreview/ImagePreview";
 import { useState } from "react";
 
 function PostForm({
