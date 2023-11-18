@@ -15,7 +15,7 @@ function Own() {
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
@@ -141,6 +141,10 @@ function Own() {
       )}
 
       {isLoading && <PostLoader />}
+
+      {posts.length === 0 && !isLoading && (
+        <p className="text-gray-500 text-lg">No own posts yet...</p>
+      )}
     </main>
   );
 }
