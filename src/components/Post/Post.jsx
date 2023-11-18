@@ -7,7 +7,7 @@ import {
   Image,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ActionsControllers from "../ActionsControllers/ActionsControllers";
 import CommentForm from "../CommentForm/CommentForm";
 import InteractionsDetails from "../InteractionsDetails/InteractionsDetails";
@@ -83,13 +83,15 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
         )}
       </CardHeader>
       <CardBody className="py-2 gap-3">
-        <Image
-          alt="Card background"
-          className="object-cover rounded-xl"
-          src={image}
-          width={480}
-          height={360}
-        />
+        <Link to={`/post/${postId}`}>
+          <Image
+            alt="Card background"
+            className="object-cover rounded-xl"
+            src={image}
+            width={480}
+            height={360}
+          />
+        </Link>
 
         <ActionsControllers
           postId={postId}

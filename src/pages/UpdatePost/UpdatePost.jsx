@@ -5,6 +5,7 @@ import { useAuthStore } from "../../store/auth.store";
 import { getPosts, updatePost } from "../../services/posts.service";
 import { showAlert } from "../../utils/toastify.util";
 import { useNavigate } from "react-router-dom"
+import PostFormSkeleton from "../../components/PostForm/PostFormSkeleton/PostFormSkeleton";
 
 function UpdatePost() {
   // States:
@@ -45,7 +46,6 @@ function UpdatePost() {
       showAlert("Post updated successfully");
       navigate(-1);
     } catch (error) {
-      console.log(error);
       showAlert("Oops try again later...", "error");
     }
   }
@@ -60,6 +60,7 @@ function UpdatePost() {
           action={actionUpdatePost}
         />
       )}
+      {isLoading && <PostFormSkeleton />}
     </>
   );
 }

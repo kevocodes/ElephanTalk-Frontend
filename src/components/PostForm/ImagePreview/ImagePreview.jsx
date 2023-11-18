@@ -1,5 +1,5 @@
 import { Image } from "@nextui-org/react";
-import NoPreviewImage from "../../assets/no-preview.png";
+import NoPreviewImage from "../../../assets/no-preview.png";
 import { useState, useEffect } from "react";
 
 function ImagePreview({ image  }) {

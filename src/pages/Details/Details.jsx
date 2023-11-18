@@ -9,6 +9,8 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PostDetail from "./components/PostDetail/PostDetail";
 import { useAuthStore } from "../../store/auth.store";
+import { showAlert } from "../../utils/toastify.util";
+import PostSkeleton from "../../components/PostLoader/PostSkeleton/PostSkeleton";
 
 function Details() {
   const { id: postId } = useParams();
@@ -28,7 +30,7 @@ function Details() {
         setComments(data.comments);
         setLoading(false);
       } catch (error) {
-        console.error("Error al obtener datos de la API:", error);
+        showAlert("Oops try again later...", "error");
         setLoading(false);
       }
     };
@@ -60,7 +62,7 @@ function Details() {
         return prevLikes.filter((like) => like._id !== user._id);
       });
 
-      console.log(error);
+      showAlert("Oops try again later...", "error");
     }
   };
 
@@ -74,7 +76,7 @@ function Details() {
     } catch (error) {
       // If the request fails, set the state to the previous value
       setFavorited((v) => !v);
-      console.log(error);
+      showAlert("Oops try again later...", "error");
     }
   };
 
@@ -90,6 +92,7 @@ function Details() {
           onFavorite={handleFavorite}
         />
       )}
+      {loading && <PostSkeleton /> }
     </main>
   );
 }

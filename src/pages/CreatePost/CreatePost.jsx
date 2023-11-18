@@ -15,7 +15,6 @@ function CreatePost() {
       showAlert("Post created successfully");
       navigate(-1);
     } catch (error) {
-      console.log(error);
       showAlert("Oops try again later...", "error");
     }
   }

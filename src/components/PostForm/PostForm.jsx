@@ -10,7 +10,7 @@ import {
   Textarea,
   Button,
 } from "@nextui-org/react";
-import ImagePreview from "./ImagePreview";
+import ImagePreview from "./ImagePreview/ImagePreview";
 import { useState } from "react";
 
 function PostForm({
@@ -39,7 +39,6 @@ function PostForm({
   const onSubmit = async (data) => {
     setIsLoading(true);
     // Here the action will be executed with form data
-    console.log(data);
     await action(data);
     setIsLoading(false);
   };
