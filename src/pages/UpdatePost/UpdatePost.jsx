@@ -45,7 +45,6 @@ function UpdatePost() {
       showAlert("Post updated successfully");
       navigate(-1);
     } catch (error) {
-      console.log(error);
       showAlert("Oops try again later...", "error");
     }
   }

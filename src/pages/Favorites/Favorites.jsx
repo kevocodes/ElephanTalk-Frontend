@@ -9,6 +9,7 @@ import {
 import PostLoader from "../../components/PostLoader/PostLoader";
 import PostList from "../../components/PostList/PostList";
 import { useAuthStore } from "../../store/auth.store";
+import { showAlert } from "../../utils/toastify.util";
 
 function Favorites() {
   const [page, setPage] = useState(1);
@@ -34,14 +35,13 @@ function Favorites() {
 
         // If the component is unmounted, don't update the state.
         if (isMounted) {
-          console.log(`fetching posts from page #${page}`);
           setPosts((prevPosts) => [...prevPosts, ...data]);
           setHasMorePosts(data.length > 0);
           setIsLoading(false);
         }
       } catch (error) {
         setIsLoading(false);
-        console.log(error);
+        showAlert("Oops try again later...", "error");
       }
     };
 
@@ -71,6 +71,7 @@ function Favorites() {
       // Send the request to the server
       await toggleLikePost({ token, postId });
     } catch (error) {
+      showAlert("Oops try again later...", "error");
       // If the request fails, set the UI to the previous state
       setLiked((v) => !v); // toggle the like state
 
@@ -80,8 +81,6 @@ function Favorites() {
 
         return prevLikes.filter((like) => like._id !== user._id);
       });
-
-      console.log(error);
     }
   };
 
@@ -100,13 +99,13 @@ function Favorites() {
       // Send the request to the server
       await toggleFavoritePost({ token, postId });
     } catch (error) {
+      showAlert("Oops try again later...", "error");
       // If the request fails, set the state to the previous value
       setFavorited((v) => !v);
       // [OWN COMPONENT LOGIC] Undo the favorites posts
       setPosts((prevPosts) => {
         return [...prevPosts, currentPost];
       });
-      console.log(error);
     }
   };
 
@@ -118,7 +117,7 @@ function Favorites() {
       setLoading(false);
       onClose();
     } catch (error) {
-      console.log(error);
+      showAlert("Oops try again later...", "error");
       setLoading(false);
       onClose();
     }
@@ -133,7 +132,7 @@ function Favorites() {
       setLoading(false);
       onClose();
     } catch (error) {
-      console.log(error);
+      showAlert("Oops try again later...", "error");
       setLoading(false);
       onClose();
     }

@@ -10,6 +10,7 @@ import OptionsDropdown from "../../../../components/OptionsDropdown/OptionsDropd
 import PostDetails from "../../../../components/PostDetails/PostDetails";
 import { deletePost, hidePost } from "../../../../services/posts.service";
 import { useAuthStore } from "../../../../store/auth.store";
+import { showAlert } from "../../../../utils/toastify.util";
 
 function PostDetail({
   post,
@@ -63,7 +64,7 @@ function PostDetail({
       onClose();
       navigate(`/`);
     } catch (error) {
-      console.log(error);
+      showAlert("Oops try again later...", "error");
       setLoading(false);
       onClose();
     }
@@ -78,7 +79,7 @@ function PostDetail({
       setLoading(false);
       onClose();
     } catch (error) {
-      console.log(error);
+      showAlert("Oops try again later...", "error");
       setLoading(false);
       onClose();
     }
