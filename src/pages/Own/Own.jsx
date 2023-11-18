@@ -27,7 +27,7 @@ function Own() {
     const fetchPosts = async () => {
       try {
         setIsLoading(true);
-        const { data } = await getPosts({
+        const { data, pagination } = await getPosts({
           endpoint: "owned",
           token,
           query: `page=${page}&limit=${import.meta.env.VITE_POSTS_PER_PAGE}`,
@@ -36,7 +36,7 @@ function Own() {
         // If the component is unmounted, don't update the state.
         if (isMounted) {
           setPosts((prevPosts) => [...prevPosts, ...data]);
-          setHasMorePosts(data.length > 0);
+          setHasMorePosts(pagination.page < pagination. pages);
           setIsLoading(false);
         }
       } catch (error) {
