@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useAuthStore } from "../../store/auth.store";
 import { getPosts, updatePost } from "../../services/posts.service";
 import { showAlert } from "../../utils/toastify.util";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import PostFormSkeleton from "../../components/PostForm/PostFormSkeleton/PostFormSkeleton";
 
 function UpdatePost() {
@@ -12,14 +12,14 @@ function UpdatePost() {
   const [isLoading, setIsLoading] = useState(true);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
-  
+
   // Hooks:
   const { id } = useParams();
   const navigate = useNavigate();
   const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
-    if(!isLoading) return;
+    if (!isLoading) return;
 
     const fetchPost = async () => {
       try {
@@ -51,7 +51,7 @@ function UpdatePost() {
   }
 
   return (
-    <>
+    <main className="flex-1 flex flex-col items-center py-4 md:mb-0 mb-14">
       {!isLoading && (
         <PostForm
           title="Update Post"
@@ -61,7 +61,7 @@ function UpdatePost() {
         />
       )}
       {isLoading && <PostFormSkeleton />}
-    </>
+    </main>
   );
 }
 

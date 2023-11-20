@@ -140,7 +140,7 @@ function Favorites() {
   };
 
   return (
-    <main className="h-full bg-red-500 flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
+    <main className="flex-1 flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
       {posts.length > 0 && (
         <PostList
           hasMorePosts={hasMorePosts}
@@ -156,7 +156,6 @@ function Favorites() {
       {isLoading && <PostLoader />}
       {/* TODO: create the no post message component */}
       {posts.length === 0 && !isLoading && (
-        
         <EmptyPlaceholder/>
       )}
     </main>

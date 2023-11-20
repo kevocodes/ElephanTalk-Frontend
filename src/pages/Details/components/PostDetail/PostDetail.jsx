@@ -106,7 +106,7 @@ function PostDetail({
           />
         )}
       </CardHeader>
-      <CardBody className="flex flex-col w-full lg:max-h-full py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row">
+      <CardBody className="flex flex-col w-full lg:max-h-full py-4 lg:py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row">
         <div className="w-full lg:w-1/2 flex h-full items-center justify-center">
           <Image
             alt="Card background"
