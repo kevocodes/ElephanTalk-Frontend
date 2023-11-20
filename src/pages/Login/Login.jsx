@@ -50,6 +50,7 @@ export default function Login() {
     <main className="h-screen grid justify-items-center bg-login  bg-cover bg-center bg-no-repeat  ">
       <div className="flex flex-col justify-center  lg:h-full  md:w-96  sm:mx-2 md:m-auto sm:m-auto sm:my-8 sm:h-80">
         <Card
+          data-testid="login-form"
           isBlurred
           as={"form"}
           onSubmit={handleSubmit(onSubmit)}
