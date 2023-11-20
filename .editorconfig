@@ -1,3 +1,6 @@
+# top-most EditorConfig file
+root = true
+
 # indent format for the project
 [*]
 indent_style = space
