@@ -14,6 +14,7 @@ function LinksSection({ classNames }) {
         icon={<Icon icon="material-symbols:bookmark" fontSize={30} />}
       />
       <NavbarLink
+        data-testid="create"
         to="/create"
         icon={<Icon icon="material-symbols:add-box-rounded" fontSize={30} />}
       />

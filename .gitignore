@@ -28,3 +28,5 @@ dist-ssr
 # Tests
 /coverage
 cypress.env.json
+cypress/videos
+cypress/screenshots
