@@ -10,6 +10,7 @@ import {
 } from "../../services/posts.service";
 import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
+import EmptyPlaceholder from "../../components/EmptyPlaceholder/EmptyPlaceholder";
 
 function Own() {
   const [page, setPage] = useState(1);
@@ -141,9 +142,8 @@ function Own() {
       )}
 
       {isLoading && <PostLoader />}
-      {/* TODO: create the no post message component */}
       {posts.length === 0 && !isLoading && (
-        <p className="text-gray-500 text-lg">No own posts yet...</p>
+        <EmptyPlaceholder icon="solar:camera-bold" text="No posts yet"/>
       )}
     </main>
   );

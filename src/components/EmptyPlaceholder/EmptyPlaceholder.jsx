@@ -1,17 +1,17 @@
 import { Icon } from "@iconify/react";
 
-function EmptyPlaceholder() {
+function EmptyPlaceholder({icon, text}) {
   return (
-    <section className="flex-1 bg-green-500 justify-self-center flex flex-col justify-center items-center">
+    <section className="flex-1 justify-self-center flex flex-col justify-center items-center">
       <div className="border-2 rounded-full w-[100px] h-[100px] flex justify-center items-center">
 
         <Icon 
-        icon="solar:camera-bold" 
+        icon={icon} 
         fontSize={50}
         />
       </div>
 
-      <h2 className="pt-6 text-xl">No post yet</h2>
+      <h2 className="pt-6 text-xl">{text}</h2>
     </section>
   )
 }

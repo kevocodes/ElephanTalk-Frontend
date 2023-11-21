@@ -154,9 +154,8 @@ function Favorites() {
       )}
 
       {isLoading && <PostLoader />}
-      {/* TODO: create the no post message component */}
       {posts.length === 0 && !isLoading && (
-        <EmptyPlaceholder/>
+        <EmptyPlaceholder icon="material-symbols-light:bookmark" text="No favorites posts yet"/>
       )}
     </main>
   );

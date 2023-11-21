@@ -11,6 +11,7 @@ import { deletePost, hidePost } from "../../../../services/posts.service";
 import { useAuthStore } from "../../../../store/auth.store";
 import { showAlert } from "../../../../utils/toastify.util";
 import CommentSection from "../CommentSection/CommentSection";
+import EmptyPlaceholder from "../../../../components/EmptyPlaceholder/EmptyPlaceholder";
 
 function PostDetail({
   post,
@@ -145,11 +146,8 @@ function PostDetail({
             ref={commentScrollRef}
           >
             {comments.length > 0 && <CommentSection comments={comments} />}
-            {/* TODO: create the no comments message component */}
             {comments.length === 0 && (
-              <p className="text-center text-small text-gray-400 h-full flex justify-center items-center">
-                No comments yet...
-              </p>
+              <EmptyPlaceholder icon="iconamoon:comment-fill" text="No comments yet"/>
             )}
           </div>
         </div>
