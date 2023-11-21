@@ -60,7 +60,7 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
   };
 
   return (
-    <Card className="max-w-[468px]" ref={measureRef}>
+    <Card data-testid="post" className="max-w-[468px]" ref={measureRef}>
       <CardHeader className="justify-between px-5">
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="md" src={user.picture} />
