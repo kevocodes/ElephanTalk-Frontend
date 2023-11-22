@@ -60,27 +60,22 @@ function Register() {
   };
 
   return (
-    <main className="h-screen grid justify-items-center bg-login  bg-cover bg-center bg-no-repeat">
-      <div className="flex flex-col justify-center lg:h-full md:w-96 sm:mx-2 md:m-auto sm:m-auto sm:my-8 sm:h-80">
+    <main className="h-screen grid justify-items-center items-center bg-light-login bg-cover bg-center bg-no-repeat dark:bg-dark-login">
         <Card
-          isBlurred
-          className="border-none w-full"
+          className="border-none flex flex-col justify-center sm:w-96 sm:mx-2 md:m-auto sm:m-auto sm:my-8"
           shadow="sm"
           as={"form"}
           onSubmit={handleSubmit(onSubmit)}
         >
-          <CardHeader className="flex gap-3 flex-col">
+          <CardHeader className="flex justify-center items-center py-6">
             <img alt="logo" height={80} src={logo} width={220} />
-            <div className="flex flex-col pl-2">
-              <p className="text-small text-foreground">
-                Connect with phantastic people
-              </p>
-            </div>
           </CardHeader>
+
           <Divider />
+
           <CardBody>
             <div className="flex flex-col gap-4">
-              <div className="flex md:flex-row flex-col gap-4 md:gap-2">
+              <div className="flex sm:flex-row flex-col gap-4 sm:gap-2">
                 <TextInput
                   {...register("name", {
                     required: {
@@ -170,22 +165,23 @@ function Register() {
               />
             </div>
           </CardBody>
-          <CardFooter className="pt-0">
-            <div className="flex flex-col gap-2 w-full px-2">
+
+          <CardFooter>
+            <div className="flex flex-col w-full pl-2 pr-2 gap-4">
               <h1 className="text-sm">
                 Already have an account?{" "}
                 <Link
                   to="/login"
-                  className="text-foreground hover:text-primary-500 font-semibold"
+                  className="text-primary-500 font-extrabold"
                 >
                   Log in
                 </Link>
               </h1>
+
               <SubmitButton text="Sign Up" loading={loading} />
             </div>
           </CardFooter>
         </Card>
-      </div>
     </main>
   );
 }

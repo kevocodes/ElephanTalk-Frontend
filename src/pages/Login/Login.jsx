@@ -47,24 +47,19 @@ export default function Login() {
   };
 
   return (
-    <main className="h-screen grid justify-items-center bg-login  bg-cover bg-center bg-no-repeat  ">
-      <div className="flex flex-col justify-center  lg:h-full  md:w-96  sm:mx-2 md:m-auto sm:m-auto sm:my-8 sm:h-80">
+    <main className="h-screen grid justify-items-center items-center bg-light-login bg-cover bg-center bg-no-repeat dark:bg-dark-login">
         <Card
-          isBlurred
           as={"form"}
           onSubmit={handleSubmit(onSubmit)}
-          className="border-none w-full"
-          shadow="sm"
+          className="border-none flex flex-col justify-center sm:w-96 sm:mx-2 md:m-auto sm:m-auto sm:my-8"
+          shadow="md"
         >
-          <CardHeader className="flex gap-3 flex-col">
-            <img alt="logo logo" height={80} src={logo} width={220} />
-            <div className="flex flex-col pl-2">
-              <p className="text-small text-foreground">
-                Connect with phantastic people
-              </p>
-            </div>
+          <CardHeader className="flex justify-center items-center py-6">
+            <img alt="logo" height={80} src={logo} width={220} />
           </CardHeader>
-          <Divider />
+
+          <Divider/>
+
           <CardBody className="gap-4">
             <TextInput
               {...register("username", {
@@ -74,9 +69,9 @@ export default function Login() {
                 },
               })}
               label="Username or Email"
-              isInvalid={Boolean(errors.username)}
               errorMessage={errors.username?.message}
             />
+
             <PasswordInput
               {...register("password", {
                 required: {
@@ -85,27 +80,26 @@ export default function Login() {
                 },
               })}
               label="Password"
-              isInvalid={Boolean(errors.password)}
               errorMessage={errors.password?.message}
             />
           </CardBody>
 
-          <CardFooter className="pt-0">
-            <div className="flex flex-col w-full pl-2 pr-2">
+          <CardFooter>
+            <div className="flex flex-col w-full pl-2 pr-2 gap-2">
               <h1 className="text-sm pb-2">
                 Need to create an account?{" "}
                 <Link
                   to="/register"
-                  className="text-foreground hover:text-primary-500"
+                  className="text-primary-500 font-extrabold"
                 >
                   Sign up
                 </Link>
               </h1>
+              
               <SubmitButton loading={loading} text="Sign In"/>
             </div>
           </CardFooter>
         </Card>
-      </div>
     </main>
   );
 }
