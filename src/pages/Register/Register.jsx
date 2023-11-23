@@ -64,13 +64,13 @@ function Register() {
 
   return (
     <main className="min-h-[100vh] grid justify-items-center items-center bg-light-login bg-cover bg-center bg-no-repeat dark:bg-dark-login">
-      <div className="w-full py-3 px-2 sm:p-0 flex justify-end">
-        <ThemeSwitcher className="sm:fixed sm:top-4 sm:right-4" />
-      </div>
+    <div className="w-full py-3 px-2 sm:p-0 self-start fixed flex justify-end">
+      <ThemeSwitcher className="sm:fixed sm:top-4 sm:right-4" />
+    </div>
       <Card
         as={"form"}
         onSubmit={handleSubmit(onSubmit)}
-        className="border-none flex flex-col justify-center mb-4 mx-2 sm:w-96 sm:my-8"
+        className="border-none flex flex-col justify-center mx-2 sm:w-96 my-16 mb-10"
         shadow="md"
       >
         <CardHeader className="flex justify-center items-center py-6">
