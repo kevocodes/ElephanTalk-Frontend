@@ -1,11 +1,10 @@
-import PostForm from "../../components/PostForm/PostForm"
-import { useAuthStore } from "../../store/auth.store"
-import { useNavigate } from "react-router-dom"
+import PostForm from "../../components/PostForm/PostForm";
+import { useAuthStore } from "../../store/auth.store";
+import { useNavigate } from "react-router-dom";
 import { createPost } from "../../services/posts.service";
 import { showAlert } from "../../utils/toastify.util";
 
 function CreatePost() {
-
   const navigate = useNavigate();
   const token = useAuthStore((state) => state.token);
 
@@ -20,8 +19,10 @@ function CreatePost() {
   }
 
   return (
-    <PostForm action={actionCreatePost} />
-  )
+    <main className="flex-1 flex flex-col items-center py-4 md:mb-0 mb-14">
+      <PostForm action={actionCreatePost} />
+    </main>
+  );
 }
 
-export default CreatePost
+export default CreatePost;

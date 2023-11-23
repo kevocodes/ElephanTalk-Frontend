@@ -10,6 +10,7 @@ import {
 } from "../../services/posts.service";
 import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
+import EmptyPlaceholder from "../../components/EmptyPlaceholder/EmptyPlaceholder";
 
 function Own() {
   const [page, setPage] = useState(1);
@@ -127,7 +128,7 @@ function Own() {
   };
 
   return (
-    <main className="flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
+    <main className="flex-1 flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
       {posts.length > 0 && (
         <PostList
           hasMorePosts={hasMorePosts}
@@ -141,9 +142,8 @@ function Own() {
       )}
 
       {isLoading && <PostLoader />}
-      {/* TODO: create the no post message component */}
       {posts.length === 0 && !isLoading && (
-        <p className="text-gray-500 text-lg">No own posts yet...</p>
+        <EmptyPlaceholder icon="solar:camera-bold" text="No posts yet"/>
       )}
     </main>
   );

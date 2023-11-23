@@ -10,7 +10,7 @@ import {
 
 function PostFormSkeleton() {
   return (
-    <Card className="mx-auto mt-8 mb-20 md:mb-8 max-w-[80%] md:max-w-xl lg:max-w-2xl font-monserrat">
+    <Card className="w-[90%] max-w-2xl">
       <CardHeader className="font-bold text-2xl p-4">Update Post</CardHeader>
       <Divider />
       <CardBody>

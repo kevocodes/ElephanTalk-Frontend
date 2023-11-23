@@ -11,7 +11,9 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        'login': "url('/src/assets/login/login-register-background.webp')",
+        'light-login': "url('/src/assets/login/login-light-background.webp')",
+        'dark-login': "url('/src/assets/login/login-dark-background.webp')",
+
       }
     },
     minHeight: {
