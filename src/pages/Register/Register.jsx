@@ -16,8 +16,10 @@ import TextInput from "../../components/TextInput/TextInput";
 import { signUp } from "../../services/auth.service";
 import { showAlert } from "../../utils/toastify.util";
 import { ThemeSwitcher } from "../../components/ThemeSwitcher/ThemeSwitcher";
+import { useTitle } from "../../hooks/useTitle";
 
 function Register() {
+  useTitle("Register | Elephantalk");
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);

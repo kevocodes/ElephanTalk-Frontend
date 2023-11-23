@@ -3,8 +3,10 @@ import { useAuthStore } from "../../store/auth.store";
 import { useNavigate } from "react-router-dom";
 import { createPost } from "../../services/posts.service";
 import { showAlert } from "../../utils/toastify.util";
+import { useTitle } from "../../hooks/useTitle";
 
 function CreatePost() {
+  useTitle("Create Post | Elephantalk");
   const navigate = useNavigate();
   const token = useAuthStore((state) => state.token);
 

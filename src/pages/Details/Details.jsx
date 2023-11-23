@@ -11,8 +11,10 @@ import PostDetail from "./components/PostDetail/PostDetail";
 import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
 import PostSkeleton from "../../components/PostLoader/PostSkeleton/PostSkeleton";
+import { useTitle } from "../../hooks/useTitle";
 
 function Details() {
+  useTitle("Post details | Elephantalk");
   const { id: postId } = useParams();
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);

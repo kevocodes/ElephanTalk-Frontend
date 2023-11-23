@@ -6,8 +6,10 @@ import { getPosts, updatePost } from "../../services/posts.service";
 import { showAlert } from "../../utils/toastify.util";
 import { useNavigate } from "react-router-dom";
 import PostFormSkeleton from "../../components/PostForm/PostFormSkeleton/PostFormSkeleton";
+import { useTitle } from "../../hooks/useTitle";
 
 function UpdatePost() {
+  useTitle("Edit Post | Elephantalk");
   // States:
   const [isLoading, setIsLoading] = useState(true);
   const [description, setDescription] = useState("");

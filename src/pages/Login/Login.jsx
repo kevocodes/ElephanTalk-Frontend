@@ -16,8 +16,10 @@ import TextInput from "../../components/TextInput/TextInput";
 import SubmitButton from "../../components/SubmitButton/SubmitButton";
 import { showAlert } from "../../utils/toastify.util";
 import { ThemeSwitcher } from "../../components/ThemeSwitcher/ThemeSwitcher";
+import { useTitle } from "../../hooks/useTitle";
 
 export default function Login() {
+  useTitle("Login | Elephantalk");
   const navigate = useNavigate();
   const setToken = useAuthStore((state) => state.setToken);
   const setUser = useAuthStore((state) => state.setUser);
