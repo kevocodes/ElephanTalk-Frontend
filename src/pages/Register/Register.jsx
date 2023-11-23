@@ -60,7 +60,7 @@ function Register() {
   };
 
   return (
-    <main className="h-screen grid justify-items-center items-center bg-light-login bg-cover bg-center bg-no-repeat dark:bg-dark-login">
+    <main className="min-h-[100vh] p-4 grid justify-items-center items-center bg-light-login bg-cover bg-center bg-no-repeat dark:bg-dark-login">
         <Card
           className="border-none flex flex-col justify-center sm:w-96 sm:mx-2 md:m-auto sm:m-auto sm:my-8"
           shadow="sm"
