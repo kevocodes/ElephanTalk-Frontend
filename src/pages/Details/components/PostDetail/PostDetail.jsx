@@ -1,5 +1,4 @@
 import { Avatar, Card, CardBody, CardHeader, Image } from "@nextui-org/react";
-import CommentCard from "../CommentCard/CommentCard";
 
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,9 @@ import OptionsDropdown from "../../../../components/OptionsDropdown/OptionsDropd
 import PostDetails from "../../../../components/PostDetails/PostDetails";
 import { deletePost, hidePost } from "../../../../services/posts.service";
 import { useAuthStore } from "../../../../store/auth.store";
+import { showAlert } from "../../../../utils/toastify.util";
+import CommentSection from "../CommentSection/CommentSection";
+import EmptyPlaceholder from "../../../../components/EmptyPlaceholder/EmptyPlaceholder";
 
 function PostDetail({
   post,
@@ -63,7 +65,7 @@ function PostDetail({
       onClose();
       navigate(`/`);
     } catch (error) {
-      console.log(error);
+      showAlert("Oops try again later...", "error");
       setLoading(false);
       onClose();
     }
@@ -78,7 +80,7 @@ function PostDetail({
       setLoading(false);
       onClose();
     } catch (error) {
-      console.log(error);
+      showAlert("Oops try again later...", "error");
       setLoading(false);
       onClose();
     }
@@ -86,7 +88,7 @@ function PostDetail({
 
   return (
     <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full">
-      <CardHeader className="justify-between px-5 mt-">
+      <CardHeader className="justify-between px-5">
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="md" src={user.picture} />
           <div className="flex flex-col gap-1 items-start justify-center">
@@ -105,7 +107,7 @@ function PostDetail({
           />
         )}
       </CardHeader>
-      <CardBody className="flex flex-col w-full lg:max-h-full py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row">
+      <CardBody className="flex flex-col w-full lg:max-h-full py-4 lg:py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row">
         <div className="w-full lg:w-1/2 flex h-full items-center justify-center">
           <Image
             alt="Card background"
@@ -143,11 +145,10 @@ function PostDetail({
             className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg"
             ref={commentScrollRef}
           >
-            {comments
-              .map((comment) => (
-                <CommentCard key={comment._id} info={comment} />
-              ))
-              .reverse()}
+            {comments.length > 0 && <CommentSection comments={comments} />}
+            {comments.length === 0 && (
+              <EmptyPlaceholder icon="iconamoon:comment-fill" text="No comments yet"/>
+            )}
           </div>
         </div>
       </CardBody>

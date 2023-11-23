@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useTitle } from "../../hooks/useTitle"
 import {
   deletePost,
   getPosts,
@@ -9,12 +10,15 @@ import {
 import PostLoader from "../../components/PostLoader/PostLoader";
 import PostList from "../../components/PostList/PostList";
 import { useAuthStore } from "../../store/auth.store";
+import { showAlert } from "../../utils/toastify.util";
+import EmptyPlaceholder from "../../components/EmptyPlaceholder/EmptyPlaceholder";
 
 function Home() {
+  useTitle("Home | Elephantalk");
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
@@ -26,21 +30,20 @@ function Home() {
     const fetchPosts = async () => {
       try {
         setIsLoading(true);
-        const { data } = await getPosts({
+        const { data, pagination } = await getPosts({
           token,
           query: `page=${page}&limit=${import.meta.env.VITE_POSTS_PER_PAGE}`,
         });
 
         // If the component is unmounted, don't update the state.
         if (isMounted) {
-          console.log(`fetching posts from page #${page}`);
           setPosts((prevPosts) => [...prevPosts, ...data]);
-          setHasMorePosts(data.length > 0);
+          setHasMorePosts(pagination.page < pagination. pages);
           setIsLoading(false);
         }
       } catch (error) {
         setIsLoading(false);
-        console.log(error);
+        showAlert("Oops try again later...", "error");
       }
     };
 
@@ -70,6 +73,7 @@ function Home() {
       // Send the request to the server
       await toggleLikePost({ token, postId });
     } catch (error) {
+      showAlert("Oops try again later...", "error");
       // If the request fails, set the UI to the previous state
       setLiked((v) => !v); // toggle the like state
 
@@ -79,8 +83,6 @@ function Home() {
 
         return prevLikes.filter((like) => like._id !== user._id);
       });
-
-      console.log(error);
     }
   };
 
@@ -92,9 +94,9 @@ function Home() {
       // Send the request to the server
       await toggleFavoritePost({ token, postId });
     } catch (error) {
+      showAlert("Oops try again later...", "error");
       // If the request fails, set the state to the previous value
       setFavorited((v) => !v);
-      console.log(error);
     }
   };
 
@@ -106,7 +108,7 @@ function Home() {
       setLoading(false);
       onClose();
     } catch (error) {
-      console.log(error);
+      showAlert("Oops try again later...", "error");
       setLoading(false);
       onClose();
     }
@@ -121,14 +123,14 @@ function Home() {
       setLoading(false);
       onClose();
     } catch (error) {
-      console.log(error);
+      showAlert("Oops try again later...", "error");
       setLoading(false);
       onClose();
     }
   };
 
   return (
-    <main className="flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
+    <main className="flex-1 flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
       {posts.length > 0 && (
         <PostList
           hasMorePosts={hasMorePosts}
@@ -142,6 +144,9 @@ function Home() {
       )}
 
       {isLoading && <PostLoader />}
+      {posts.length === 0 && !isLoading && (
+        <EmptyPlaceholder icon="solar:camera-bold" text="No posts yet"/>
+      )}
     </main>
   );
 }

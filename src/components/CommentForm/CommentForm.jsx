@@ -3,6 +3,7 @@ import SendButton from "./SendButton/SendButton";
 import { useState } from "react";
 import { commentPost } from "../../services/posts.service";
 import { useAuthStore } from "../../store/auth.store";
+import { showAlert } from "../../utils/toastify.util"
 
 function CommentForm({ setPostsComments, postId, inputRef = null }) {
   const token = useAuthStore((state) => state.token);
@@ -23,13 +24,13 @@ function CommentForm({ setPostsComments, postId, inputRef = null }) {
       ]);
       setLoading(false);
     } catch (error) {
+      showAlert("Oops try again later...", "error");
       setLoading(false);
-      console.log(error);
     }
   };
 
   return (
-    <form className="w-full" onSubmit={handleSend}>
+    <form data-testid="comment-form" className="w-full" onSubmit={handleSend}>
       <Input
         ref={inputRef}
         value={value}

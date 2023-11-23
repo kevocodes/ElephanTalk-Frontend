@@ -7,7 +7,7 @@ import {
   Image,
 } from "@nextui-org/react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ActionsControllers from "../ActionsControllers/ActionsControllers";
 import CommentForm from "../CommentForm/CommentForm";
 import InteractionsDetails from "../InteractionsDetails/InteractionsDetails";
@@ -60,15 +60,15 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
   };
 
   return (
-    <Card className="max-w-[468px]" ref={measureRef}>
+    <Card data-testid="post" className="max-w-[468px]" ref={measureRef}>
       <CardHeader className="justify-between px-5">
         <div className="flex gap-5">
           <Avatar isBordered radius="full" size="md" src={user.picture} />
           <div className="flex flex-col gap-1 items-start justify-center">
             <p className="text-small font-semibold leading-none">
-              {user.name} {user.lastname}
+              {`${user.name} ${user.lastname}`}
             </p>
-            <p className="text-small tracking-tight">@{user.username}</p>
+            <p className="text-small tracking-tight">{`@${user.username}`}</p>
           </div>
         </div>
 
@@ -83,13 +83,15 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
         )}
       </CardHeader>
       <CardBody className="py-2 gap-3">
-        <Image
-          alt="Card background"
-          className="object-cover rounded-xl"
-          src={image}
-          width={480}
-          height={360}
-        />
+        <Link to={`/post/${postId}`}>
+          <Image
+            alt="Card background"
+            className="object-cover rounded-xl"
+            src={image}
+            width={480}
+            height={360}
+          />
+        </Link>
 
         <ActionsControllers
           postId={postId}

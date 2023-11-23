@@ -37,12 +37,13 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
       <Dropdown>
         <DropdownTrigger>
           <Icon
+            data-testid="options-button"
             icon="mi:options-horizontal"
             fontSize={25}
             className="hover:cursor-pointer text-default-500"
           />
         </DropdownTrigger>
-        <DropdownMenu variant="flat" aria-label="Dropdown menu with icons">
+        <DropdownMenu data-testid="options-menu" variant="flat" aria-label="Dropdown menu with icons">
           <DropdownItem key="edit" onClick={handleEdit}>
             Edit post
           </DropdownItem>
@@ -50,6 +51,7 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
             {isActive ? "Hide post" : "Unhide post"}
           </DropdownItem>
           <DropdownItem
+            data-testid="delete-button"
             key="delete"
             className="text-danger"
             color="danger"

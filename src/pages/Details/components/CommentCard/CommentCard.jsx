@@ -1,17 +1,11 @@
-import React from "react";
 import {
   Card,
   CardHeader,
-  CardBody,
-  CardFooter,
-  Divider,
-  Link,
-  Image,
   Avatar,
 } from "@nextui-org/react";
 
-export default function App({ info }) {
-  const { content, user, _id } = info;
+export default function CommentCard ({ info }) {
+  const { content, user } = info;
 
   return (
     <div className="flex items-center justify-between w-full">

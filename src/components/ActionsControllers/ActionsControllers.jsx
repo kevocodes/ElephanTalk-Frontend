@@ -26,12 +26,13 @@ function ActionsControllers({ isLiked, isFavorite, isActive, onLike, onFavorite,
   }
   
   return (
-    <div className="flex items-center justify-between w-full">
+    <div data-testid="actions-controllers" className="flex items-center justify-between w-full">
       <div className="flex items-center gap-[2px]">
         <ControllerToggle
           state={liked}
           action={handleLike}
           Component={HeartIcon}
+          data-testid="like-button"
         />
 
         <ControllerAction
@@ -50,6 +51,7 @@ function ActionsControllers({ isLiked, isFavorite, isActive, onLike, onFavorite,
           state={favorited}
           action={handleFavorite}
           Component={FavoriteIcon}
+          data-testid="favorite-button"
         />
       </div>
     </div>

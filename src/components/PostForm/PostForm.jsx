@@ -10,7 +10,7 @@ import {
   Textarea,
   Button,
 } from "@nextui-org/react";
-import ImagePreview from "./ImagePreview";
+import ImagePreview from "./ImagePreview/ImagePreview";
 import { useState } from "react";
 
 function PostForm({
@@ -39,17 +39,16 @@ function PostForm({
   const onSubmit = async (data) => {
     setIsLoading(true);
     // Here the action will be executed with form data
-    console.log(data);
     await action(data);
     setIsLoading(false);
   };
 
   return (
-    <Card className="mx-auto mt-8 mb-20 md:mb-8 max-w-[80%] md:max-w-xl lg:max-w-2xl font-monserrat">
+    <Card className="w-[90%] max-w-2xl">
       <CardHeader className="font-bold text-2xl p-4">{title}</CardHeader>
       <Divider />
       <CardBody>
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <form data-testid="create-form" className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
           <Input
             variant="bordered"
             label="Image URL"
