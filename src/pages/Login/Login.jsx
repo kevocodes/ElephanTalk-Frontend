@@ -53,6 +53,7 @@ export default function Login() {
         <ThemeSwitcher className="sm:fixed sm:top-4 sm:right-4" />
       </div>
       <Card
+        data-testid="login-form"
         as={"form"}
         onSubmit={handleSubmit(onSubmit)}
         className="border-none flex flex-col justify-center mb-4 mx-2 sm:w-96 sm:my-8"
