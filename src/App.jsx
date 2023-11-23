@@ -1,5 +1,10 @@
 import { useEffect } from "react";
-import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
 import MainLayout from "./components/MainLayout/MainLayout";
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import Details from "./pages/Details/Details";
@@ -37,7 +42,7 @@ function App() {
       <Router>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/signup" element={<Register />} />
           <Route
             element={
               <ProtectedRoute
@@ -53,7 +58,7 @@ function App() {
               <Route path="/post/:id" element={<Details />} />
               <Route path="/edit/:id" element={<UpdatePost />} />
               <Route path="/create" element={<CreatePost />} />
-              <Route path="*" element={<h1>404</h1>} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Route>
           </Route>
         </Routes>

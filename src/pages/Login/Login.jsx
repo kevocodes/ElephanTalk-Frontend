@@ -92,7 +92,7 @@ export default function Login() {
           <div className="flex flex-col w-full pl-2 pr-2 gap-2">
             <h1 className="text-sm pb-2">
               Need to create an account?{" "}
-              <Link to="/register" className="text-primary-500 font-extrabold">
+              <Link to="/signup" className="text-primary-500 font-extrabold">
                 Sign up
               </Link>
             </h1>
