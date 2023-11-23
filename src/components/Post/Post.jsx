@@ -66,9 +66,9 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
           <Avatar isBordered radius="full" size="md" src={user.picture} />
           <div className="flex flex-col gap-1 items-start justify-center">
             <p className="text-small font-semibold leading-none">
-              {user.name} {user.lastname}
+              {`${user.name} ${user.lastname}`}
             </p>
-            <p className="text-small tracking-tight">@{user.username}</p>
+            <p className="text-small tracking-tight">{`@${user.username}`}</p>
           </div>
         </div>
 

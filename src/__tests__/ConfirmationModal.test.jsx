@@ -57,7 +57,7 @@ describe("<ConfirmationModal />", () => {
       />
     );
 
-    const button = screen.getByText("Confirm")
+    const button = screen.getByText("Confirm");
     fireEvent.click(button);
 
     expect(action).toHaveBeenCalledTimes(1);
@@ -78,7 +78,7 @@ describe("<ConfirmationModal />", () => {
       />
     );
 
-    const button = screen.getByText("Close")
+    const button = screen.getByText("Close");
     fireEvent.click(button);
 
     expect(onOpenChange).toHaveBeenCalledTimes(1);
@@ -99,7 +99,7 @@ describe("<ConfirmationModal />", () => {
       />
     );
 
-    const button = screen.getByText("Confirm")
+    const button = screen.getByText("Confirm");
     fireEvent.click(button);
 
     expect(action).toHaveBeenCalledTimes(0);

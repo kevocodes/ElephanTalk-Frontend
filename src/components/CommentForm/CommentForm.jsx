@@ -30,7 +30,7 @@ function CommentForm({ setPostsComments, postId, inputRef = null }) {
   };
 
   return (
-    <form className="w-full" onSubmit={handleSend}>
+    <form data-testid="comment-form" className="w-full" onSubmit={handleSend}>
       <Input
         ref={inputRef}
         value={value}
