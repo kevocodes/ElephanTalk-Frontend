@@ -48,7 +48,7 @@ function PostForm({
       <CardHeader className="font-bold text-2xl p-4">{title}</CardHeader>
       <Divider />
       <CardBody>
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
+        <form data-testid="create-form" className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
           <Input
             variant="bordered"
             label="Image URL"

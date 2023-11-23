@@ -20,6 +20,7 @@ function ConfirmationModal({
   return (
     <>
       <Modal
+        data-testid="confirmation-modal"
         backdrop="blur"
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -42,6 +43,7 @@ function ConfirmationModal({
                   Close
                 </Button>
                 <Button
+                  data-testid="action-button"
                   color="danger"
                   variant="light"
                   onPress={action}
