@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { useTitle } from "../../hooks/useTitle"
 import {
   deletePost,
   getPosts,
@@ -13,6 +14,7 @@ import { showAlert } from "../../utils/toastify.util";
 import EmptyPlaceholder from "../../components/EmptyPlaceholder/EmptyPlaceholder";
 
 function Home() {
+  useTitle("Home | Elephantalk");
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(false);

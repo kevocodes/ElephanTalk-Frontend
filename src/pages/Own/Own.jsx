@@ -11,8 +11,10 @@ import {
 import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
 import EmptyPlaceholder from "../../components/EmptyPlaceholder/EmptyPlaceholder";
+import { useTitle } from "../../hooks/useTitle";
 
 function Own() {
+  useTitle("Own | Elephantalk");
   const [page, setPage] = useState(1);
   const [posts, setPosts] = useState([]);
   const [hasMorePosts, setHasMorePosts] = useState(false);
