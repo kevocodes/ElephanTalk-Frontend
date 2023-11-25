@@ -43,7 +43,11 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
             className="hover:cursor-pointer text-default-500"
           />
         </DropdownTrigger>
-        <DropdownMenu data-testid="options-menu" variant="flat" aria-label="Dropdown menu with icons">
+        <DropdownMenu
+          data-testid="options-menu"
+          variant="flat"
+          aria-label="Dropdown menu with icons"
+        >
           <DropdownItem key="edit" onClick={handleEdit}>
             Edit post
           </DropdownItem>

@@ -8,7 +8,7 @@ export default function SubmitButton({ loading, text }) {
       className="w-full mb-2 font-bold text-base"
       type="submit"
     >
-      { text }
+      {text}
     </Button>
   );
 }

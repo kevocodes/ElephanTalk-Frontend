@@ -13,7 +13,7 @@ export const signIn = async ({ username, password }) => {
     if (response.status === 401) {
       throw new Error("Invalid credentials");
     }
-    
+
     throw new Error("Can't signing in");
   }
 

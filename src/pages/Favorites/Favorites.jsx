@@ -39,7 +39,7 @@ function Favorites() {
         // If the component is unmounted, don't update the state.
         if (isMounted) {
           setPosts((prevPosts) => [...prevPosts, ...data]);
-          setHasMorePosts(pagination.page < pagination. pages);
+          setHasMorePosts(pagination.page < pagination.pages);
           setIsLoading(false);
         }
       } catch (error) {
@@ -157,7 +157,10 @@ function Favorites() {
 
       {isLoading && <PostLoader />}
       {posts.length === 0 && !isLoading && (
-        <EmptyPlaceholder icon="material-symbols-light:bookmark" text="No favorites posts yet"/>
+        <EmptyPlaceholder
+          icon="material-symbols-light:bookmark"
+          text="No favorites posts yet"
+        />
       )}
     </main>
   );

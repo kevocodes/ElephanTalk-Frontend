@@ -39,7 +39,7 @@ function Own() {
         // If the component is unmounted, don't update the state.
         if (isMounted) {
           setPosts((prevPosts) => [...prevPosts, ...data]);
-          setHasMorePosts(pagination.page < pagination. pages);
+          setHasMorePosts(pagination.page < pagination.pages);
           setIsLoading(false);
         }
       } catch (error) {
@@ -145,7 +145,7 @@ function Own() {
 
       {isLoading && <PostLoader />}
       {posts.length === 0 && !isLoading && (
-        <EmptyPlaceholder icon="solar:camera-bold" text="No posts yet"/>
+        <EmptyPlaceholder icon="solar:camera-bold" text="No posts yet" />
       )}
     </main>
   );

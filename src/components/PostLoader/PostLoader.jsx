@@ -1,4 +1,4 @@
-import PostSkeleton from "./PostSkeleton/PostSkeleton"
+import PostSkeleton from "./PostSkeleton/PostSkeleton";
 
 function PostLoader({ quantity = 3 }) {
   return (
@@ -7,7 +7,7 @@ function PostLoader({ quantity = 3 }) {
         <PostSkeleton key={i} />
       ))}
     </>
-    )
+  );
 }
 
-export default PostLoader
+export default PostLoader;
