@@ -112,7 +112,7 @@ export const createPost = async ({ token, body: postData }) => {
   }
 
   return true;
-}
+};
 
 export const updatePost = async ({ token, postId, body: postData }) => {
   const response = await fetch(`${BASE_URL}/posts/${postId}`, {
@@ -129,4 +129,4 @@ export const updatePost = async ({ token, postId, body: postData }) => {
   }
 
   return true;
-}
+};

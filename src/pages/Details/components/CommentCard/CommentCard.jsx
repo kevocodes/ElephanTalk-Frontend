@@ -1,10 +1,6 @@
-import {
-  Card,
-  CardHeader,
-  Avatar,
-} from "@nextui-org/react";
+import { Card, CardHeader, Avatar } from "@nextui-org/react";
 
-export default function CommentCard ({ info }) {
+export default function CommentCard({ info }) {
   const { content, user } = info;
 
   return (
@@ -16,13 +12,15 @@ export default function CommentCard ({ info }) {
             alt="nextui logo"
             height={40}
             radius="sm"
-            src={user ? user.picture : ''}
+            src={user ? user.picture : ""}
             width={40}
           />
           <div className="flex flex-col min-h-fit w-10/12">
-            <p className="text-md">{user ? `${user.name} ${user.lastname}` : ''}</p>
+            <p className="text-md">
+              {user ? `${user.name} ${user.lastname}` : ""}
+            </p>
             <p className="text-small text-default-500">
-              {content ? content : ''}
+              {content ? content : ""}
             </p>
           </div>
         </CardHeader>

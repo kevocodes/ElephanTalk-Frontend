@@ -2,7 +2,7 @@ import { Image } from "@nextui-org/react";
 import NoPreviewImage from "../../../assets/no-preview.png";
 import { useState, useEffect } from "react";
 
-function ImagePreview({ image  }) {
+function ImagePreview({ image }) {
   const [isImageValid, setIsImageValid] = useState(true);
   const [imageSrc, setImageSrc] = useState("");
 

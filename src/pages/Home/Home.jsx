@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { useTitle } from "../../hooks/useTitle"
+import { useTitle } from "../../hooks/useTitle";
 import {
   deletePost,
   getPosts,
@@ -38,7 +38,7 @@ function Home() {
         // If the component is unmounted, don't update the state.
         if (isMounted) {
           setPosts((prevPosts) => [...prevPosts, ...data]);
-          setHasMorePosts(pagination.page < pagination. pages);
+          setHasMorePosts(pagination.page < pagination.pages);
           setIsLoading(false);
         }
       } catch (error) {
@@ -145,7 +145,7 @@ function Home() {
 
       {isLoading && <PostLoader />}
       {posts.length === 0 && !isLoading && (
-        <EmptyPlaceholder icon="solar:camera-bold" text="No posts yet"/>
+        <EmptyPlaceholder icon="solar:camera-bold" text="No posts yet" />
       )}
     </main>
   );

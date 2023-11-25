@@ -18,7 +18,7 @@ function Details() {
   const { id: postId } = useParams();
   const token = useAuthStore((state) => state.token);
   const user = useAuthStore((state) => state.user);
-  
+
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState({});
   const [comments, setComments] = useState([]);
@@ -94,7 +94,7 @@ function Details() {
           onFavorite={handleFavorite}
         />
       )}
-      {loading && <PostSkeleton /> }
+      {loading && <PostSkeleton />}
     </main>
   );
 }

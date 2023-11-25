@@ -10,9 +10,6 @@ export default forwardRef(function EmailInput({ ...props }, ref) {
       variant="bordered"
       color="primary-50"
       className="w-full"
-      // startContent={
-      //   <MailIcon className="text-2xl text-default-400 pointer-events-none flex-shrink-0" />
-      // }
       {...props}
     />
   );
