@@ -7,13 +7,13 @@ export function ThemeSwitcher({ ...props }) {
 
   return (
     <Button
-    isIconOnly
-    size="lg"
-    variant="light"
-    color="primary"
-    aria-label="Theme Switcher"
-    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-    {...props}
+      isIconOnly
+      size="lg"
+      variant="light"
+      color="primary"
+      aria-label="Theme Switcher"
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      {...props}
     >
       {theme === "dark" ? (
         <Icon icon="ion:moon" className="text-foreground" fontSize={22} />

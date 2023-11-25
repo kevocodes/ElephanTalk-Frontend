@@ -1,15 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import HeartIcon from "./HeartIcon/HeartIcon";
 import FavoriteIcon from "./FavoriteIcon/FavoriteIcon";
 import CommentIcon from "./CommentIcon/CommentIcon";
 import ControllerToggle from "./ControllerToggle/ControllerToggle";
 import ControllerAction from "./ControllerAction/ControllerAction";
-import { useNavigate } from "react-router-dom";
 import { Chip } from "@nextui-org/react";
 
-function ActionsControllers({ isLiked, isFavorite, isActive, onLike, onFavorite, onComment }) {
-  const navigate = useNavigate();
-
+function ActionsControllers({
+  isLiked,
+  isFavorite,
+  isActive,
+  onLike,
+  onFavorite,
+  onComment,
+}) {
   const [favorited, setFavorited] = useState(isFavorite);
   const [liked, setLiked] = useState(isLiked);
 
@@ -19,14 +23,17 @@ function ActionsControllers({ isLiked, isFavorite, isActive, onLike, onFavorite,
 
   const handleFavorite = async () => {
     await onFavorite({ setFavorited });
-  }
+  };
 
-  const handleComment = ()  => {
+  const handleComment = () => {
     onComment();
-  }
-  
+  };
+
   return (
-    <div data-testid="actions-controllers" className="flex items-center justify-between w-full">
+    <div
+      data-testid="actions-controllers"
+      className="flex items-center justify-between w-full"
+    >
       <div className="flex items-center gap-[2px]">
         <ControllerToggle
           state={liked}
@@ -35,10 +42,7 @@ function ActionsControllers({ isLiked, isFavorite, isActive, onLike, onFavorite,
           data-testid="like-button"
         />
 
-        <ControllerAction
-          Component={CommentIcon}
-          action={handleComment}
-        />
+        <ControllerAction Component={CommentIcon} action={handleComment} />
       </div>
       <div className="flex justify-between items-center gap-1">
         {!isActive && (

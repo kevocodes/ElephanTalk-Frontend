@@ -147,7 +147,10 @@ function PostDetail({
           >
             {comments.length > 0 && <CommentSection comments={comments} />}
             {comments.length === 0 && (
-              <EmptyPlaceholder icon="iconamoon:comment-fill" text="No comments yet"/>
+              <EmptyPlaceholder
+                icon="iconamoon:comment-fill"
+                text="No comments yet"
+              />
             )}
           </div>
         </div>

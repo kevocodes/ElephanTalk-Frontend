@@ -1,5 +1,5 @@
 /* eslint no-unused-vars: "warn"*/
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 import {
   Card,
@@ -22,9 +22,9 @@ function PostForm({
   const [isLoading, setIsLoading] = useState(false);
 
   const {
-    register,
     handleSubmit,
     formState: { errors },
+    control,
     watch,
   } = useForm({
     defaultValues: {
@@ -48,36 +48,53 @@ function PostForm({
       <CardHeader className="font-bold text-2xl p-4">{title}</CardHeader>
       <Divider />
       <CardBody>
-        <form data-testid="create-form" className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-          <Input
-            variant="bordered"
-            label="Image URL"
-            placeholder="Enter the image URL for your post."
-            {...register("image", {
+        <form
+          data-testid="create-form"
+          className="flex flex-col gap-2"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Controller
+            name="image"
+            control={control}
+            rules={{
               required: "Image URL is required",
               pattern: {
                 value: /^(ftp|http|https):\/\/[^ "]+$/,
                 message: "Please enter a valid image URL",
               },
-            })}
-            isInvalid={errors.image}
-            errorMessage={errors.image?.message}
+            }}
+            render={({ field }) => (
+              <Input
+                variant="bordered"
+                label="Image URL"
+                placeholder="Enter the image URL for your post."
+                errorMessage={errors.image?.message}
+                {...field}
+              />
+            )}
           />
-          <Textarea
-            label="Description"
-            variant="bordered"
-            placeholder="Tell what you think about this post"
-            {...register("description", {
+
+          <Controller
+            name="description"
+            control={control}
+            rules={{
               required: "Description is required",
               minLength: {
                 value: 8,
                 message: "Description must be at least 8 characters",
               },
-            })}
-            isInvalid={errors.description}
-            errorMessage={errors.description?.message}
-            maxRows={4}
+            }}
+            render={({ field }) => (
+              <Textarea
+                label="Description"
+                variant="bordered"
+                placeholder="Tell what you think about this post"
+                errorMessage={errors.description?.message}
+                {...field}
+              />
+            )}
           />
+
           <ImagePreview image={watchImage} />
           <Button
             isLoading={isLoading}

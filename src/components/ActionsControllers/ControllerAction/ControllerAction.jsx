@@ -9,9 +9,7 @@ function ControllerAction({ action, Component }) {
       variant="light"
       onPress={() => action()}
     >
-      <Component
-        fill="none"
-      />
+      <Component fill="none" />
     </Button>
   );
 }
