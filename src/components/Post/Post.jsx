@@ -105,7 +105,7 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
 
         <InteractionsDetails
           likes={postLikes}
-          comments={postComments.length}
+          comments={postComments?.length}
           onComment={handleComment}
         />
 
