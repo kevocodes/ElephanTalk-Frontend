@@ -61,6 +61,11 @@ export const commentPost = async ({ token, postId, content }) => {
   });
 
   if (!response.ok) {
+    if (response.status === 406) {
+      const { message } = await response.json();
+      throw new ResponseError(JSON.stringify(message), response.status);
+    }
+
     throw new ResponseError("Error commenting on post", response.status);
   }
 
