@@ -22,7 +22,7 @@ function CreatePost() {
         if (error.status === 406) {
           return setError("description", {
             type: "manual",
-            message: `this post is considered ${getToxicityTags(
+            message: `This post is considered ${getToxicityTags(
               JSON.parse(error.message)
             ).toLowerCase()}`,
           });

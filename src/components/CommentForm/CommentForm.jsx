@@ -29,7 +29,7 @@ function CommentForm({ setPostsComments, postId, inputRef = null }) {
       if (error instanceof ResponseError) {
         if (error.status === 406) {
           return showAlert(
-            `this comment is considered ${getToxicityTags(
+            `This comment is considered ${getToxicityTags(
               JSON.parse(error.message)
             ).toLowerCase()}`,
             "error"

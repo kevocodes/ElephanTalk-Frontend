@@ -26,7 +26,6 @@ function PostDetail({
   const commentInputRef = useRef(null);
   const commentScrollRef = useRef(null);
 
-  const currentUser = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
 
   const { description, image, user, likes, isLiked, isFavorite, active } = post;
@@ -98,14 +97,13 @@ function PostDetail({
             <p className="text-small tracking-tight">{`@${user.username}`}</p>
           </div>
         </div>
-        {currentUser._id === user._id && (
-          <OptionsDropdown
-            isActive={isActive}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onHide={handleHide}
-          />
-        )}
+        <OptionsDropdown
+          isActive={isActive}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onHide={handleHide}
+          userId={user._id}
+        />
       </CardHeader>
       <CardBody className="flex flex-col w-full lg:max-h-full py-4 lg:py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row">
         <div className="w-full lg:w-1/2 flex h-full items-center justify-center">

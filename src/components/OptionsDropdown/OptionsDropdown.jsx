@@ -8,8 +8,13 @@ import {
 } from "@nextui-org/react";
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import { useState } from "react";
+import { useAuthStore } from "../../store/auth.store";
 
-function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
+function OptionsDropdown({ isActive, onEdit, onDelete, onHide, userId }) {
+  const currentUser = useAuthStore((state) => state.user);
+
+  console.log(userId);
+
   const {
     isOpen: isOpenDelete,
     onOpen: onOpenDelete,
@@ -48,21 +53,40 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide }) {
           variant="flat"
           aria-label="Dropdown menu with icons"
         >
-          <DropdownItem key="edit" onClick={handleEdit}>
-            Edit post
-          </DropdownItem>
-          <DropdownItem key="hide" onClick={onOpenHide}>
-            {isActive ? "Hide post" : "Unhide post"}
-          </DropdownItem>
-          <DropdownItem
-            data-testid="delete-button"
-            key="delete"
-            className="text-danger"
-            color="danger"
-            onClick={onOpenDelete}
-          >
-            Delete post
-          </DropdownItem>
+          {currentUser._id === userId && (
+            <DropdownItem key="edit" onClick={handleEdit}>
+              Edit post
+            </DropdownItem>
+          )}
+
+          {currentUser._id === userId && (
+            <DropdownItem key="hide" onClick={onOpenHide}>
+              {isActive ? "Hide post" : "Unhide post"}
+            </DropdownItem>
+          )}
+
+          {currentUser._id === userId && (
+            <DropdownItem
+              data-testid="delete-button"
+              key="delete"
+              className="text-danger"
+              color="danger"
+              onClick={onOpenDelete}
+            >
+              Delete post
+            </DropdownItem>
+          )}
+
+          {currentUser._id !== userId && (
+            <DropdownItem
+              key="report"
+              color="danger"
+              className="text-danger"
+              onClick={() => alert("REPORT")}
+            >
+              Report post
+            </DropdownItem>
+          )}
         </DropdownMenu>
       </Dropdown>
       <ConfirmationModal
