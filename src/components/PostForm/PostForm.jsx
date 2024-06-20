@@ -26,6 +26,7 @@ function PostForm({
     formState: { errors },
     control,
     watch,
+    setError,
   } = useForm({
     defaultValues: {
       description: description,
@@ -38,8 +39,10 @@ function PostForm({
   // The submit function will receive the form data if all validations pass
   const onSubmit = async (data) => {
     setIsLoading(true);
+
     // Here the action will be executed with form data
-    await action(data);
+    await action(data, setError);
+    
     setIsLoading(false);
   };
 
@@ -104,6 +107,10 @@ function PostForm({
           >
             Submit
           </Button>
+
+          <div>
+
+          </div>
         </form>
       </CardBody>
     </Card>

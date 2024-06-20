@@ -1,3 +1,5 @@
+import { ResponseError } from "../models/ResponseError";
+
 const BASE_URL = import.meta.env.VITE_PUBLIC_API_URL;
 
 export const getPosts = async ({ token, endpoint = "", query = "" }) => {
@@ -10,7 +12,7 @@ export const getPosts = async ({ token, endpoint = "", query = "" }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error fetching posts");
+    throw new ResponseError("Error fetching posts", response.status);
   }
 
   return await response.json();
@@ -26,7 +28,7 @@ export const toggleLikePost = async ({ token, postId }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error liking post");
+    throw new ResponseError("Error liking post", response.status);
   }
 
   return true;
@@ -42,7 +44,7 @@ export const toggleFavoritePost = async ({ token, postId }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error adding post to favorites");
+    throw new ResponseError("Error adding post to favorites", response.status);
   }
 
   return true;
@@ -59,7 +61,7 @@ export const commentPost = async ({ token, postId, content }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error commenting on post");
+    throw new ResponseError("Error commenting on post", response.status);
   }
 
   return true;
@@ -75,7 +77,7 @@ export const deletePost = async ({ token, postId }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error deleting post");
+    throw new ResponseError("Error deleting post", response.status);
   }
 
   return true;
@@ -91,7 +93,7 @@ export const hidePost = async ({ token, postId }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error hiding post");
+    throw new ResponseError("Error hiding post", response.status);
   }
 
   return true;
@@ -108,7 +110,12 @@ export const createPost = async ({ token, body: postData }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error creating post");
+    if (response.status === 406) {
+      const { message } = await response.json();
+      throw new ResponseError(JSON.stringify(message), response.status);
+    }
+
+    throw new ResponseError("Error creating post", response.status);
   }
 
   return true;
@@ -125,7 +132,7 @@ export const updatePost = async ({ token, postId, body: postData }) => {
   });
 
   if (!response.ok) {
-    throw new Error("Error updating post");
+    throw new ResponseError("Error updating post", response.status);
   }
 
   return true;
