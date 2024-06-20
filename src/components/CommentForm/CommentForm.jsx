@@ -5,6 +5,7 @@ import { commentPost } from "../../services/posts.service";
 import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
 import getToxicityTags from "../../utils/getToxicityTag";
+import { ResponseError } from "../../models/ResponseError";
 
 function CommentForm({ setPostsComments, postId, inputRef = null }) {
   const token = useAuthStore((state) => state.token);
@@ -25,13 +26,15 @@ function CommentForm({ setPostsComments, postId, inputRef = null }) {
       ]);
       setLoading(false);
     } catch (error) {
-      if (error.status === 406) {
-        return showAlert(
-          `this comment is considered ${getToxicityTags(
-            JSON.parse(error.message)
-          ).toLowerCase()}`,
-          "error"
-        );
+      if (error instanceof ResponseError) {
+        if (error.status === 406) {
+          return showAlert(
+            `this comment is considered ${getToxicityTags(
+              JSON.parse(error.message)
+            ).toLowerCase()}`,
+            "error"
+          );
+        }
       }
 
       showAlert("Oops try again later...", "error");

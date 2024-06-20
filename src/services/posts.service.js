@@ -137,6 +137,11 @@ export const updatePost = async ({ token, postId, body: postData }) => {
   });
 
   if (!response.ok) {
+    if (response.status === 406) {
+      const { message } = await response.json();
+      throw new ResponseError(JSON.stringify(message), response.status);
+    }
+
     throw new ResponseError("Error updating post", response.status);
   }
 
