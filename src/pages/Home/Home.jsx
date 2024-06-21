@@ -7,11 +7,13 @@ import {
   toggleFavoritePost,
   toggleLikePost,
 } from "../../services/posts.service";
+import { generateReport } from "../../services/toxicity-reports.service";
 import PostLoader from "../../components/PostLoader/PostLoader";
 import PostList from "../../components/PostList/PostList";
 import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
 import EmptyPlaceholder from "../../components/EmptyPlaceholder/EmptyPlaceholder";
+import { ResponseError } from "../../models/ResponseError";
 
 function Home() {
   useTitle("Home | Elephantalk");
@@ -132,9 +134,17 @@ function Home() {
   const handleReport = async ({ data, setLoading, onClose, postId }) => {
     try {
       setLoading(true);
-      // Send the report data to the server
-      console.log(data, postId);
+      await generateReport({
+        token,
+        reportedElementId: postId,
+        tags: data.tags,
+      });
+      showAlert("Report sent successfully", "success");
     } catch (error) {
+      if (error instanceof ResponseError) {
+        return showAlert(error.message, "error");
+      }
+
       showAlert("Oops try again later...", "error");
     } finally {
       setLoading(false);
