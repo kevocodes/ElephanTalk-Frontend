@@ -39,7 +39,6 @@ function CommentOptions({ userId, commentId, setComments }) {
     try {
       setLoading(true);
       await deleteComment({ commentId, token });
-      showAlert("Comment deleted successfully", "success");
       setComments((prevComments) =>
         prevComments.filter((c) => c._id !== commentId)
       );
