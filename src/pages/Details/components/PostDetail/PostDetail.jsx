@@ -179,7 +179,9 @@ function PostDetail({
             className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg"
             ref={commentScrollRef}
           >
-            {comments?.length > 0 && <CommentSection comments={comments} />}
+            {comments?.length > 0 && (
+              <CommentSection comments={comments} setComments={setComments} />
+            )}
             {comments?.length === 0 && (
               <EmptyPlaceholder
                 icon="iconamoon:comment-fill"

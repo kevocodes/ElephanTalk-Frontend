@@ -69,6 +69,23 @@ export const commentPost = async ({ token, postId, content }) => {
     throw new ResponseError("Error commenting on post", response.status);
   }
 
+  const { data } = await response.json();
+  return data._id;
+};
+
+export const deleteComment = async ({ token, commentId }) => {
+  const response = await fetch(`${BASE_URL}/posts/${commentId}/comment`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) {
+    throw new ResponseError("Error deleting comment", response.status);
+  }
+
   return true;
 };
 

@@ -1,7 +1,8 @@
 import { Card, CardHeader, Avatar } from "@nextui-org/react";
+import CommentOptions from "./components/CommentOptions/CommentOptions";
 
-export default function CommentCard({ info }) {
-  const { content, user } = info;
+export default function CommentCard({ info, setComments }) {
+  const { content, user, _id } = info;
 
   return (
     <div className="flex items-center justify-between w-full">
@@ -15,10 +16,17 @@ export default function CommentCard({ info }) {
             src={user ? user.picture : ""}
             width={40}
           />
-          <div className="flex flex-col min-h-fit w-10/12">
-            <p className="text-md">
-              {user ? `${user.name} ${user.lastname}` : ""}
-            </p>
+          <div className="flex flex-col min-h-fit w-10/12 flex-1">
+            <div className="flex justify-between">
+              <p className="text-md flex-1">
+                {user ? `${user.name} ${user.lastname}` : ""}
+              </p>
+              <CommentOptions
+                commentId={_id}
+                userId={user._id}
+                setComments={setComments}
+              />
+            </div>
             <p className="text-small text-default-500">
               {content ? content : ""}
             </p>

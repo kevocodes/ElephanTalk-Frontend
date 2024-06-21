@@ -18,11 +18,11 @@ function CommentForm({ setPostsComments, postId, inputRef = null }) {
     e.preventDefault();
     try {
       setLoading(true);
-      await commentPost({ content: value, token, postId });
+      const newCommentId = await commentPost({ content: value, token, postId });
       setValue("");
       setPostsComments((prev) => [
         ...prev,
-        { content: value, user, _id: crypto.randomUUID() },
+        { content: value, user, _id: newCommentId },
       ]);
       setLoading(false);
     } catch (error) {
