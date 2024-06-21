@@ -129,6 +129,19 @@ function Home() {
     }
   };
 
+  const handleReport = async ({ data, setLoading, onClose, postId }) => {
+    try {
+      setLoading(true);
+      // Send the report data to the server
+      console.log(data, postId);
+    } catch (error) {
+      showAlert("Oops try again later...", "error");
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  };
+
   return (
     <main className="flex-1 flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
       {posts.length > 0 && (
@@ -140,6 +153,7 @@ function Home() {
           onFavorite={handleFavorite}
           onDelete={handleDelete}
           onHide={handleHide}
+          onReport={handleReport}
         />
       )}
 

@@ -14,7 +14,15 @@ import InteractionsDetails from "../InteractionsDetails/InteractionsDetails";
 import OptionsDropdown from "../OptionsDropdown/OptionsDropdown";
 import PostDetails from "../PostDetails/PostDetails";
 
-function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
+function Post({
+  info,
+  onLike,
+  onFavorite,
+  onDelete,
+  onHide,
+  onReport,
+  measureRef,
+}) {
   const navigate = useNavigate();
 
   const {
@@ -57,6 +65,10 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
     await onHide({ setLoading, onClose, postId, setIsActive });
   };
 
+  const handleReport = async (data, setLoading, onClose) => {
+    await onReport({ data, setLoading, onClose, postId });
+  };
+
   return (
     <Card data-testid="post" className="max-w-[468px]" ref={measureRef}>
       <CardHeader className="justify-between px-5">
@@ -76,6 +88,7 @@ function Post({ info, onLike, onFavorite, onDelete, onHide, measureRef }) {
           onEdit={handleEdit}
           onDelete={handleDelete}
           onHide={handleHide}
+          onReport={handleReport}
           userId={user._id}
         />
       </CardHeader>

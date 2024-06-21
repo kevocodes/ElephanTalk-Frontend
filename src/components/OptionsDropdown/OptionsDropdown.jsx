@@ -9,11 +9,17 @@ import {
 import ConfirmationModal from "../ConfirmationModal/ConfirmationModal";
 import { useState } from "react";
 import { useAuthStore } from "../../store/auth.store";
+import ReportModal from "../ReportModal/ReportModal";
 
-function OptionsDropdown({ isActive, onEdit, onDelete, onHide, userId }) {
+function OptionsDropdown({
+  isActive,
+  onEdit,
+  onDelete,
+  onHide,
+  onReport,
+  userId,
+}) {
   const currentUser = useAuthStore((state) => state.user);
-
-  console.log(userId);
 
   const {
     isOpen: isOpenDelete,
@@ -29,6 +35,13 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide, userId }) {
     onClose: onCloseHide,
   } = useDisclosure();
 
+  const {
+    isOpen: isOpenReport,
+    onOpen: onOpenReport,
+    onOpenChange: onOpenChangeReport,
+    onClose: onCloseReport,
+  } = useDisclosure();
+
   const [loading, setLoading] = useState(false);
 
   const handleEdit = () => onEdit();
@@ -36,6 +49,8 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide, userId }) {
   const handleDelete = async () => onDelete(setLoading, onCloseDelete);
 
   const handleHide = async () => onHide(setLoading, onCloseHide);
+
+  const handleReport = (data) => onReport( data, setLoading, onCloseReport);
 
   return (
     <>
@@ -82,13 +97,14 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide, userId }) {
               key="report"
               color="danger"
               className="text-danger"
-              onClick={() => alert("REPORT")}
+              onClick={onOpenReport}
             >
               Report post
             </DropdownItem>
           )}
         </DropdownMenu>
       </Dropdown>
+
       <ConfirmationModal
         isOpen={isOpenDelete}
         onOpenChange={onOpenChangeDelete}
@@ -98,6 +114,7 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide, userId }) {
         description="it cannot be undone and will be permanently removed along with comments, likes, and any other interactions."
         loading={loading}
       />
+
       <ConfirmationModal
         isOpen={isOpenHide}
         onOpenChange={onOpenChangeHide}
@@ -110,6 +127,15 @@ function OptionsDropdown({ isActive, onEdit, onDelete, onHide, userId }) {
           !isActive ? "hide" : "unhide"
         } it later.`}
         loading={loading}
+      />
+
+      <ReportModal
+        isOpen={isOpenReport}
+        onOpenChange={onOpenChangeReport}
+        actionText={"Report"}
+        title={"Report post"}
+        description="What's wrong with this post?"
+        action={handleReport}
       />
     </>
   );
