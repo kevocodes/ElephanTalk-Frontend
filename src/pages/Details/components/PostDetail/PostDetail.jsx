@@ -12,6 +12,8 @@ import { useAuthStore } from "../../../../store/auth.store";
 import { showAlert } from "../../../../utils/toastify.util";
 import CommentSection from "../CommentSection/CommentSection";
 import EmptyPlaceholder from "../../../../components/EmptyPlaceholder/EmptyPlaceholder";
+import { generateReport } from "../../../../services/toxicity-reports.service";
+import { ResponseError } from "../../../../models/ResponseError";
 
 function PostDetail({
   post,
@@ -23,12 +25,22 @@ function PostDetail({
 }) {
   const navigate = useNavigate();
 
+  const currentUser = useAuthStore((state) => state.user);
+  const token = useAuthStore((state) => state.token);
+
   const commentInputRef = useRef(null);
   const commentScrollRef = useRef(null);
 
-  const token = useAuthStore((state) => state.token);
-
-  const { description, image, user, likes, isLiked, isFavorite, active } = post;
+  const {
+    description,
+    image,
+    user,
+    likes,
+    isLiked,
+    isFavorite,
+    active,
+    manualReviewed,
+  } = post;
 
   const [postLikes, setLikes] = useState(likes);
   const [isActive, setIsActive] = useState(active);
@@ -85,6 +97,27 @@ function PostDetail({
     }
   };
 
+  const handleReport = async (data, setLoading, onClose) => {
+    try {
+      setLoading(true);
+      await generateReport({
+        token,
+        reportedElementId: postId,
+        tags: data.tags,
+      });
+      showAlert("Report sent successfully", "success");
+    } catch (error) {
+      if (error instanceof ResponseError) {
+        return showAlert(error.message, "error");
+      }
+
+      showAlert("Oops try again later...", "error");
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  };
+
   return (
     <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full">
       <CardHeader className="justify-between px-5">
@@ -97,13 +130,16 @@ function PostDetail({
             <p className="text-small tracking-tight">{`@${user.username}`}</p>
           </div>
         </div>
-        <OptionsDropdown
-          isActive={isActive}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onHide={handleHide}
-          userId={user._id}
-        />
+        {(!manualReviewed || currentUser._id === user._id) && (
+          <OptionsDropdown
+            isActive={isActive}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onHide={handleHide}
+            onReport={handleReport}
+            userId={user._id}
+          />
+        )}
       </CardHeader>
       <CardBody className="flex flex-col w-full lg:max-h-full py-4 lg:py-0 items-center lg:px-0 lg:items-start lg:gap-2 lg:flex-row">
         <div className="w-full lg:w-1/2 flex h-full items-center justify-center">
