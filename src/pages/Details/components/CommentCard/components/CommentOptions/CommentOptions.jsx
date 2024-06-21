@@ -13,6 +13,7 @@ import ReportModal from "../../../../../../components/ReportModal/ReportModal";
 import { ResponseError } from "../../../../../../models/ResponseError";
 import { showAlert } from "../../../../../../utils/toastify.util";
 import { deleteComment } from "../../../../../../services/posts.service";
+import { generateReport } from "../../../../../../services/toxicity-reports.service";
 
 function CommentOptions({ userId, commentId, setComments }) {
   const currentUser = useAuthStore((state) => state.user);
@@ -53,8 +54,27 @@ function CommentOptions({ userId, commentId, setComments }) {
     }
   };
 
-  const handleReport = (data) => {
-    onCloseReport();
+  const handleReport = async (data) => {
+    try {
+      setLoading(true);
+
+      await generateReport({
+        token,
+        reportedElementId: commentId,
+        tags: data.tags,
+        type: "comment",
+      });
+
+      showAlert("Report sent successfully", "success");
+    } catch (error) {
+      if (error instanceof ResponseError)
+        return showAlert(error.message, "error");
+
+      showAlert("Oops try again later...", "error");
+    } finally {
+      setLoading(false);
+      onCloseReport();
+    }
   };
 
   return (
