@@ -12,6 +12,8 @@ import { useAuthStore } from "../../../../store/auth.store";
 import { showAlert } from "../../../../utils/toastify.util";
 import CommentSection from "../CommentSection/CommentSection";
 import EmptyPlaceholder from "../../../../components/EmptyPlaceholder/EmptyPlaceholder";
+import { generateReport } from "../../../../services/toxicity-reports.service";
+import { ResponseError } from "../../../../models/ResponseError";
 
 function PostDetail({
   post,
@@ -23,13 +25,22 @@ function PostDetail({
 }) {
   const navigate = useNavigate();
 
-  const commentInputRef = useRef(null);
-  const commentScrollRef = useRef(null);
-
   const currentUser = useAuthStore((state) => state.user);
   const token = useAuthStore((state) => state.token);
 
-  const { description, image, user, likes, isLiked, isFavorite, active } = post;
+  const commentInputRef = useRef(null);
+  const commentScrollRef = useRef(null);
+
+  const {
+    description,
+    image,
+    user,
+    likes,
+    isLiked,
+    isFavorite,
+    active,
+    manualReviewed,
+  } = post;
 
   const [postLikes, setLikes] = useState(likes);
   const [isActive, setIsActive] = useState(active);
@@ -86,6 +97,27 @@ function PostDetail({
     }
   };
 
+  const handleReport = async (data, setLoading, onClose) => {
+    try {
+      setLoading(true);
+      await generateReport({
+        token,
+        reportedElementId: postId,
+        tags: data.tags,
+      });
+      showAlert("Report sent successfully", "success");
+    } catch (error) {
+      if (error instanceof ResponseError) {
+        return showAlert(error.message, "error");
+      }
+
+      showAlert("Oops try again later...", "error");
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  };
+
   return (
     <Card className="lg:w-10/12 lg:h-full lg:my-5 w-full h-full">
       <CardHeader className="justify-between px-5">
@@ -98,12 +130,14 @@ function PostDetail({
             <p className="text-small tracking-tight">{`@${user.username}`}</p>
           </div>
         </div>
-        {currentUser._id === user._id && (
+        {(!manualReviewed || currentUser._id === user._id) && (
           <OptionsDropdown
             isActive={isActive}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onHide={handleHide}
+            onReport={handleReport}
+            userId={user._id}
           />
         )}
       </CardHeader>
@@ -145,8 +179,10 @@ function PostDetail({
             className="flex flex-col lg:h-full lg:overflow-auto gap-3 lg:p-2 rounded-lg"
             ref={commentScrollRef}
           >
-            {comments.length > 0 && <CommentSection comments={comments} />}
-            {comments.length === 0 && (
+            {comments?.length > 0 && (
+              <CommentSection comments={comments} setComments={setComments} />
+            )}
+            {comments?.length === 0 && (
               <EmptyPlaceholder
                 icon="iconamoon:comment-fill"
                 text="No comments yet"

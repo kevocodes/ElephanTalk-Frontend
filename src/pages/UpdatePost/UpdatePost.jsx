@@ -7,6 +7,8 @@ import { showAlert } from "../../utils/toastify.util";
 import { useNavigate } from "react-router-dom";
 import PostFormSkeleton from "../../components/PostForm/PostFormSkeleton/PostFormSkeleton";
 import { useTitle } from "../../hooks/useTitle";
+import { ResponseError } from "../../models/ResponseError";
+import getToxicityTags from "../../utils/getToxicityTag";
 
 function UpdatePost() {
   useTitle("Edit Post | Elephantalk");
@@ -21,8 +23,6 @@ function UpdatePost() {
   const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
-    if (!isLoading) return;
-
     const fetchPost = async () => {
       try {
         const response = await getPosts({ token: token, endpoint: id });
@@ -40,14 +40,27 @@ function UpdatePost() {
     };
 
     fetchPost();
-  }, []);
+  }, [id, token]);
 
-  async function actionUpdatePost(body) {
+  async function actionUpdatePost(body, setError) {
     try {
       await updatePost({ token: token, postId: id, body: body });
       showAlert("Post updated successfully");
       navigate(-1);
     } catch (error) {
+      if (error instanceof ResponseError) {
+        if (error.status === 406) {
+          return setError("description", {
+            type: "manual",
+            message: `This post is considered ${getToxicityTags(
+              JSON.parse(error.message)
+            ).toLowerCase()}`,
+          });
+        }
+
+        return showAlert(error.message, "error");
+      }
+
       showAlert("Oops try again later...", "error");
     }
   }

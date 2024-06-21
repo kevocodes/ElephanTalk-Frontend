@@ -11,6 +11,7 @@ function PostList({
   onFavorite,
   onDelete,
   onHide,
+  onReport,
 }) {
   const [ref, inView] = useInView();
 
@@ -34,6 +35,7 @@ function PostList({
               onFavorite={onFavorite}
               onDelete={onDelete}
               onHide={onHide}
+              onReport={onReport}
             />
           );
         }
@@ -47,6 +49,7 @@ function PostList({
             onFavorite={onFavorite}
             onDelete={onDelete}
             onHide={onHide}
+            onReport={onReport}
           />
         );
       })}
