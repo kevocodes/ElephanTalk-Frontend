@@ -83,6 +83,13 @@ export const deleteComment = async ({ token, commentId }) => {
   });
 
   if (!response.ok) {
+    if (response.status === 404) {
+      throw new ResponseError(
+        "Comment has already been deleted",
+        response.status
+      );
+    }
+
     throw new ResponseError("Error deleting comment", response.status);
   }
 
@@ -99,6 +106,10 @@ export const deletePost = async ({ token, postId }) => {
   });
 
   if (!response.ok) {
+    if (response.status === 404) {
+      throw new ResponseError("Post has already been deleted", response.status);
+    }
+
     throw new ResponseError("Error deleting post", response.status);
   }
 

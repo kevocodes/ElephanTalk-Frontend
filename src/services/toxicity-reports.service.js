@@ -18,8 +18,15 @@ export const generateReport = async ({
   });
 
   if (!response.ok) {
+    if (response.status === 404) {
+      throw new ResponseError(`The ${type} has already been deleted`, 404);
+    }
+
     if (response.status === 409) {
-      throw new ResponseError(`This ${type} is already reported`, response.status);
+      throw new ResponseError(
+        `This ${type} is already reported`,
+        response.status
+      );
     }
 
     throw new ResponseError(`Error reporting ${type}`, response.status);
