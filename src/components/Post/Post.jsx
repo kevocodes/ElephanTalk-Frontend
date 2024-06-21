@@ -13,6 +13,7 @@ import CommentForm from "../CommentForm/CommentForm";
 import InteractionsDetails from "../InteractionsDetails/InteractionsDetails";
 import OptionsDropdown from "../OptionsDropdown/OptionsDropdown";
 import PostDetails from "../PostDetails/PostDetails";
+import { useAuthStore } from "../../store/auth.store";
 
 function Post({
   info,
@@ -25,6 +26,8 @@ function Post({
 }) {
   const navigate = useNavigate();
 
+  const currentUser = useAuthStore((state) => state.user);
+
   const {
     description,
     image,
@@ -35,6 +38,7 @@ function Post({
     isLiked,
     isFavorite,
     active,
+    manualReviewed,
   } = info;
 
   const [postLikes, setLikes] = useState(likes);
@@ -82,15 +86,17 @@ function Post({
           </div>
         </div>
 
-        <OptionsDropdown
-          isActive={isActive}
-          setIsActive={setIsActive}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-          onHide={handleHide}
-          onReport={handleReport}
-          userId={user._id}
-        />
+        {(!manualReviewed || currentUser._id === user._id) && (
+          <OptionsDropdown
+            isActive={isActive}
+            setIsActive={setIsActive}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+            onHide={handleHide}
+            onReport={handleReport}
+            userId={user._id}
+          />
+        )}
       </CardHeader>
       <CardBody className="py-2 gap-3">
         <Link to={`/post/${postId}`}>
