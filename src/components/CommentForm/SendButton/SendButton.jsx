@@ -12,6 +12,7 @@ function SendButton({ inputValue, loading }) {
       radius="full"
       variant="light"
       isLoading={loading}
+      disabled={loading || inputValue.length === 0}
     >
       {!loading && <SendIcon />}
     </Button>
