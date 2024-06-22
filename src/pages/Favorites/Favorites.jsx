@@ -12,6 +12,8 @@ import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
 import EmptyPlaceholder from "../../components/EmptyPlaceholder/EmptyPlaceholder";
 import { useTitle } from "../../hooks/useTitle";
+import { generateReport } from "../../services/toxicity-reports.service";
+import { ResponseError } from "../../models/ResponseError";
 
 function Favorites() {
   useTitle("Favorites | Elephantalk");
@@ -141,6 +143,27 @@ function Favorites() {
     }
   };
 
+  const handleReport = async ({ data, setLoading, onClose, postId }) => {
+    try {
+      setLoading(true);
+      await generateReport({
+        token,
+        reportedElementId: postId,
+        tags: data.tags,
+      });
+      showAlert("Report sent successfully", "success");
+    } catch (error) {
+      if (error instanceof ResponseError) {
+        return showAlert(error.message, "error");
+      }
+
+      showAlert("Oops try again later...", "error");
+    } finally {
+      setLoading(false);
+      onClose();
+    }
+  };
+
   return (
     <main className="flex-1 flex flex-col gap-4 items-center py-4 md:mb-0 mb-14">
       {posts.length > 0 && (
@@ -152,6 +175,7 @@ function Favorites() {
           onFavorite={handleFavorite}
           onDelete={handleDelete}
           onHide={handleHide}
+          onReport={handleReport}
         />
       )}
 
