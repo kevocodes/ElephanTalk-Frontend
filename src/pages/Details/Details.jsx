@@ -12,6 +12,7 @@ import { useAuthStore } from "../../store/auth.store";
 import { showAlert } from "../../utils/toastify.util";
 import PostSkeleton from "../../components/PostLoader/PostSkeleton/PostSkeleton";
 import { useTitle } from "../../hooks/useTitle";
+import elephantNotFound from "../../assets/elephant.webp";
 
 function Details() {
   useTitle("Post details | Elephantalk");
@@ -20,7 +21,7 @@ function Details() {
   const user = useAuthStore((state) => state.user);
 
   const [loading, setLoading] = useState(true);
-  const [post, setPost] = useState({});
+  const [post, setPost] = useState(undefined);
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
@@ -84,7 +85,7 @@ function Details() {
 
   return (
     <main className="flex-1 absolute top-0 py-16 md:pb-4 lg:pb-0 flex flex-col justify-center items-center w-full lg:h-screen">
-      {!loading && (
+      {!loading && post && (
         <PostDetail
           post={post}
           comments={comments}
@@ -94,6 +95,16 @@ function Details() {
           onFavorite={handleFavorite}
         />
       )}
+
+      {!post && !loading && (
+        <div className="text-center p-4 flex flex-col gap-4">
+          <img src={elephantNotFound} alt="Not found image"/>
+          <h1 className="text-5xl font-bold text-foreground">
+            ERROR <span className="text-primary">404</span>
+          </h1>
+        </div>
+      )}
+
       {loading && <PostSkeleton />}
     </main>
   );
